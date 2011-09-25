@@ -100,26 +100,33 @@ class Route {
 		foreach(self::$route as $pattern=>$location) {
 			
 			// Skip default route
-			//if($pattern != '/') {
+			if($pattern != '/') {
 			
-				// Loop pattern segments
 				$pattern_segments = explode('/', $pattern);
-				for($i = 0; $i < count($pattern_segments); $i++) {
-					
-					// Check to see if they don't match
-					if($segments[$i] != $pattern_segments[$i]) {
-					
-						// Skip to next route entry
-						continue 2;
+				
+				// Skip if segment count doesn't match
+				// TODO: Add checks for special segment types
+				if(count($pattern_segments) == count($segments)) {
+				
+					// Loop pattern segments
+					for($i = 0; $i < count($pattern_segments); $i++) {
+						
+						// Check to see if they don't match
+						if($segments[$i] != $pattern_segments[$i]) {
+						
+							// Skip to next route entry
+							continue 2;
+						
+						}
 					
 					}
+					
+					// If it gets to here, then everything matches
+					return self::process($location[0], $location[1], $segments, $i);
 				
 				}
-				
-				// If it gets to here, then everything matches
-				return self::process($location[0], $location[1], $segments, $i);
 			
-			//}
+			}
 		
 		}
 		
