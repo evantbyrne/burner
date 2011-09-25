@@ -1,37 +1,20 @@
 <?php
 
-class main_controller
-{
-	// API
-	public $controller_api = array(
-		'rest'=>array('json')
-	);
+//namespace Controller;
+
+
+class Main {
+
+	public function index() {
 	
+		echo 'Hello, World!';
 	
-	// Index
-	public function index()
-	{
-		echo 'SWEEET!!!';
 	}
 	
+	public function foo() {
 	
-	// REST API
-	public function rest()
-	{
-		$api = api::get();
-		$args = func_get_args();
-		
-		
-		// Normal request
-		if(!$api)
-		{
-			print_r($args);
-		}
-		
-		// JSON API request
-		else
-		{
-			echo json_encode($args,TRUE);
-		}
+		echo 'Foooo!';
+	
 	}
+
 }

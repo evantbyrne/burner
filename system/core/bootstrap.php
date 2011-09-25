@@ -4,11 +4,11 @@
  * Dingo Framework Bootstrap Class
  *
  * @Author          Evan Byrne
- * @Copyright       2008 - 2010
+ * @Copyright       2008 - 2011
  * @Project Page    http://www.dingoframework.com
  */
 
-class bootstrap
+class Bootstrap
 {
 	// Get the requested URL, parse it, then clean it up
 	// ---------------------------------------------------------------------------
@@ -63,7 +63,7 @@ class bootstrap
 	// ---------------------------------------------------------------------------
 	public static function run()
 	{
-		define('DINGO_VERSION','0.7.1');
+		define('DINGO_VERSION','0.8');
 		
 		// Start buffer
 		ob_start();
@@ -84,51 +84,48 @@ class bootstrap
 		set_exception_handler('dingo_exception');
 		
 		
-		config::set('system',SYSTEM);
-		config::set('application',APPLICATION);
-		config::set('config',CONFIG);
+		Config::set('system',SYSTEM);
+		Config::set('application',APPLICATION);
+		Config::set('config',CONFIG);
 		
 		
 		// Load route configuration
-		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/route.php');
+		require_once(APPLICATION.'/'.CONFIG.'/route.php');
 		
 		
 		// Get route
-		$uri = route::get(bootstrap::get_request_url());
-		
+		$request_url = self::get_request_url();
+		$uri = Route::get($request_url);
+		/*$uri['controller'] = 'main';
+		$uri['controller_class'] = 'Main';
+		$uri['function'] = 'index';
+		$uri['arguments'] = array();*/
 		
 		// Set current page
-		define('CURRENT_PAGE',$uri['string']);
-		
-		
-		// Validate
-		if(!route::valid($uri))
-		{
-			load::error('general','Invalid URL','The requested URL contains invalid characters.');
-		}
+		define('CURRENT_PAGE', $request_url);
 		
 		
 		// Load Controller
 		//----------------------------------------------------------------------------------------------
 		
 		// If controller does not exist, give 404 error
-		if(!file_exists(APPLICATION.'/'.config::get('folder_controllers')."/{$uri['controller']}.php"))
+		if(!file_exists(APPLICATION.'/'.Config::get('folder_controllers')."/{$uri['controller']}.php"))
 		{
-			load::error('404');
+			Load::error('404');
 		}
 		
 		
 		// Include controller
-		require_once(APPLICATION.'/'.config::get('folder_controllers')."/{$uri['controller']}.php");
+		require_once(APPLICATION.'/'.Config::get('folder_controllers')."/{$uri['controller']}.php");
 		
 		// Initialize controller
-		$tmp = "{$uri['controller_class']}_controller";
+		$tmp = ucfirst($uri['controller']);
+		//use \Controller;
 		$controller = new $tmp();
-		unset($tmp);
 		
 		
 		// Check if using valid REST API
-		if(api::get())
+		/*if(api::get())
 		{
 			if(!empty($controller->controller_api) and
 				is_array($controller->controller_api) and
@@ -142,39 +139,29 @@ class bootstrap
 				
 				if(!api::allowed(api::get()))
 				{
-					load::error('404');
+					Load::error('404');
 				}
 			}
 			else
 			{
-				load::error('404');
+				Load::error('404');
 			}
-		}
+		}*/
 		
 		
 		// Autoload Components
-		bootstrap::autoload($controller);
+		//self::autoload($controller);
 		
 		
 		// Check to see if function exists
-		if(!is_callable(array($controller,$uri['function'])))
-		{
-			// Try replacing underscores with dashes
-			$minus_function_name = str_replace('-', '_', $uri['function']);
-			
-			if(!is_callable(array($controller,$minus_function_name)))
-			{
-				load::error('404');
-			}
-			else
-			{
-				$uri['function'] = $minus_function_name;
-			}
+		if(!is_callable(array($controller, $uri['method']))) {
+		
+			Load::error('404');
+		
 		}
 		
-		
 		// Run Function
-		call_user_func_array(array($controller,$uri['function']),$uri['arguments']);
+		call_user_func_array(array($controller, $uri['method']), $uri['args']);
 		
 		
 		// Display echoed content

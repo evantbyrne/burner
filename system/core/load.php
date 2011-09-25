@@ -4,11 +4,11 @@
  * Dingo Framework Load Class
  *
  * @Author          Evan Byrne
- * @Copyright       2008 - 2010
+ * @Copyright       2008 - 2011
  * @Project Page    http://www.dingoframework.com
  */
 
-class load
+class Load
 {
 	// File
 	// ---------------------------------------------------------------------------
@@ -32,7 +32,7 @@ class load
 	// ---------------------------------------------------------------------------
 	public static function controller($controller)
 	{
-		return self::file(APPLICATION.'/'.config::get('folder_controllers'),$controller,'controller');
+		return self::file(APPLICATION.'/'.Config::get('folder_controllers'),$controller,'controller');
 	}
 	
 	
@@ -55,7 +55,7 @@ class load
 		
 		if(!class_exists($model_class))
 		{
-			$path = config::get('application')."/".config::get('folder_models')."/$model.php";
+			$path = Config::get('application')."/".Config::get('folder_models')."/$model.php";
 			
 			// If model does not exist display error
 			if(!file_exists($path))
@@ -85,7 +85,7 @@ class load
 		
 		if(!class_exists($model_class))
 		{
-			$path = config::get('application')."/".config::get('folder_models')."/$model.php";
+			$path = Config::get('application')."/".Config::get('folder_models')."/$model.php";
 			
 			// If model does not exist display error
 			if(!file_exists($path))
@@ -107,7 +107,7 @@ class load
 	public static function error($type = 'general',$title = NULL,$message = NULL)
 	{
 		ob_clean();
-		require_once(config::get('application').'/'.config::get('folder_errors')."/$type.php");
+		require_once(Config::get('application').'/'.Config::get('folder_errors')."/$type.php");
 		ob_end_flush();
 		exit;
 	}
@@ -117,7 +117,7 @@ class load
 	// ---------------------------------------------------------------------------
 	public static function config($file)
 	{
-		return self::file(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION,$file,'configuration');
+		return self::file(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION,$file,'Configuration');
 	}
 	
 	
@@ -125,7 +125,7 @@ class load
 	// ---------------------------------------------------------------------------
 	public static function language($language)
 	{
-		return self::file(APPLICATION.'/'.config::get('folder_languages'),$language,'language');
+		return self::file(APPLICATION.'/'.Config::get('folder_languages'),$language,'language');
 	}
 	
 	
@@ -134,9 +134,9 @@ class load
 	public static function view($view,$data = NULL)
 	{
 		// If view does not exist display error
-		if(!file_exists(config::get('application').'/'.config::get('folder_views')."/$view.php"))
+		if(!file_exists(Config::get('application').'/'.Config::get('folder_views')."/$view.php"))
 		{
-			dingo_error(E_USER_WARNING,'The requested view ('.config::get('application').'/'.config::get('folder_views')."/$view.php) could not be found.");
+			dingo_error(E_USER_WARNING,'The requested view ('.Config::get('application').'/'.Config::get('folder_views')."/$view.php) could not be found.");
 			return FALSE;
 		}
 		else
@@ -147,7 +147,7 @@ class load
 				extract($data, EXTR_OVERWRITE);
 			}
 			
-			require(config::get('application').'/'.config::get('folder_views')."/$view.php");
+			require(Config::get('application').'/'.Config::get('folder_views')."/$view.php");
 			return FALSE;
 		}
 	}
@@ -174,7 +174,7 @@ class load
 	// ---------------------------------------------------------------------------
 	public static function helper($helper)
 	{
-		return self::file(APPLICATION.'/'.config::get('folder_helpers'),$helper,'helper');
+		return self::file(APPLICATION.'/'.Config::get('folder_helpers'),$helper,'helper');
 	}
 	
 	
@@ -182,7 +182,7 @@ class load
 	// ---------------------------------------------------------------------------
 	public static function orm_class($orm)
 	{
-		return self::file(APPLICATION.'/'.config::get('folder_orm'),$orm,'ORM');
+		return self::file(APPLICATION.'/'.Config::get('folder_orm'),$orm,'ORM');
 	}
 	
 	

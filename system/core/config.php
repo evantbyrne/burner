@@ -9,7 +9,7 @@
  */
 
 
-class config
+class Config
 {
 	private static $x = array();
 	

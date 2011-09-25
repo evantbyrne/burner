@@ -4,11 +4,11 @@
  * Dingo Framework Core Class (here for possible future use)
  *
  * @Author          Evan Byrne
- * @Copyright       2008 - 2010
+ * @Copyright       2008 - 2011
  * @Project Page    http://www.dingoframework.com
  */
 
-class dingo{}
+class Dingo{}
 
 
 
@@ -16,12 +16,12 @@ class dingo{}
  * Dingo Cookie Class
  *
  * @Author          Evan Byrne
- * @Copyright       2008 - 2010
+ * @Copyright       2008 - 2011
  * @Project Page    http://www.dingoframework.com
  * @docs            http://www.dingoframework.com/docs/cookie-library
  */
 
-class cookie
+class Cookie
 {
 	// Set Cookie
 	// ---------------------------------------------------------------------------

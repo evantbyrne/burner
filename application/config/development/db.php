@@ -1,4 +1,4 @@
-<?php if(!defined('DINGO')){die('External Access to File Denied');}
+<?php
 
 /**
  * Dingo Framework DB Configuration File
@@ -8,7 +8,7 @@
  * @Project Page    http://www.dingoframework.com
  */
 
-config::set('db',array(
+Config::set('db',array(
 	
 	/* Default Connection */
 	'default'=>array(
