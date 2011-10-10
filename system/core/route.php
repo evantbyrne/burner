@@ -59,24 +59,6 @@ class Route {
 	}
 	
 	
-	// Process
-	// ---------------------------------------------------------------------------
-	public static function process($controller, $method, $segments, $slice=2) {
-	
-		$res = array('controller'=>$controller, 'method'=>$method, 'args'=>array());
-		
-		$segments = array_slice($segments, $slice);
-		foreach($segments as $e) {
-		
-			$res['args'][] = $e;
-		
-		}
-		
-		return $res;
-	
-	}
-	
-	
 	// Get
 	// ---------------------------------------------------------------------------
 	public static function get($url) {
@@ -119,7 +101,9 @@ class Route {
 				// Skip if segment count doesn't match
 				// TODO: Add checks for special segment types
 				if(count($pattern_segments) == count($segments)) {
-				
+					
+					$args = array();
+					
 					// Loop pattern segments
 					for($i = 0; $i < count($pattern_segments); $i++) {
 						
@@ -128,9 +112,14 @@ class Route {
 						
 							// Check to see if they don't match pattern
 							if(!preg_match(self::$pattern[substr($pattern_segments[$i], 1)], $segments[$i])) {
-							
+								
 								// Skip to next route entry
 								continue 2;
+							
+							} else {
+							
+								// Add to arguments array
+								$args[] = $segments[$i];
 							
 							}
 						
@@ -150,7 +139,7 @@ class Route {
 					}
 					
 					// If it gets to here, then everything matches
-					return self::process($location[0], $location[1], $segments, $i);
+					return array('controller'=>$location[0], 'method'=>$location[1], 'args'=>$args);
 				
 				}
 			
