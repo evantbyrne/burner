@@ -13,6 +13,9 @@ class Route {
 	
 	private static $route = array();
 	private static $current = array();
+	private static $pattern = array(
+		'int'=>'/^([0-9]+)$/'
+	);
 	
 	
 	// Validate
@@ -31,6 +34,15 @@ class Route {
 		
 		return TRUE;
 		
+	}
+	
+	
+	// Pattern
+	// ---------------------------------------------------------------------------
+	public static function pattern($name, $regex) {
+	
+		self::$pattern[$name] = $regex;
+	
 	}
 	
 	
@@ -111,11 +123,27 @@ class Route {
 					// Loop pattern segments
 					for($i = 0; $i < count($pattern_segments); $i++) {
 						
-						// Check to see if they don't match
-						if($segments[$i] != $pattern_segments[$i]) {
+						// Pattern segment
+						if(preg_match('/^:/', $pattern_segments[$i])) {
 						
-							// Skip to next route entry
-							continue 2;
+							// Check to see if they don't match pattern
+							if(!preg_match(self::$pattern[substr($pattern_segments[$i], 1)], $segments[$i])) {
+							
+								// Skip to next route entry
+								continue 2;
+							
+							}
+						
+						// Regular segment
+						} else {
+						
+							// Check to see if they don't match
+							if($segments[$i] != $pattern_segments[$i]) {
+							
+								// Skip to next route entry
+								continue 2;
+							
+							}
 						
 						}
 					

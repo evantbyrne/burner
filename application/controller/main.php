@@ -16,5 +16,11 @@ class Main {
 		echo 'Foooo!';
 	
 	}
+	
+	public function bar() {
+	
+		print_r(func_get_args());
+	
+	}
 
 }
