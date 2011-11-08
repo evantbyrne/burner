@@ -77,6 +77,7 @@ class Bootstrap
 		require_once(SYSTEM.'/core/api.php');
 		require_once(SYSTEM.'/core/route.php');
 		require_once(SYSTEM.'/core/load.php');
+		require_once(SYSTEM.'/core/view.php');
 		require_once(SYSTEM.'/core/input.php');
 		require_once(SYSTEM.'/core/error.php');
 		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/config.php');

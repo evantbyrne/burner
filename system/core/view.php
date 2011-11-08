@@ -27,11 +27,12 @@ class View {
 		// Load extensions
 		foreach(self::$extensions as $e) {
 		
-			print_r($e);
+			//print_r($e);
+			Load::view($e['view'], $e['data']);
 		
 		}
 		
-		print_r(self::$sections);
+		//print_r(self::$sections);
 	
 	}
 	
@@ -49,6 +50,7 @@ class View {
 	// ---------------------------------------------------------------------------
 	public static function section($name) {
 	
+		ob_clean();
 		self::$current_section = $name;
 		ob_end_flush();
 		ob_start();
@@ -60,7 +62,7 @@ class View {
 	// ---------------------------------------------------------------------------
 	public static function end_section() {
 	
-		$data = ob_end_clean();
+		$data = ob_get_clean();
 		self::$sections[self::$current_section] = $data;
 		self::$current_section = false;
 		ob_start();
@@ -72,7 +74,7 @@ class View {
 	// ---------------------------------------------------------------------------
 	public static function new_section($name) {
 	
-		
+		print_r(self::$sections[$name]);
 	
 	}
 	

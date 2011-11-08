@@ -1,14 +1,13 @@
 <?php
 
 namespace Controller;
-use Dingo\Route, Dingo\Cookie;
+use Dingo\Route, Dingo\Cookie, Dingo\View;
 
 class Main {
 
 	public function index() {
 	
-		echo 'Hello, World!';
-		echo (Cookie::delete('dsfsdfs')) ? ' yep' : ' nope';
+		View::render('hello');
 	
 	}
 	
