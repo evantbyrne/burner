@@ -1,16 +1,6 @@
-<?php if(!defined('DINGO')){die('External Access to File Denied');}
+<?php
 
-/**
- * Dingo Framework Core Class (here for possible future use)
- *
- * @Author          Evan Byrne
- * @Copyright       2008 - 2011
- * @Project Page    http://www.dingoframework.com
- */
-
-class Dingo{}
-
-
+namespace Dingo;
 
 /**
  * Dingo Cookie Class

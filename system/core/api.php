@@ -1,4 +1,6 @@
-<?php if(!defined('DINGO')){die('External Access to File Denied');}
+<?php
+
+namespace Dingo;
 
 /**
  * API Class For Dingo Framework

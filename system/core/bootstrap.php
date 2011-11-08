@@ -1,4 +1,6 @@
-<?php if(!defined('DINGO')){die('External Access to File Denied');}
+<?php
+
+namespace Dingo;
 
 /**
  * Dingo Framework Bootstrap Class
@@ -84,9 +86,9 @@ class Bootstrap
 		set_exception_handler('dingo_exception');
 		
 		
-		Config::set('system',SYSTEM);
-		Config::set('application',APPLICATION);
-		Config::set('config',CONFIG);
+		Config::set('system', SYSTEM);
+		Config::set('application', APPLICATION);
+		Config::set('config', CONFIG);
 		
 		
 		// Load route configuration
@@ -96,10 +98,6 @@ class Bootstrap
 		// Get route
 		$request_url = self::get_request_url();
 		$uri = Route::get($request_url);
-		/*$uri['controller'] = 'main';
-		$uri['controller_class'] = 'Main';
-		$uri['function'] = 'index';
-		$uri['arguments'] = array();*/
 		
 		// Set current page
 		define('CURRENT_PAGE', $request_url);
@@ -119,8 +117,7 @@ class Bootstrap
 		require_once(APPLICATION.'/'.Config::get('folder_controllers')."/{$uri['controller']}.php");
 		
 		// Initialize controller
-		$tmp = ucfirst($uri['controller']);
-		//use \Controller;
+		$tmp = '\\Controller\\'.ucfirst($uri['controller']);
 		$controller = new $tmp();
 		
 		

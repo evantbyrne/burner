@@ -1,13 +1,14 @@
 <?php
 
-//namespace Controller;
-
+namespace Controller;
+use Dingo\Route, Dingo\Cookie;
 
 class Main {
 
 	public function index() {
 	
 		echo 'Hello, World!';
+		echo (Cookie::delete('dsfsdfs')) ? ' yep' : ' nope';
 	
 	}
 	

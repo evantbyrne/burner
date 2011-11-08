@@ -1,13 +1,15 @@
-<?php if(!defined('DINGO')){die('External Access to File Denied');}
+<?php
+
+namespace Dingo;
 
 // User Database Connection
-config::set('user_connection','default');
+Config::set('user_connection','default');
 
 // User Database Table
-config::set('user_table','users');
+Config::set('user_table','users');
 
 // User Types
-config::set('user_types',array(
+Config::set('user_types',array(
 
 	'banned'=>0,
 	'guest'=>1,

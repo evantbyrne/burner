@@ -1,4 +1,6 @@
-<?php if(!defined('DINGO')){die('External Access to File Denied');}
+<?php
+
+namespace Dingo;
 
 /**
  * Dingo Framework Basic Configuration File
@@ -34,28 +36,28 @@ date_default_timezone_set('America/New_York');
 
 
 /* Auto Load Libraries */
-config::set('autoload_library',array('url'));
+Config::set('autoload_library',array('url'));
 
 /* Auto Load Helpers */
-config::set('autoload_helper',array());
+Config::set('autoload_helper',array());
 
 
 /* Sessions */
-config::set('session',array(
+Config::set('session',array(
 	'connection'=>'default',
 	'table'=>'sessions',
 	'cookie'=>array('path'=>'/','expire'=>'+1 months')
 ));
 
 /* Notes */
-config::set('notes',array('path'=>'/','expire'=>'+5 minutes'));
+Config::set('notes',array('path'=>'/','expire'=>'+5 minutes'));
 
 
 /* Application Folder Locations */
-config::set('folder_views','view');             // Views
-config::set('folder_controllers','controller'); // Controllers
-config::set('folder_models','model');           // Models
-config::set('folder_helpers','helper');         // Helpers
-config::set('folder_languages','language');     // Languages
-config::set('folder_errors','error');           // Errors
-config::set('folder_orm','orm');                // ORM
+Config::set('folder_views','view');             // Views
+Config::set('folder_controllers','controller'); // Controllers
+Config::set('folder_models','model');           // Models
+Config::set('folder_helpers','helper');         // Helpers
+Config::set('folder_languages','language');     // Languages
+Config::set('folder_errors','error');           // Errors
+Config::set('folder_orm','orm');                // ORM

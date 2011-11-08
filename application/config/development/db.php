@@ -1,5 +1,7 @@
 <?php
 
+namespace Dingo;
+
 /**
  * Dingo Framework DB Configuration File
  *

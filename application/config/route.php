@@ -1,5 +1,7 @@
 <?php
 
+namespace Dingo;
+
 Route::add(array(
 
 	'/'=>'main.index',
