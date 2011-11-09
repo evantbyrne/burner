@@ -16,6 +16,7 @@ class View {
 	private static $extensions = array();
 	private static $sections = array();
 	private static $current_section = false;
+	private static $current_new_section = false;
 	
 	
 	// Render
@@ -72,9 +73,35 @@ class View {
 	
 	// New Section
 	// ---------------------------------------------------------------------------
-	public static function new_section($name) {
+	public static function new_section($name, $default=false) {
 	
-		print_r(self::$sections[$name]);
+		if(!$default) {
+		
+			echo self::$sections[$name];
+			
+		} else {
+			
+			self::$current_new_section = $name;
+			ob_end_flush();
+			ob_start();
+		
+		}
+	
+	}
+	
+	
+	// End New Section
+	// ---------------------------------------------------------------------------
+	public static function end_new_section() {
+	
+		if(isset(self::$sections[self::$current_new_section])) {
+		
+			ob_clean();
+			echo self::$sections[self::$current_new_section];
+		
+		}
+		
+		self::$current_new_section = false;
 	
 	}
 	
