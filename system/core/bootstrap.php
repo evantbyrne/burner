@@ -83,8 +83,8 @@ class Bootstrap
 		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/config.php');
 		
 		
-		set_error_handler('dingo_error');
-		set_exception_handler('dingo_exception');
+		set_error_handler('Dingo\dingo_error');
+		set_exception_handler('Dingo\dingo_exception');
 		
 		
 		Config::set('system', SYSTEM);

@@ -1,10 +1,12 @@
 <?php
 
+namespace Dingo;
+
 /**
  * Dingo Error Handling Functions
  *
  * @Author          Evan Byrne
- * @Copyright       2008 - 2010
+ * @Copyright       2008 - 2011
  * @Project Page    http://www.dingoframework.com
  *
  * Many thanks to Kalle for providing code
@@ -74,13 +76,13 @@ function dingo_error($level,$message,$file='current file',$line='(unknown)')
 	{
 		ob_clean();
 		
-		if(file_exists(APPLICATION.'/'.config::get('folder_errors').'/fatal.php'))
+		if(file_exists(APPLICATION.'/'.Config::get('folder_errors').'/fatal.php'))
 		{
-			require(APPLICATION.'/'.config::get('folder_errors').'/fatal.php');
+			require(APPLICATION.'/'.Config::get('folder_errors').'/fatal.php');
 		}
 		else
 		{
-			echo 'Dingo could not locate error file at '.APPLICATION.'/'.config::get('folder_errors').'/fatal.php';
+			echo 'Dingo could not locate error file at '.APPLICATION.'/'.Config::get('folder_errors').'/fatal.php';
 		}
 		
 		ob_end_flush();
@@ -90,13 +92,13 @@ function dingo_error($level,$message,$file='current file',$line='(unknown)')
 	{
 		ob_clean();
 		
-		if(file_exists(APPLICATION.'/'.config::get('folder_errors').'/exception.php'))
+		if(file_exists(APPLICATION.'/'.Config::get('folder_errors').'/exception.php'))
 		{
-			require(APPLICATION.'/'.config::get('folder_errors').'/exception.php');
+			require(APPLICATION.'/'.Config::get('folder_errors').'/exception.php');
 		}
 		else
 		{
-			echo 'Dingo could not locate exception file at '.APPLICATION.'/'.config::get('folder_errors').'/exception.php';
+			echo 'Dingo could not locate exception file at '.APPLICATION.'/'.Config::get('folder_errors').'/exception.php';
 		}
 		
 		ob_end_flush();
@@ -104,13 +106,13 @@ function dingo_error($level,$message,$file='current file',$line='(unknown)')
 	}
 	elseif(DEBUG)
 	{
-		if(file_exists(APPLICATION.'/'.config::get('folder_errors').'/nonfatal.php'))
+		if(file_exists(APPLICATION.'/'.Config::get('folder_errors').'/nonfatal.php'))
 		{
-			require(APPLICATION.'/'.config::get('folder_errors').'/nonfatal.php');
+			require(APPLICATION.'/'.Config::get('folder_errors').'/nonfatal.php');
 		}
 		else
 		{
-			echo 'Dingo could not locate error file at '.APPLICATION.'/'.config::get('folder_errors').'/nonfatal.php';
+			echo 'Dingo could not locate error file at '.APPLICATION.'/'.Config::get('folder_errors').'/nonfatal.php';
 		}
 	}
 	
@@ -126,7 +128,6 @@ function dingo_error($level,$message,$file='current file',$line='(unknown)')
 function dingo_exception($ex)
 {
 	dingo_error('exception',$ex->getMessage(),$ex->getFile(),$ex->getLine());
-	//echo "<p>Uncaught exception in {$exception->getFile()} on line {$exception->getLine()}: <strong>{$exception->getMessage()}</strong></p>";
 }
 
 
