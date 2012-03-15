@@ -469,6 +469,14 @@ abstract class TableColumn {
 		$this->options[$key] = $value;
 	
 	}
+	
+	/* Build Null */
+	public function build_null() {
+	
+		// Default to not null
+		return (isset($this->options['null']) and $this->options['null'] === true) ? 'NULL' : 'NOT NULL';
+	
+	}
 
 }
 
@@ -478,7 +486,7 @@ class IntColumn extends TableColumn {
 	/* Build */
 	public function build() {
 	
-		return "{$this->name} INT";
+		return "{$this->name} {$this->build_null()} INT";
 	
 	}
 	
@@ -490,7 +498,7 @@ class TextColumn extends TableColumn {
 	/* Build */
 	public function build() {
 	
-		return "{$this->name} TEXT";
+		return "{$this->name} {$this->build_null()} TEXT";
 	
 	}
 	
@@ -509,7 +517,7 @@ class VarcharColumn extends TableColumn {
 		
 		}
 		
-		return "{$this->name} VARCHAR({$this->options['max_length']})";
+		return "{$this->name} {$this->build_null()} VARCHAR({$this->options['max_length']})";
 	
 	}
 	
@@ -545,4 +553,5 @@ $d->set_limit(1);
 echo $d->build() . "\n";*/
 
 $c = new VarcharColumn('name', array('max_length'=>30));
+$c->add_option('null', true);
 echo $c->build() . "\n\n";
