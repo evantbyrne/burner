@@ -417,6 +417,106 @@ class Insert {
 }
 
 
+/* Create Table */
+class CreateTable {
+
+	protected $name;
+	protected $columns;
+	
+	/* Construct */
+	public function __construct($name) {
+	
+		$this->name = $name;
+		$this->columns = array();
+	
+	}
+	
+	/* Add Column */
+	public function add_column($column) {
+	
+		$this->columns[] = $column;
+	
+	}
+	
+	/* Build */
+	public function build() {
+	
+		
+	
+	}
+	
+}
+
+
+
+/* Table Column */
+abstract class TableColumn {
+
+	protected $name;
+	protected $options;
+	
+	/* Construct */
+	public function __construct($name, $options=array()) {
+	
+		$this->name = $name;
+		$this->options = $options;
+	
+	}
+	
+	/* Add Option */
+	public function add_option($key, $value) {
+	
+		$this->options[$key] = $value;
+	
+	}
+
+}
+
+/* Int Column */
+class IntColumn extends TableColumn {
+	
+	/* Build */
+	public function build() {
+	
+		return "{$this->name} INT";
+	
+	}
+	
+}
+
+/* Text Column */
+class TextColumn extends TableColumn {
+	
+	/* Build */
+	public function build() {
+	
+		return "{$this->name} TEXT";
+	
+	}
+	
+}
+
+/* Varchar Column */
+class VarcharColumn extends TableColumn {
+	
+	/* Build */
+	public function build() {
+		
+		// Max length
+		if(!isset($this->options['max_length'])) {
+		
+			die("ERROR: No varchar character max_length given.\n");
+		
+		}
+		
+		return "{$this->name} VARCHAR({$this->options['max_length']})";
+	
+	}
+	
+}
+
+
+
 /*$s = new Select('Woo');
 $s->add_column('one');
 $s->add_column('two');
@@ -436,10 +536,13 @@ $e->add_order_desc('id');
 $e->set_limit(1);
 echo $e->build() . "\n";*/
 
-$d = new Delete('Woo');
+/*$d = new Delete('Woo');
 $d->add_where('one', '=', 'yup');
 $d->add_or_where('two', '!=', 'nope');
 $d->add_order_asc('one');
 $d->add_order_desc('two');
 $d->set_limit(1);
-echo $d->build() . "\n";
+echo $d->build() . "\n";*/
+
+$c = new VarcharColumn('name', array('max_length'=>30));
+echo $c->build() . "\n\n";
