@@ -441,7 +441,18 @@ class CreateTable {
 	/* Build */
 	public function build() {
 	
+		$sql = array("CREATE TABLE {$this->name}(");
+		$sql_cols = array();
 		
+		foreach($this->columns as $column) {
+		
+			$sql_cols[] = $column->build();
+		
+		}
+		
+		$sql[] = implode(",\n", $sql_cols);
+		$sql[] = ')';
+		return implode("\n", $sql);
 	
 	}
 	
@@ -552,6 +563,7 @@ $d->add_order_desc('two');
 $d->set_limit(1);
 echo $d->build() . "\n";*/
 
-$c = new VarcharColumn('name', array('max_length'=>30));
-$c->add_option('null', true);
-echo $c->build() . "\n\n";
+$t = new CreateTable('User');
+$t->add_column(new IntColumn('id'));
+$t->add_column(new VarcharColumn('name', array('max_length'=>30)));
+echo $t->build() . "\n\n";
