@@ -7,81 +7,130 @@ use Dingo\Load;
  * Dingo Framework View Class
  *
  * @Author          Evan Byrne
- * @Copyright       2008 - 2011
+ * @Copyright       2008 - 2012
  * @Project Page    http://www.dingoframework.com
  */
 
 class View {
 	
-	private static $extensions = array();
-	private static $sections = array();
-	private static $current_section = false;
-	private static $current_new_section = false;
+	private $extensions = array();
+	private $sections = array();
+	private $current_section = false;
+	private $current_new_section = false;
+	private $out;
 	
 	
 	// Render
 	// ---------------------------------------------------------------------------
-	public static function render($view, $data=array()) {
+	public static function render($view, $data = array()) {
+	
+		$v = new View($view, $data);
+		return $v->output();
+	
+	}
+	
+	
+	// Construct
+	// ---------------------------------------------------------------------------
+	public function __construct($view, $data = array()) {
 		
-		Load::view($view, $data);
+		$this->output = '';
+		$this->load($view, $data);
 		
 		// Load extensions
-		foreach(self::$extensions as $e) {
+		foreach($this->extensions as $e) {
 		
 			//print_r($e);
-			Load::view($e['view'], $e['data']);
+			$this->load($e['view'], $e['data']);
 		
 		}
 		
-		//print_r(self::$sections);
+		$this->out = ob_get_clean();
+		ob_start();
+	
+	}
+	
+	
+	// Output
+	// ---------------------------------------------------------------------------
+	public function output() {
+	
+		return $this->out;
+	
+	}
+	
+	
+	// Load
+	// ---------------------------------------------------------------------------
+	public function load($view,$data = NULL) {
+		
+		// If view does not exist display error
+		if(!file_exists(Config::get('application').'/'.Config::get('folder_views')."/$view.php")) {
+			
+			dingo_error(E_USER_WARNING,'The requested view ('.Config::get('application').'/'.Config::get('folder_views')."/$view.php) could not be found.");
+			return false;
+			
+		} else {
+			
+			// If data is array, convert keys to variables
+			if(is_array($data)) {
+				
+				extract($data, EXTR_OVERWRITE);
+			
+			}
+			
+			require(Config::get('application').'/'.Config::get('folder_views')."/$view.php");
+			return true;
+		
+		}
+		
+	}
+	
+	
+	// Base
+	// ---------------------------------------------------------------------------
+	public function base($view, $data=array()) {
+	
+		$this->extensions[] = array('view'=>$view, 'data'=>$data);
 	
 	}
 	
 	
 	// Extend
 	// ---------------------------------------------------------------------------
-	public static function extend($view, $data=array()) {
-	
-		self::$extensions[] = array('view'=>$view, 'data'=>$data);
-	
-	}
-	
-	
-	// Section
-	// ---------------------------------------------------------------------------
-	public static function section($name) {
+	public function extend($name) {
 	
 		ob_clean();
-		self::$current_section = $name;
+		$this->current_section = $name;
 		ob_end_flush();
 		ob_start();
 	
 	}
 	
 	
-	// End Section
+	// End Extend
 	// ---------------------------------------------------------------------------
-	public static function end_section() {
+	public function end_extend() {
 	
 		$data = ob_get_clean();
-		self::$sections[self::$current_section] = $data;
-		self::$current_section = false;
+		$this->sections[$this->current_section] = $data;
+		$this->current_section = false;
 		ob_start();
 	
 	}
 	
 	
-	// New Section
+	// Section
 	// ---------------------------------------------------------------------------
-	public static function new_section($name, $default=false) {
+	public function section($name, $default=true) {
 	
 		if(!$default) {
 		
-			echo self::$sections[$name];
+			echo $this->sections[$name];
 			
 		} else {
 			
-			self::$current_new_section = $name;
+			$this->current_new_section = $name;
 			ob_end_flush();
 			ob_start();
 		
@@ -90,18 +139,18 @@ class View {
 	}
 	
 	
-	// End New Section
+	// End Section
 	// ---------------------------------------------------------------------------
-	public static function end_new_section() {
+	public function end_section() {
 	
-		if(isset(self::$sections[self::$current_new_section])) {
+		if(isset($this->sections[$this->current_new_section])) {
 		
 			ob_clean();
-			echo self::$sections[self::$current_new_section];
+			echo $this->sections[$this->current_new_section];
 		
 		}
 		
-		self::$current_new_section = false;
+		$this->current_new_section = false;
 	
 	}
 	

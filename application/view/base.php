@@ -1,11 +1,10 @@
-<?php use Dingo\View; ?>
 <!DOCTYPE html>
 <html>
 	<body>
-		<?php View::new_section('main_content', true); ?>
+		<?php $this->section('main_content'); ?>
 			
 			<p>Boring default content</p>
 			
-		<?php View::end_new_section(); ?>
+		<?php $this->end_section(); ?>
 	</body>
 </html>

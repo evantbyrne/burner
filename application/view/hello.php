@@ -1,17 +1,17 @@
-<?php use Dingo\View; View::extend('base'); ?>
+<?php $this->base('base'); ?>
 
 
 <!-- Main Content -->
-<?php View::section('main_content'); ?>
+<?php $this->extend('main_content'); ?>
 
 	<p>Hello, World!</p>
 	
-<?php View::end_section(); ?>
+<?php $this->end_extend(); ?>
 
 
 <!-- Optional -->
-<?php View::section('optional'); ?>
+<?php $this->extend('optional'); ?>
 
 	<p>WOOOoooOOOooOooo</p>
 
-<?php View::end_section(); ?>
+<?php $this->end_extend(); ?>

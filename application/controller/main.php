@@ -7,7 +7,7 @@ class Main {
 
 	public function index() {
 	
-		View::render('hello');
+		echo View::render('hello');
 	
 	}
 	
