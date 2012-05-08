@@ -80,6 +80,7 @@ class Bootstrap
 		require_once(SYSTEM.'/core/view.php');
 		require_once(SYSTEM.'/core/input.php');
 		require_once(SYSTEM.'/core/error.php');
+		require_once(SYSTEM.'/core/response.php');
 		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/config.php');
 		
 		
@@ -159,8 +160,9 @@ class Bootstrap
 		}
 		
 		// Run Function
-		call_user_func_array(array($controller, $uri['method']), $uri['args']);
-		
+		$response = call_user_func_array(array($controller, $uri['method']), $uri['args']);
+		header($response->header());
+		echo $response->content();
 		
 		// Display echoed content
 		ob_end_flush();

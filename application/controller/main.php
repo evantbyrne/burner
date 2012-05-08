@@ -1,13 +1,13 @@
 <?php
 
 namespace Controller;
-use Dingo\Route, Dingo\Cookie, Dingo\View;
+use Dingo\Route, Dingo\Cookie, Dingo\View, Dingo\Response;//, Dingo\Shotcut\render_response;
 
 class Main {
 
 	public function index() {
 	
-		echo View::render('hello');
+		return new Response(View::render('hello'));
 	
 	}
 	

@@ -34,7 +34,7 @@ class View {
 	// ---------------------------------------------------------------------------
 	public function __construct($view, $data = array()) {
 		
-		$this->output = '';
+		$this->out = '';
 		$this->load($view, $data);
 		
 		// Load extensions
@@ -45,7 +45,7 @@ class View {
 		
 		}
 		
-		$this->out = ob_get_clean();
+		$this->out .= ob_get_clean();
 		ob_start();
 	
 	}
@@ -102,7 +102,8 @@ class View {
 	
 		ob_clean();
 		$this->current_section = $name;
-		ob_end_flush();
+		//ob_end_flush();
+		$this->out .= ob_get_clean();
 		ob_start();
 	
 	}
@@ -131,7 +132,8 @@ class View {
 		} else {
 			
 			$this->current_new_section = $name;
-			ob_end_flush();
+			//ob_end_flush();
+			$this->out .= ob_get_clean();
 			ob_start();
 		
 		}
