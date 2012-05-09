@@ -1,19 +1,19 @@
 <?php
 
 namespace Controller;
-use Dingo\Route, Dingo\Cookie, Dingo\View, Dingo\Response;//, Dingo\Shotcut\render_response;
+use Dingo\Route, Dingo\Cookie, Dingo\View, Dingo\Response, Dingo\Shortcut as S;
 
 class Main {
 
 	public function index() {
 	
-		return new Response(View::render('hello'));
+		return S::render_response('hello');
 	
 	}
 	
 	public function foo() {
 	
-		echo 'Foooo!';
+		return new Response('Foooo!', 404);
 	
 	}
 	

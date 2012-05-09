@@ -3,19 +3,65 @@
 namespace Dingo;
 
 /**
- * Dingo Framework Bootstrap Class
- *
- * @Author          Evan Byrne
- * @Copyright       2008 - 2011
- * @Project Page    http://www.dingoframework.com
+ * Bootstrap Class
+ * @author Evan Byrne
  */
-
-class Bootstrap
-{
-	// Get the requested URL, parse it, then clean it up
-	// ---------------------------------------------------------------------------
-	public static function get_request_url()
-	{	
+class Bootstrap {
+	
+	/**
+	 * Autoload
+	 * @param String representing class to be loaded
+	 */
+	public static function autoload($class) {
+		
+		// Split into segments
+		$segments = explode('\\', strtolower($class));
+		
+		if(empty($segments)) {
+		
+			throw new \Exception("Nothing to autoload!");
+			return false;
+		
+		}
+		
+		// Compensate for some classes not starting with backslash
+		$first = preg_match('/^\\\/', $class) ? 1 : 0;
+		
+		switch($segments[$first]) {
+		
+			case 'dingo':      $start = SYSTEM.'/core'; break;
+			case 'library':    $start = SYSTEM.'/library'; break;
+			case 'controller': $start = APPLICATION.'/'.Config::get('folder_controllers'); break;
+			case 'model':      $start = APPLICATION.'/'.Config::get('folder_models'); break;
+			default: return false; break;
+		
+		}
+		
+		// Combine into usuable path
+		$path = "$start/{$segments[$first+1]}.php";
+		
+		if(file_exists($path)) {
+		
+			require_once($path);
+			return true;
+		
+		} else {
+		
+			throw new \Exception("File at <strong>$path</strong> could not be autoloaded");
+			return false;
+		
+		}
+	
+	}
+	
+	
+	/**
+	 * Get Request URL
+	 * Grabs the requested URL, parses it, then cleans it up.
+	 * @return The cleaned up URL
+	 */
+	public static function get_request_url() {
+		
 		// Get the filename of the currently executing script relative to docroot
 		$url = (empty($_SERVER['PHP_SELF'])) ? $_SERVER['PHP_SELF'] : '/';
 		
@@ -34,53 +80,28 @@ class Bootstrap
 		$url = (!empty($url)) ? rtrim($url, '/') : '/';
 		
 		return $url;
+	
 	}
 	
 	
-	// Autoload
-	// ---------------------------------------------------------------------------
-	public static function autoload($controller)
-	{
-		foreach(array('library','helper') as $type)
-		{
-			$property = "autoload_$type";
-			
-			foreach(config::get($property) as $class)
-			{
-				load::$type($class);
-			}
-			
-			if(!empty($controller->$property) AND is_array($controller->$property))
-			{
-				foreach($controller->$property as $class)
-				{
-					load::$type($class);
-				}
-			}
-		}
-	}
+	/**
+	 * Run
+	 * Starts everything up.
+	 */
+	public static function run() {
 	
-	
-	// Run
-	// ---------------------------------------------------------------------------
-	public static function run()
-	{
 		define('DINGO_VERSION','0.8');
 		
 		// Start buffer
 		ob_start();
 		
+		// Set autoload
+		spl_autoload_register('Dingo\Bootstrap::autoload', true);
 		
 		// Load core files
 		require_once(SYSTEM.'/core/core.php');
 		require_once(SYSTEM.'/core/config.php');
-		require_once(SYSTEM.'/core/api.php');
-		require_once(SYSTEM.'/core/route.php');
-		require_once(SYSTEM.'/core/load.php');
-		require_once(SYSTEM.'/core/view.php');
-		require_once(SYSTEM.'/core/input.php');
 		require_once(SYSTEM.'/core/error.php');
-		require_once(SYSTEM.'/core/response.php');
 		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/config.php');
 		
 		
@@ -96,7 +117,6 @@ class Bootstrap
 		// Load route configuration
 		require_once(APPLICATION.'/'.CONFIG.'/route.php');
 		
-		
 		// Get route
 		$request_url = self::get_request_url();
 		$uri = Route::get($request_url);
@@ -109,48 +129,15 @@ class Bootstrap
 		//----------------------------------------------------------------------------------------------
 		
 		// If controller does not exist, give 404 error
-		if(!file_exists(APPLICATION.'/'.Config::get('folder_controllers')."/{$uri['controller']}.php"))
-		{
+		if(!file_exists(APPLICATION.'/'.Config::get('folder_controllers')."/{$uri['controller']}.php")) {
+		
 			Load::error('404');
+		
 		}
-		
-		
-		// Include controller
-		require_once(APPLICATION.'/'.Config::get('folder_controllers')."/{$uri['controller']}.php");
 		
 		// Initialize controller
 		$tmp = '\\Controller\\'.ucfirst($uri['controller']);
 		$controller = new $tmp();
-		
-		
-		// Check if using valid REST API
-		/*if(api::get())
-		{
-			if(!empty($controller->controller_api) and
-				is_array($controller->controller_api) and
-				!empty($controller->controller_api[$uri['function']]) and
-				is_array($controller->controller_api[$uri['function']]))
-			{
-				foreach($controller->controller_api[$uri['function']] as $e)
-				{
-					api::permit($e);
-				}
-				
-				if(!api::allowed(api::get()))
-				{
-					Load::error('404');
-				}
-			}
-			else
-			{
-				Load::error('404');
-			}
-		}*/
-		
-		
-		// Autoload Components
-		//self::autoload($controller);
-		
 		
 		// Check to see if function exists
 		if(!is_callable(array($controller, $uri['method']))) {
@@ -166,6 +153,7 @@ class Bootstrap
 		
 		// Display echoed content
 		ob_end_flush();
+	
 	}
-}
 
+}
