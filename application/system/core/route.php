@@ -16,14 +16,16 @@ class Route {
 	private static $route = array();
 	private static $current = array();
 	private static $pattern = array(
-		'int'=>'/^([0-9]+)$/',
-		'numeric'=>'/^([0-9\.]+)$/',
-		'alpha'=>'/^([a-zA-Z]+)$/',
-		'alpha-int'=>'/^([a-zA-Z0-9]+)$/',
-		'alpha-numeric'=>'/^([a-zA-Z0-9\.]+)$/',
-		'words'=>'/^([_a-zA-Z0-9\- ]+)$/',
-		'any'=>'/^(.*?)$/',
-		'extension'=>'/^([a-zA-Z]+)\.([a-zA-Z]+)$/'
+	
+		'int'           => '/^([0-9]+)$/',
+		'numeric'       => '/^([0-9\.]+)$/',
+		'alpha'         => '/^([a-zA-Z]+)$/',
+		'alpha-int'     => '/^([a-zA-Z0-9]+)$/',
+		'alpha-numeric' => '/^([a-zA-Z0-9\.]+)$/',
+		'words'         => '/^([_a-zA-Z0-9\- ]+)$/',
+		'any'           => '/^(.*?)$/',
+		'extension'     => '/^([a-zA-Z]+)\.([a-zA-Z]+)$/'
+	
 	);
 	
 	
@@ -61,7 +63,7 @@ class Route {
 		
 		foreach($routes as $key=>$val) {
 		
-			self::$route[$key] = explode('.', $val);
+			self::$route[$key] = $val;
 		
 		}
 		
