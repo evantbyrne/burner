@@ -29,8 +29,8 @@ class Bootstrap {
 		
 		switch($segments[$first]) {
 		
-			case 'dingo':      $start = SYSTEM.'/core'; break;
-			case 'library':    $start = SYSTEM.'/library'; break;
+			case 'dingo':      $start = APPLICATION.'/system/core'; break;
+			case 'library':    $start = APPLICATION.'/system/library'; break;
 			case 'controller': $start = APPLICATION.'/'.Config::get('folder_controllers'); break;
 			case 'model':      $start = APPLICATION.'/'.Config::get('folder_models'); break;
 			default: return false; break;
@@ -99,9 +99,9 @@ class Bootstrap {
 		spl_autoload_register('Dingo\Bootstrap::autoload', true);
 		
 		// Load core files
-		require_once(SYSTEM.'/core/core.php');
-		require_once(SYSTEM.'/core/config.php');
-		require_once(SYSTEM.'/core/error.php');
+		require_once(APPLICATION.'/system/core/core.php');
+		require_once(APPLICATION.'/system/core/config.php');
+		require_once(APPLICATION.'/system/core/error.php');
 		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/config.php');
 		
 		
@@ -109,7 +109,7 @@ class Bootstrap {
 		set_exception_handler('Dingo\dingo_exception');
 		
 		
-		Config::set('system', SYSTEM);
+		Config::set('system', APPLICATION.'/system');
 		Config::set('application', APPLICATION);
 		Config::set('config', CONFIG);
 		
