@@ -7,7 +7,15 @@ class Main {
 
 	public function index() {
 	
-		return S::render_response('hello');
+		$con = new \Mysql\Connection('localhost', 'beaker-db', 'root');
+		$con->connect();
+		
+		$s = new \Mysql\Generate\Select('user');
+		print_r($con->fetch($s->build()));
+		
+		return new Response();
+		
+		//return S::render_response('hello');
 	
 	}
 	
@@ -26,6 +34,7 @@ class Main {
 	public function bar() {
 	
 		print_r(func_get_args());
+		return new Response();
 	
 	}
 
