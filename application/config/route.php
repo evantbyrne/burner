@@ -4,8 +4,9 @@ namespace Dingo;
 
 Route::add(array(
 
-	'/'        => array('main', 'index'),
-	'one/two'  => array('main', 'foo'),
-	'int/:int' => array('main', 'bar')
+	'GET:/'        => array('main', 'index'),
+	'GET:one/two'  => array('main', 'foo'),
+	'POST:one/two' => array('main', 'foo_action'),
+	'GET:int/:int' => array('main', 'bar')
 	
 ));

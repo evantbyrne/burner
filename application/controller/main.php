@@ -13,7 +13,13 @@ class Main {
 	
 	public function foo() {
 	
-		return new Response('Foooo!', 404);
+		return new Response("<form method='post'><input name='name' /></form>");
+	
+	}
+	
+	public function foo_action() {
+	
+		return new Response($_POST['name']);
 	
 	}
 	

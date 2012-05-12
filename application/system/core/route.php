@@ -85,9 +85,9 @@ class Route {
 		if(empty($segments[0])) {
 			
 			// Get
-			if(isset(self::$route['/'])) {
+			if(isset(self::$route['GET:/'])) {
 			
-				return array('controller'=>self::$route['/'][0], 'method'=>self::$route['/'][1], 'args'=>array());
+				return array('controller'=>self::$route['GET:/'][0], 'method'=>self::$route['GET:/'][1], 'args'=>array());
 			
 			}
 			
@@ -102,7 +102,18 @@ class Route {
 		
 		
 		// 2) Loops routes
-		foreach(self::$route as $pattern=>$location) {
+		foreach(self::$route as $pattern => $location) {
+			
+			$is_get = preg_match('/^GET/', $pattern);
+			$is_post = preg_match('/^POST/', $pattern);
+			$pattern = preg_replace('/^(GET|POST)\:/', '', $pattern);
+			
+			// Skip routes of wrong request type
+			if(($is_get and $_SERVER['REQUEST_METHOD'] != 'GET') or ($is_post and $_SERVER['REQUEST_METHOD'] != 'POST')) {
+			
+				continue;
+			
+			}
 			
 			// Skip default route
 			if($pattern != '/') {
