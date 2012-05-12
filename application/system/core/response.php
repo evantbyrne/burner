@@ -16,7 +16,7 @@ class Response {
 	 * @param Response content
 	 * @param HTTP status code
 	 */
-	public function __construct($content, $code = null) {
+	public function __construct($content = '', $code = null) {
 	
 		$this->content = $content;
 		$this->code = ($code === null) ? (isset($GLOBALS['http_response_code']) ? $GLOBALS['http_response_code'] : 200) : $code;
