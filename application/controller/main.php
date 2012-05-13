@@ -1,15 +1,13 @@
 <?php
 
 namespace Controller;
-use Dingo\Route, Dingo\Cookie, Dingo\View, Dingo\Response, Dingo\Shortcut as S;
+use Dingo\DB, Dingo\Route, Dingo\Cookie, Dingo\View, Dingo\Response, Dingo\Shortcut as S;
 
 class Main {
 
 	public function index() {
 	
-		$con = new \Mysql\Connection('localhost', 'beaker-db', 'root');
-		$con->connect();
-		
+		$con = DB::connection();
 		$s = new \Mysql\Generate\Select('user');
 		print_r($con->fetch($s->build()));
 		

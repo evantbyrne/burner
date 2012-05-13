@@ -103,6 +103,7 @@ class Bootstrap {
 		require_once(APPLICATION.'/system/core/config.php');
 		require_once(APPLICATION.'/system/core/error.php');
 		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/config.php');
+		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/db.php');
 		require_once(APPLICATION.'/system/core/mysql/generate.php');
 		require_once(APPLICATION.'/system/core/mysql/connection.php');
 		
