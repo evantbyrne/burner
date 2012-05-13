@@ -7,11 +7,19 @@ class Main {
 
 	public function index() {
 	
-		$con = DB::connection();
-		$s = new \Mysql\Generate\Select('user');
-		print_r($con->fetch($s->build()));
+		//$con = DB::connection();
+		//$s = new \Mysql\Generate\Select('user');
+		//print_r($con->fetch($s->build()));
 		
-		return new Response();
+		/*$p = new \Page\Base('article');
+		$p->add(new \Block\Text('title'));
+		$p->create_table();*/
+		
+		$p = new \Page\Article();
+		$p->create_table();
+		$p->drop_table();
+		
+		return new Response($p->table());
 		
 		//return S::render_response('hello');
 	

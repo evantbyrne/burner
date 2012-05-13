@@ -32,7 +32,8 @@ class Bootstrap {
 			case 'dingo':      $start = APPLICATION.'/system/core'; break;
 			case 'library':    $start = APPLICATION.'/system/library'; break;
 			case 'controller': $start = APPLICATION.'/'.Config::get('folder_controllers'); break;
-			case 'model':      $start = APPLICATION.'/'.Config::get('folder_models'); break;
+			case 'page':       $start = APPLICATION.'/page'; break;
+			case 'block':      $start = APPLICATION.'/system/block'; break;
 			default: return false; break;
 		
 		}
@@ -104,6 +105,8 @@ class Bootstrap {
 		require_once(APPLICATION.'/system/core/error.php');
 		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/config.php');
 		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/db.php');
+		require_once(APPLICATION.'/system/core/page.php');
+		require_once(APPLICATION.'/system/core/block.php');
 		require_once(APPLICATION.'/system/core/mysql/generate.php');
 		require_once(APPLICATION.'/system/core/mysql/connection.php');
 		

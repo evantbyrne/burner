@@ -14,16 +14,16 @@ class Article extends Base {
 		parent::__construct('article');
 		
 		// Article
-		$this->add('title', new \Block\Text(array('max_length'=>120)));
-		$this->add('content', new \Block\Set\Text());
+		$this->add(new \Block\Text('title', array('max_length'=>120)));
+		$this->add(new \Block\Text('content'));
 		
 		// Comments
-		$this->add('comments', new \Block\Set\Multi(array(
+		/*$this->add(new \Block\Set\Multi('comments', array(
 		
-			'author' => new \Block\Text(array('max_length'=>120)),
-			'content' => new \Block\Text()
+			new \Block\Text('author', array('max_length'=>120)),
+			new \Block\Text('content')
 		
-		)));
+		)));*/
 	
 	}
 
