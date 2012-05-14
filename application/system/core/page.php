@@ -9,7 +9,7 @@ namespace Page;
 class Base {
 
 	public static $table = 'base';
-	private $_blocks;
+	public static $blocks = array();
 	
 	/**
 	 * Table
@@ -39,37 +39,16 @@ class Base {
 	}
 	
 	/**
-	 * Construct
-	 * @param Database table name
-	 */
-	public function __construct() {
-	
-		$this->_blocks = array();
-	
-	}
-	
-	/**
-	 * Add
-	 * @param Block object
-	 */
-	public function add($block) {
-	
-		// TODO: Validate that $block inherits \Block\Base
-		$this->_blocks[] = $block;
-	
-	}
-	
-	/**
 	 * Create Table
 	 * @return Result of CREATE TABLE query execution
 	 */
-	public function create_table() {
+	public static function create_table() {
 	
 		$t = new \Mysql\Generate\CreateTable(self::table());
 		$t->add(new \Mysql\Generate\IncrementingColumn('id'));
 		
-		// Loop page blocks
-		foreach($this->_blocks as $block) {
+		// Loop page blocks (using late static binding)
+		foreach(static::$blocks as $block) {
 		
 			// Loop block columns
 			$columns = $block->columns();
@@ -89,7 +68,7 @@ class Base {
 	 * Drop Table
 	 * @return Result of DROP TABLE query execution
 	 */
-	public function drop_table() {
+	public static function drop_table() {
 	
 		$t = new \Mysql\Generate\DropTable(self::table());
 		return \Dingo\DB::connection()->execute($t->build());
