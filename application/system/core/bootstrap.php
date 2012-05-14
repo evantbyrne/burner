@@ -105,10 +105,10 @@ class Bootstrap {
 		require_once(APPLICATION.'/system/core/error.php');
 		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/config.php');
 		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/db.php');
-		require_once(APPLICATION.'/system/core/page.php');
-		require_once(APPLICATION.'/system/core/block.php');
 		require_once(APPLICATION.'/system/core/mysql/generate.php');
 		require_once(APPLICATION.'/system/core/mysql/connection.php');
+		require_once(APPLICATION.'/system/core/page.php');
+		require_once(APPLICATION.'/system/core/block.php');
 		
 		set_error_handler('Dingo\dingo_error');
 		set_exception_handler('Dingo\dingo_exception');

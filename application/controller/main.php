@@ -6,19 +6,9 @@ use Dingo\DB, Dingo\Route, Dingo\Cookie, Dingo\View, Dingo\Response, Dingo\Short
 class Main {
 
 	public function index() {
-	
-		//$con = DB::connection();
-		//$s = new \Mysql\Generate\Select('user');
-		//print_r($con->fetch($s->build()));
-		
-		//$p = new \Page\Article();
-		//$p->create_table();
-		//$p->drop_table();
 		
 		$article = \Page\Article::get(1);
-		return new Response(($article) ? $article->title : '<em>Article not found</em>');
-		
-		//return S::render_response('hello');
+		return new Response(($article) ? "Title: <em>{$article->title}</em>" : '<em>Article not found</em>');
 	
 	}
 	
