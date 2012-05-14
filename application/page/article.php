@@ -8,15 +8,19 @@ namespace Page;
  */
 class Article extends Base {
 	
-	// Table name
-	public static $table = 'article';
+	/**
+	 * Blocks
+	 * @return Array of blocks that make up page
+	 */
+	public static function blocks() {
 	
-	// Blocks
-	public static $blocks = array(
+		return array(
 		
-		new \Block\Text('title', array('max_length'=>120)),
-		new \Block\Text('content')
+			new \Block\Text('title', array('max_length'=>120)),
+			new \Block\Text('content')
 		
-	);
+		);
+		
+	}
 
 }

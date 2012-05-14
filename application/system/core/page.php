@@ -7,9 +7,6 @@ namespace Page;
  * @author Evan Byrne
  */
 class Base {
-
-	public static $table = 'base';
-	public static $blocks = array();
 	
 	/**
 	 * Table
@@ -18,7 +15,8 @@ class Base {
 	public static function table() {
 	
 		// TODO: Prepend table prefix if configured
-		return static::$table;
+		$parts = explode('\\', get_called_class());
+		return strtolower(end($parts));
 	
 	}
 	
@@ -32,7 +30,7 @@ class Base {
 		$s = new \Mysql\Generate\Select(self::table());
 		$s->where('id', '=', $id);
 		$s->limit(1);
-		$res = \Dingo\DB::connection()->fetch($s->build(), '\\Page\\'.get_called_class());
+		$res = \Dingo\DB::connection()->fetch($s->build(), '\\'.get_called_class());
 		
 		return (empty($res)) ? false : $res[0];
 		
@@ -46,9 +44,10 @@ class Base {
 	
 		$t = new \Mysql\Generate\CreateTable(self::table());
 		$t->add(new \Mysql\Generate\IncrementingColumn('id'));
+		$t->add(new \Mysql\Generate\PrimaryKey('id'));
 		
 		// Loop page blocks (using late static binding)
-		foreach(static::$blocks as $block) {
+		foreach(static::blocks() as $block) {
 		
 			// Loop block columns
 			$columns = $block->columns();

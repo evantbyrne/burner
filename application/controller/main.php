@@ -11,15 +11,12 @@ class Main {
 		//$s = new \Mysql\Generate\Select('user');
 		//print_r($con->fetch($s->build()));
 		
-		/*$p = new \Page\Base('article');
-		$p->add(new \Block\Text('title'));
-		$p->create_table();*/
+		//$p = new \Page\Article();
+		//$p->create_table();
+		//$p->drop_table();
 		
-		$p = new \Page\Article();
-		$p->create_table();
-		$p->drop_table();
-		
-		return new Response($p->table());
+		$article = \Page\Article::get(1);
+		return new Response(($article) ? $article->title : '<em>Article not found</em>');
 		
 		//return S::render_response('hello');
 	
