@@ -10,7 +10,6 @@ class Base {
 
 	private $_table;
 	private $_blocks;
-	private $_connection;
 	
 	/**
 	 * Construct
@@ -20,7 +19,6 @@ class Base {
 	
 		$this->_table = $table;
 		$this->_blocks = array();
-		$this->_connection = \Dingo\DB::connection();
 	
 	}
 	
@@ -66,7 +64,7 @@ class Base {
 		
 		}
 		
-		return $this->_connection->execute($t->build());
+		return \Dingo\DB::connection()->execute($t->build());
 	
 	}
 	
@@ -77,7 +75,7 @@ class Base {
 	public function drop_table() {
 	
 		$t = new \Mysql\Generate\DropTable($this->table());
-		return $this->_connection->execute($t->build());
+		return \Dingo\DB::connection()->execute($t->build());
 		
 	}
 
