@@ -8,10 +8,10 @@ namespace Page;
  */
 class Article extends Base {
 	
+	// Table name
+	public static $table = 'article';
+	
 	public function __construct() {
-
-		// Explicitly define table name
-		parent::__construct('article');
 		
 		// Article
 		$this->add(new \Block\Text('title', array('max_length'=>120)));
