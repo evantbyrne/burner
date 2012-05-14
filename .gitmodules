@@ -1,3 +1,0 @@
-[submodule "application/system/core/mysql"]
-	path = application/system/core/mysql
-	url = https://evantbyrne@bitbucket.org/evantbyrne/beaker-db.git
