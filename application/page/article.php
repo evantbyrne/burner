@@ -16,7 +16,14 @@ class Article extends Base {
 	
 		return array(
 		
-			new \Block\Text('title', array('max_length'=>120)),
+			// Title
+			new \Block\Text('title', array('max_length'=>120, 'valid'=>function($value) {
+			
+				return preg_match('/^([a-zA-Z0-9\-\._ ]+)$/', $value) ? true : 'Invalid title. Must be alpha-numeric.';
+			
+			})),
+			
+			// Content
 			new \Block\Text('content')
 		
 		);

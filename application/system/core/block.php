@@ -8,35 +8,71 @@ namespace Block;
  */
 class Base {
 
-	private $_columns;
+	private $_column_name;
+	private $_column;
+	private $_options;
 	
 	/**
 	 * Construct
 	 */
-	public function __construct() {
+	public function __construct($column_name, $options = array(), $column = null) {
 	
-		$this->_columns = array();
+		// TODO: Validate column name
+		$this->_column_name = $column_name;
+		$this->_options = $options;
+		
+		if($column !== null) {
+		
+			$this->set_column($column);
+			
+		}
 	
 	}
 	
 	/**
-	 * Add
+	 * Column
+	 * @return Database column
+	 */
+	public function column() {
+	
+		return $this->_column;
+	
+	}
+	
+	/**
+	 * Set Column
 	 * @param Database column
 	 */
-	public function add($column) {
+	public function set_column($column) {
 	
 		// TODO: Validate that $column inherits \Mysql\Generate\TableColumn
-		$this->_columns[] = $column;
+		return $this->_column = $column;
 	
 	}
 	
 	/**
-	 * Columns
-	 * @return Array of database columns
+	 * Column Name
+	 * @return Column name
 	 */
-	public function columns() {
+	public function column_name() {
 	
-		return $this->_columns;
+		return $this->_column_name;
+	
+	}
+	
+	/**
+	 * Valid
+	 * @return True if valid or no validation function given, a string on failure
+	 */
+	public function valid($value) {
+	
+		if(isset($this->_options['valid']) and is_callable($this->_options['valid'])) {
+		
+			return $this->_options['valid']($value);
+		
+		}
+		
+		return true;
 	
 	}
 

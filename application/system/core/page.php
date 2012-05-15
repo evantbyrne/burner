@@ -86,12 +86,8 @@ namespace Page {
 			foreach(static::blocks() as $block) {
 			
 				// Loop block columns
-				$columns = $block->columns();
-				foreach($columns as $column) {
-				
-					$t->add($column);
-				
-				}
+				$column = $block->column();
+				$t->add($column);
 			
 			}
 			
@@ -108,6 +104,31 @@ namespace Page {
 			$t = new \Mysql\Generate\DropTable(self::table());
 			return \Dingo\DB::connection()->execute($t->build());
 			
+		}
+		
+		/**
+		 * Valid
+		 * @return True if valid, an associative array of errors otherwise
+		 */
+		public function valid() {
+		
+			$errors = array();
+			$vars = get_object_vars($this);
+			$blocks = static::blocks();
+			
+			foreach($blocks as $block) {
+			
+				$res = $block->valid($vars[$block->column_name()]);
+				if($res !== true) {
+				
+					$errors[$block->column_name()] = $res;
+				
+				}
+			
+			}
+			
+			return (empty($errors)) ? true : $errors;
+		
 		}
 	
 	}
