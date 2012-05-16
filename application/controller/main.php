@@ -7,14 +7,20 @@ class Main {
 
 	public function index() {
 		
-		//$article = \Page\Article::get(1);
-		//return new Response(($article) ? "Title: <em>{$article->title}</em>" : '<em>Article not found</em>');
+		/*$article = \Page\Article::get(1);
+		return new Response(($article) ? "Title: <em>{$article->title}</em>" : '<em>Article not found</em>');
 		
 		$p = new \Page\Article();
 		$p->title = 'Yes';
 		$p->content = 'Sweet content, bro.';
-		var_dump($p->valid());
-		return new Response();
+		var_dump($p->valid());*/
+		
+		//\Page\User::create_table();
+		$user = new \Page\User();
+		$user->set_email('evantbyrne@gmail.com');
+		$user->set_password('password123');
+		var_dump($user->check());
+		return new Response("{$user->email}:{$user->password}");
 	
 	}
 	

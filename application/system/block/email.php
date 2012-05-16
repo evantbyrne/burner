@@ -3,15 +3,16 @@
 namespace Block;
 
 /**
- * Text Block
+ * Email Block
  * @author Evan Byrne
  */
-class Text extends Base {
+class Email extends Text {
 	
 	public function __construct($column_name, $options = array()) {
 		
 		parent::__construct($column_name, $options, new \Mysql\Generate\TextColumn($column_name, $options));
+		// TODO: Add special email validation
 	
 	}
-
+	
 }
