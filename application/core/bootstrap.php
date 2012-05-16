@@ -84,13 +84,11 @@ class Bootstrap {
 	
 	}
 	
-	
 	/**
-	 * Run
-	 * Starts everything up.
+	 * Init
 	 */
-	public static function run() {
-	
+	public static function init() {
+		
 		define('DINGO_VERSION','0.8');
 		
 		// Start buffer
@@ -114,6 +112,13 @@ class Bootstrap {
 		
 		// Load route configuration
 		require_once(APPLICATION.'/config/route.php');
+		
+	}
+	
+	/**
+	 * Run
+	 */
+	public static function run() {
 		
 		// Get route
 		$request_url = self::get_request_url();
