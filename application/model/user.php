@@ -1,16 +1,16 @@
 <?php
 
-namespace Page;
+namespace Model;
 
 /**
- * User Page
+ * User Model
  * @author Evan Byrne
  */
 class User extends Base {
 	
 	/**
 	 * Blocks
-	 * @return Array of blocks that make up page
+	 * @return Array of blocks that make up model
 	 */
 	public static function blocks() {
 	

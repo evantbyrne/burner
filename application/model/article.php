@@ -1,16 +1,16 @@
 <?php
 
-namespace Page;
+namespace Model;
 
 /**
- * Example Article Page
+ * Example Article Model
  * @author Evan Byrne
  */
 class Article extends Base {
 	
 	/**
 	 * Blocks
-	 * @return Array of blocks that make up page
+	 * @return Array of blocks that make up model
 	 */
 	public static function blocks() {
 	

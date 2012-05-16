@@ -32,7 +32,7 @@ class Bootstrap {
 			case 'dingo':      $start = APPLICATION.'/core'; break;
 			case 'library':    $start = APPLICATION.'/library'; break;
 			case 'controller': $start = APPLICATION.'/controller'; break;
-			case 'page':       $start = APPLICATION.'/page'; break;
+			case 'model':      $start = APPLICATION.'/model'; break;
 			case 'block':      $start = APPLICATION.'/block'; break;
 			default: return false; break;
 		
@@ -107,7 +107,7 @@ class Bootstrap {
 		require_once(APPLICATION.'/config/'.CONFIGURATION.'/db.php');
 		require_once(APPLICATION.'/core/mysql/generate.php');
 		require_once(APPLICATION.'/core/mysql/connection.php');
-		require_once(APPLICATION.'/core/page.php');
+		require_once(APPLICATION.'/core/model.php');
 		require_once(APPLICATION.'/core/block.php');
 		
 		set_error_handler('Dingo\dingo_error');

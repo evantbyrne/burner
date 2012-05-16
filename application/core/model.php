@@ -1,9 +1,9 @@
 <?php
 
-namespace Page {
+namespace Model {
 
 	/**
-	 * Base Page Class
+	 * Base Model Class
 	 * @author Evan Byrne
 	 */
 	class Base {
@@ -22,8 +22,8 @@ namespace Page {
 		
 		/**
 		 * Get
-		 * @param ID of page
-		 * @return \Page\Base object or false
+		 * @param ID of model
+		 * @return \Model\Base object or false
 		 */
 		public static function get($id) {
 		
@@ -34,41 +34,41 @@ namespace Page {
 		
 		/**
 		 * Select
-		 * @return \Page\Query\Select object
+		 * @return \Model\Query\Select object
 		 */
 		public static function select() {
 		
-			return new \Page\Query\Select(self::table(), '\\'.get_called_class());
+			return new \Model\Query\Select(self::table(), '\\'.get_called_class());
 			
 		}
 		
 		/**
 		 * Insert
-		 * @return \Page\Query\Insert object
+		 * @return \Model\Query\Insert object
 		 */
 		public static function insert() {
 		
-			return new \Page\Query\Insert(self::table());
+			return new \Model\Query\Insert(self::table());
 			
 		}
 		
 		/**
 		 * Update
-		 * @return \Page\Query\Update object
+		 * @return \Model\Query\Update object
 		 */
 		public static function update() {
 		
-			return new \Page\Query\Update(self::table());
+			return new \Model\Query\Update(self::table());
 			
 		}
 		
 		/**
 		 * Delete
-		 * @return \Page\Query\Delete object
+		 * @return \Model\Query\Delete object
 		 */
 		public static function delete() {
 		
-			return new \Page\Query\Delete(self::table());
+			return new \Model\Query\Delete(self::table());
 			
 		}
 		
@@ -82,7 +82,7 @@ namespace Page {
 			$t->add(new \Mysql\Generate\IncrementingColumn('id'));
 			$t->add(new \Mysql\Generate\PrimaryKey('id'));
 			
-			// Loop page blocks (using late static binding)
+			// Loop model blocks (using late static binding)
 			foreach(static::blocks() as $block) {
 			
 				// Loop block columns
@@ -135,7 +135,7 @@ namespace Page {
 	
 }
 
-namespace Page\Query {
+namespace Model\Query {
 
 	/**
 	 * Select Class
