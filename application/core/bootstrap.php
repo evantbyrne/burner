@@ -75,7 +75,7 @@ class Bootstrap {
 		$url = (empty($_SERVER['ORIG_PATH_INFO'])) ? $url : $_SERVER['ORIG_PATH_INFO'];
 		
 		// Check for GET __dingo_page
-		$url = (input::get('__dingo_page')) ? input::get('__dingo_page') : $url;
+		$url = (isset($_GET['__dingo_page'])) ? $_GET['__dingo_page'] : $url;
 		
 		//Tidy up the URL by removing trailing slashes
 		$url = (!empty($url)) ? rtrim($url, '/') : '/';
@@ -100,7 +100,6 @@ class Bootstrap {
 		spl_autoload_register('Dingo\Bootstrap::autoload', true);
 		
 		// Load core files
-		require_once(APPLICATION.'/core/core.php');
 		require_once(APPLICATION.'/core/config.php');
 		require_once(APPLICATION.'/core/error.php');
 		require_once(APPLICATION.'/config/'.CONFIGURATION.'/config.php');
