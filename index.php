@@ -15,9 +15,6 @@ define('CONFIGURATION','development');
 // Application location
 define('APPLICATION','application');
 
-// Config directory location (in relation to application location)
-define('CONFIG','config');
-
 // Allowed characters in URL
 define('ALLOWED_CHARS','/^[ \!\,\~\&\.\:\+\@\-_a-zA-Z0-9]+$/');
 
@@ -26,5 +23,5 @@ define('ALLOWED_CHARS','/^[ \!\,\~\&\.\:\+\@\-_a-zA-Z0-9]+$/');
 // End of configuration
 //----------------------------------------------------------------------------------------------
 define('DINGO',1);
-require_once(APPLICATION.'/system/core/bootstrap.php');
+require_once(APPLICATION.'/core/bootstrap.php');
 \Dingo\Bootstrap::run();

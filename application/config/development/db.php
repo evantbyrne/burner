@@ -6,7 +6,7 @@ Config::set('database',array(
 	
 	'host'=>'localhost',
 	'username'=>'root',
-	'password'=>'',
+	'password'=>'root',
 	'database'=>'beaker-db'
 	
 ));

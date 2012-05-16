@@ -29,11 +29,11 @@ class Bootstrap {
 		
 		switch($segments[$first]) {
 		
-			case 'dingo':      $start = APPLICATION.'/system/core'; break;
-			case 'library':    $start = APPLICATION.'/system/library'; break;
-			case 'controller': $start = APPLICATION.'/'.Config::get('folder_controllers'); break;
+			case 'dingo':      $start = APPLICATION.'/core'; break;
+			case 'library':    $start = APPLICATION.'/library'; break;
+			case 'controller': $start = APPLICATION.'/controller'; break;
 			case 'page':       $start = APPLICATION.'/page'; break;
-			case 'block':      $start = APPLICATION.'/system/block'; break;
+			case 'block':      $start = APPLICATION.'/block'; break;
 			default: return false; break;
 		
 		}
@@ -43,7 +43,7 @@ class Bootstrap {
 		
 		if(file_exists($path)) {
 		
-			require_once($path);
+			include_once($path);
 			return true;
 		
 		} else {
@@ -100,27 +100,21 @@ class Bootstrap {
 		spl_autoload_register('Dingo\Bootstrap::autoload', true);
 		
 		// Load core files
-		require_once(APPLICATION.'/system/core/core.php');
-		require_once(APPLICATION.'/system/core/config.php');
-		require_once(APPLICATION.'/system/core/error.php');
-		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/config.php');
-		require_once(APPLICATION.'/'.CONFIG.'/'.CONFIGURATION.'/db.php');
-		require_once(APPLICATION.'/system/core/mysql/generate.php');
-		require_once(APPLICATION.'/system/core/mysql/connection.php');
-		require_once(APPLICATION.'/system/core/page.php');
-		require_once(APPLICATION.'/system/core/block.php');
+		require_once(APPLICATION.'/core/core.php');
+		require_once(APPLICATION.'/core/config.php');
+		require_once(APPLICATION.'/core/error.php');
+		require_once(APPLICATION.'/config/'.CONFIGURATION.'/config.php');
+		require_once(APPLICATION.'/config/'.CONFIGURATION.'/db.php');
+		require_once(APPLICATION.'/core/mysql/generate.php');
+		require_once(APPLICATION.'/core/mysql/connection.php');
+		require_once(APPLICATION.'/core/page.php');
+		require_once(APPLICATION.'/core/block.php');
 		
 		set_error_handler('Dingo\dingo_error');
 		set_exception_handler('Dingo\dingo_exception');
 		
-		
-		Config::set('system', APPLICATION.'/system');
-		Config::set('application', APPLICATION);
-		Config::set('config', CONFIG);
-		
-		
 		// Load route configuration
-		require_once(APPLICATION.'/'.CONFIG.'/route.php');
+		require_once(APPLICATION.'/config/route.php');
 		
 		// Get route
 		$request_url = self::get_request_url();
@@ -134,7 +128,7 @@ class Bootstrap {
 		//----------------------------------------------------------------------------------------------
 		
 		// If controller does not exist, give 404 error
-		if(!file_exists(APPLICATION.'/'.Config::get('folder_controllers')."/{$uri['controller']}.php")) {
+		if(!file_exists(APPLICATION."/controller/{$uri['controller']}.php")) {
 		
 			Load::error('404');
 		
