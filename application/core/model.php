@@ -74,9 +74,10 @@ namespace Model {
 		
 		/**
 		 * Create Table
-		 * @return Result of CREATE TABLE query execution
+		 * @param If true, then the function should return the SQL, and not create the table
+		 * @return Result of CREATE TABLE query execution, or SQL
 		 */
-		public static function create_table() {
+		public static function create_table($sql = false) {
 		
 			$t = new \Mysql\Generate\CreateTable(self::table());
 			$t->add(new \Mysql\Generate\IncrementingColumn('id'));
@@ -91,7 +92,7 @@ namespace Model {
 			
 			}
 			
-			return \Dingo\DB::connection()->execute($t->build());
+			return ($sql) ? $t->build()->sql() : \Dingo\DB::connection()->execute($t->build());
 		
 		}
 		

@@ -12,12 +12,36 @@ class CLI {
 	 */
 	public static function run() {
 		
-		$options = getopt('', array('create:', 'drop:'));
+		$options = getopt('', array('sql:', 'create:', 'drop:'));
 		
 		foreach($options as $name => $value) {
 			
 			if($name == 'drop') self::drop($value);
 			elseif($name == 'create') self::create($value);
+			elseif($name == 'sql') self::sql($value);
+			
+		}
+		
+	}
+	
+	/**
+	 * Sql
+	 * @param Model to get create table SQL for. Name of class (case-sensitive, don't include namespace)
+	 */
+	public static function sql($model) {
+		
+		if(is_array($model)) {
+			
+			foreach($model as $m) {
+				
+				self::sql($m);
+				
+			}
+			
+		} else {
+		
+			$model_class = "\\Model\\$model";
+			echo "\n" . $model_class::create_table(true) . "\n\n";
 			
 		}
 		
