@@ -6,7 +6,7 @@ namespace Block;
  * Base Block Class
  * @author Evan Byrne
  */
-class Base {
+abstract class Base {
 
 	private $_column_name;
 	private $_column;
