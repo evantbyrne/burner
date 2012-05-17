@@ -9,6 +9,11 @@ namespace Model {
 	class Base {
 		
 		/**
+		 * SySQL storage engine to use
+		 */
+		public static $engine = 'MyISAM';
+		
+		/**
 		 * Table
 		 * @return Full name of database table (using late static binding)
 		 */
@@ -80,6 +85,7 @@ namespace Model {
 		public static function create_table($sql = false) {
 		
 			$t = new \Mysql\Generate\CreateTable(self::table());
+			$t->engine(static::$engine);
 			$t->add(new \Mysql\Generate\IncrementingColumn('id'));
 			$t->add(new \Mysql\Generate\PrimaryKey('id'));
 			
