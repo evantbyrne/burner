@@ -14,8 +14,12 @@ class CLI {
 		
 		$options = getopt('', array('create:', 'drop:'));
 		
-		if(isset($options['create'])) self::create($options['create']);
-		if(isset($options['drop'])) self::drop($options['drop']);
+		foreach($options as $name => $value) {
+			
+			if($name == 'drop') self::drop($value);
+			elseif($name == 'create') self::create($value);
+			
+		}
 		
 	}
 	
@@ -25,8 +29,20 @@ class CLI {
 	 */
 	public static function create($model) {
 		
-		$model_class = "\\Model\\$model";
-		$model_class::create_table();
+		if(is_array($model)) {
+			
+			foreach($model as $m) {
+				
+				self::create($m);
+				
+			}
+			
+		} else {
+		
+			$model_class = "\\Model\\$model";
+			$model_class::create_table();
+			
+		}
 		
 	}
 	
@@ -36,8 +52,20 @@ class CLI {
 	 */
 	public static function drop($model) {
 		
-		$model_class = "\\Model\\$model";
-		$model_class::drop_table();
+		if(is_array($model)) {
+			
+			foreach($model as $m) {
+				
+				self::drop($m);
+				
+			}
+			
+		} else {
+		
+			$model_class = "\\Model\\$model";
+			$model_class::drop_table();
+		
+		}
 		
 	}
 	
