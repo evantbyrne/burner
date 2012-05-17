@@ -16,11 +16,14 @@ class Main {
 		var_dump($p->valid());*/
 		//include('application/model/abstract/user.php');
 		//\Model\User::create_table();
-		$user = new \Model\User();
+		
+		/*$user = new \Model\User();
 		$user->set_email('evantbyrne@gmail.com');
 		$user->set_password('password123');
 		var_dump($user->check());
-		return new Response("{$user->email}:{$user->password}");
+		return new Response("{$user->email}:{$user->password}");*/
+		
+		return new Response(\Library\Valid::name('Evan Byrne') ? 'Yup' : 'Nope');
 	
 	}
 	
