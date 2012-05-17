@@ -14,7 +14,7 @@ class Main {
 		$p->title = 'Yes';
 		$p->content = 'Sweet content, bro.';
 		var_dump($p->valid());*/
-		
+		//include('application/model/abstract/user.php');
 		//\Model\User::create_table();
 		$user = new \Model\User();
 		$user->set_email('evantbyrne@gmail.com');

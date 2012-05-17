@@ -39,7 +39,7 @@ class Bootstrap {
 		}
 		
 		// Combine into usuable path
-		$path = "$start/{$segments[$first+1]}.php";
+		$path = "$start/" . implode('/', array_slice($segments, $first+1)) . '.php';
 		
 		if(file_exists($path)) {
 		
@@ -104,7 +104,6 @@ class Bootstrap {
 		require_once(APPLICATION.'/config/'.CONFIGURATION.'/db.php');
 		require_once(APPLICATION.'/core/mysql/generate.php');
 		require_once(APPLICATION.'/core/mysql/connection.php');
-		require_once(APPLICATION.'/core/model.php');
 		require_once(APPLICATION.'/core/block.php');
 		
 		set_error_handler('Dingo\dingo_error');

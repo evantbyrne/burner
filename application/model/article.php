@@ -6,7 +6,7 @@ namespace Model;
  * Example Article Model
  * @author Evan Byrne
  */
-class Article extends Base {
+class Article extends Base\Root {
 	
 	/**
 	 * Blocks

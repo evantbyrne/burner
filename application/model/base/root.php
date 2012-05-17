@@ -1,12 +1,13 @@
 <?php
 
-namespace Model {
+namespace Model\Base {
 
 	/**
-	 * Base Model Class
+	 * Root Model Class
+	 * All models should extend this.
 	 * @author Evan Byrne
 	 */
-	class Base {
+	abstract class Root {
 		
 		/**
 		 * SySQL storage engine to use
