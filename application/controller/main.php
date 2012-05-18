@@ -27,6 +27,7 @@ class Main {
 		return new Response("{$user->email}:{$user->password}");*/
 		
 		$a = new \Model\Article();
+		$a->set_owner_id(2);
 		//$a->set_owner($user);
 		// TODO: How to handle owners???
 		var_dump($a->can($user, 'read'));

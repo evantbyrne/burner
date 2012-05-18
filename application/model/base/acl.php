@@ -29,7 +29,12 @@ abstract class ACL extends Root {
 	private $restrictions;
 	
 	/**
-	 * Instance of \Model\Base\User
+	 * Special owner permissions
+	 */
+	private $owner_permissions;
+	
+	/**
+	 * Instance of \Model\Base\User who 'owns' this
 	 */
 	private $owner;
 	
@@ -39,6 +44,7 @@ abstract class ACL extends Root {
 	public function __construct() {
 	
 		$this->restrictions = array();
+		$this->owner_permissions = array();
 		$this->owner = null;
 	
 	}
@@ -55,6 +61,16 @@ abstract class ACL extends Root {
 	}
 	
 	/**
+	 * Allow Owner
+	 * @param Name of action to allow owner to perform
+	 */
+	public function allow_owner($action) {
+	
+		$this->owner_permissions[] = $action;
+	
+	}
+	
+	/**
 	 * Can
 	 * @param \Model\Base\User object
 	 * @param Name of action
@@ -65,6 +81,12 @@ abstract class ACL extends Root {
 		
 			throw new \Exception('User object must inherit \\Model\\Base\\User.');
 		
+		}
+		
+		if($user->id == $this->owner_id and in_array($action, $this->owner_permissions)) {
+			
+			return true;
+			
 		}
 		
 		return ($user->type >= $this->restrictions[$action]);
