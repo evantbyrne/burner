@@ -102,7 +102,7 @@ class IntColumn extends TableColumn {
 	/* Build */
 	public function build() {
 	
-		return "{$this->name} INT {$this->build_null()}";
+		return "`{$this->name}` INT {$this->build_null()}";
 	
 	}
 	
@@ -114,7 +114,7 @@ class TinyIntColumn extends TableColumn {
 	/* Build */
 	public function build() {
 	
-		return "{$this->name} TINYINT {$this->build_null()}";
+		return "`{$this->name}` TINYINT {$this->build_null()}";
 	
 	}
 	
@@ -126,7 +126,7 @@ class SmallIntColumn extends TableColumn {
 	/* Build */
 	public function build() {
 	
-		return "{$this->name} SMALLINT{$this->build_null()}";
+		return "`{$this->name}` SMALLINT{$this->build_null()}";
 	
 	}
 	
@@ -138,7 +138,7 @@ class MediumIntColumn extends TableColumn {
 	/* Build */
 	public function build() {
 	
-		return "{$this->name} MEDIUMINT{$this->build_null()}";
+		return "`{$this->name}` MEDIUMINT{$this->build_null()}";
 	
 	}
 	
@@ -150,7 +150,7 @@ class BigIntColumn extends TableColumn {
 	/* Build */
 	public function build() {
 	
-		return "{$this->name} BIGINT{$this->build_null()}";
+		return "`{$this->name}` BIGINT{$this->build_null()}";
 	
 	}
 	
@@ -162,7 +162,7 @@ class BooleanColumn extends TableColumn {
 	/* Build */
 	public function build() {
 	
-		return "{$this->name} BOOLEAN{$this->build_null()}";
+		return "`{$this->name}` BOOLEAN{$this->build_null()}";
 	
 	}
 	
@@ -202,7 +202,7 @@ class DecimalColumn extends TableColumn {
 		
 		}
 		
-		return "{$this->name} Decimal({$this->options['max']}, {$this->options['digits']}){$this->build_null()}";
+		return "`{$this->name}` Decimal({$this->options['max']}, {$this->options['digits']}){$this->build_null()}";
 	
 	}
 	

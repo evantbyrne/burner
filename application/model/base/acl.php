@@ -46,6 +46,7 @@ abstract class ACL extends Root {
 		$this->restrictions = array();
 		$this->owner_permissions = array();
 		$this->owner = null;
+		$this->owner_id = null;
 	
 	}
 	
