@@ -6,7 +6,7 @@ namespace Model;
  * Example Article Model
  * @author Evan Byrne
  */
-class Article extends Base\Root {
+class Article extends Base\ACL {
 	
 	/**
 	 * Blocks
@@ -27,6 +27,18 @@ class Article extends Base\Root {
 			new \Block\Text('content')
 		
 		);
+		
+	}
+	
+	/**
+	 * Construct
+	 */
+	public function __construct() {
+	
+		$this->restrict('read', \Model\Base\User::level('any'));
+		$this->restrict('create', \Model\Base\User::level('user'));
+		$this->restrict('update', \Model\Base\User::level('moderator'));
+		$this->restrict('delete', \Model\Base\User::level('moderator'));
 		
 	}
 

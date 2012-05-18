@@ -9,6 +9,29 @@ namespace Model\Base;
 abstract class User extends Root {
 	
 	/**
+	 * User levels, which are primarily used for ACLs
+	 */
+	private static $levels = array(
+	
+		'owner'     => 40,
+		'admin'     => 30,
+		'moderator' => 20,
+		'user'      => 10,
+		'any'       => 0
+	
+	);
+	
+	/**
+	 * Level
+	 * @param Level to get integer value of
+	 */
+	public static function level($level) {
+	
+		return (isset(static::$levels[$level])) ? static::$levels[$level] : 0;
+	
+	}
+	
+	/**
 	 * Blocks
 	 * @return Array of blocks that make up model
 	 */

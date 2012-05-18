@@ -17,13 +17,23 @@ class Main {
 		//include('application/model/abstract/user.php');
 		//\Model\User::create_table();
 		
-		/*$user = new \Model\User();
+		$user = new \Model\User();
+		$user->id = 1;
+		$user->type = \Model\Base\User::level('user');
 		$user->set_email('evantbyrne@gmail.com');
 		$user->set_password('password123');
-		var_dump($user->check());
+		
+		/*var_dump($user->check());
 		return new Response("{$user->email}:{$user->password}");*/
 		
-		return new Response(\Library\Valid::name('Evan Byrne') ? 'Yup' : 'Nope');
+		$a = new \Model\Article();
+		//$a->set_owner($user);
+		// TODO: How to handle owners???
+		var_dump($a->can($user, 'read'));
+		var_dump($a->can($user, 'create'));
+		var_dump($a->can($user, 'update'));
+		var_dump($a->can($user, 'delete'));
+		return new Response();
 	
 	}
 	
