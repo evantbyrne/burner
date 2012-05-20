@@ -15,6 +15,11 @@ namespace Model\Base {
 		public static $engine = 'MyISAM';
 		
 		/**
+		 * Associated array of blocks
+		 */
+		public static $assoc_blocks = array();
+		
+		/**
 		 * Table
 		 * @return Full name of database table (using late static binding)
 		 */
@@ -111,6 +116,94 @@ namespace Model\Base {
 		
 			$t = new \Mysql\Generate\DropTable(self::table());
 			return \Dingo\DB::connection()->execute($t->build());
+			
+		}
+		
+		/**
+		 * Array of properties used by __get and __set
+		 */
+		private $properties = array();
+		
+		/**
+		 * Get
+		 * @param Name of property
+		 * @return Possibly modified property value
+		 */
+		public function __get($name) {
+		
+			// Existing properties
+			if(property_exists($this, $name)) {
+			
+				return $this->$name;
+			
+			}
+			
+			// Non-existant properties
+			elseif(isset($this->properties[$name])) {
+			
+				$block = self::get_block($name);
+				if($block !== null and is_callable(array($block, 'get'))) {
+				
+					return $block->get($this->properties[$name]);
+			
+				}
+				
+				return $this->properties[$name];
+			
+			}
+		
+		}
+		
+		/**
+		 * Set
+		 * @param Name of property
+		 * @param New value
+		 */
+		public function __set($name, $value) {
+		
+			// Existing properties
+			if(property_exists($this, $name)) {
+			
+				$this->$name = $value;
+			
+			}
+			
+			// Non-existant properties
+			else {
+			
+				$block = self::get_block($name);
+				if($block !== null and is_callable(array($block, 'set'))) {
+				
+					$this->properties[$name] = $block->set($value);
+					
+				} else {
+				
+					$this->properties[$name] = $value;
+					
+				}
+			
+			}
+		
+		}
+		
+		/**
+		 * Get Block
+		 * @return
+		 */
+		private static function get_block($name) {
+		
+			if(empty(self::$assoc_blocks)) {
+			
+				$blocks = static::blocks();
+				foreach($blocks as $block) {
+				
+					self::$assoc_blocks[$block->column_name()] = $block;
+				
+				}
+			
+			}
+		
+			return (isset(self::$assoc_blocks[$name])) ? self::$assoc_blocks[$name] : null;
 			
 		}
 		

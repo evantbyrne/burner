@@ -7,7 +7,7 @@ namespace Model;
  * @author Evan Byrne
  */
 class User extends \Model\Base\User {
-	
-	// Empty...
+
+
 	
 }

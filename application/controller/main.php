@@ -6,34 +6,26 @@ use Dingo\DB, Dingo\Route, Dingo\Cookie, Dingo\View, Dingo\Response, Dingo\Short
 class Main {
 
 	public function index() {
-		
-		/*$article = \Model\Article::get(1);
-		return new Response(($article) ? "Title: <em>{$article->title}</em>" : '<em>Article not found</em>');
-		
-		$p = new \Model\Article();
-		$p->title = 'Yes';
-		$p->content = 'Sweet content, bro.';
-		var_dump($p->valid());*/
-		//include('application/model/abstract/user.php');
-		//\Model\User::create_table();
-		
-		$user = new \Model\User();
+
+		/*$user = new \Model\User();
 		$user->id = 1;
 		$user->type = \Model\Base\User::level('user');
 		$user->set_email('evantbyrne@gmail.com');
 		$user->set_password('password123');
-		
-		/*var_dump($user->check());
-		return new Response("{$user->email}:{$user->password}");*/
+		//var_dump($user->check());
+		//return new Response("{$user->email}:{$user->password}");
 		
 		$a = new \Model\Article();
 		//$a->set_owner($user);
-		// TODO: How to handle owners???
 		var_dump($a->can($user, 'read'));
 		var_dump($a->can($user, 'create'));
 		var_dump($a->can($user, 'update'));
-		var_dump($a->can($user, 'delete'));
-		return new Response();
+		var_dump($a->can($user, 'delete'));*/
+		
+		$s = new \Model\Simple();
+		$s->headline = 'Foo';
+		$s->other = 'Bar';
+		return new Response("headline:{$s->headline}\nother:{$s->other}");
 	
 	}
 	
