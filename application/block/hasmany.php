@@ -30,7 +30,7 @@ class HasMany extends Base {
 		// Get
 		$this->set_method("get_$column_name", function($model) use ($column_name) {
 		
-			return $model->$column_name;
+			return (isset($model->$column_name)) ? $model->$column_name : null;
 		
 		});
 		

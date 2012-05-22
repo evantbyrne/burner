@@ -120,16 +120,61 @@ namespace Model\Base {
 		}
 		
 		/**
+		 * Whether methods array has been populated
+		 */
+		private $_methods_set = false;
+		
+		/**
+		 * Array of methods dynamically set by blocks
+		 */
+		private $_methods = array();
+		
+		/**
 		 * Array of properties used by __get and __set
 		 */
 		private $properties = array();
+		
+		/**
+		 * Call
+		 * @param Name of method
+		 * @param Arguments
+		 * @return Mixed
+		 */
+		public function __call($method, $args) {
+			
+			if(!$this->_methods_set) {
+				
+				foreach(static::blocks() as $block) {
+
+					$methods = $block->methods();
+					foreach($methods as $name => $func) {
+						
+						$this->_methods[$name] = $func;
+						
+					}
+
+				}
+				
+				$this->_methods_set = true;
+				
+			}
+			
+			if(isset($this->_methods[$method]) and is_callable($this->_methods[$method])) {
+			
+				$func = $this->_methods[$method];
+				array_unshift($args, $this);
+				return call_user_func_array($func, $args);
+				
+			}
+			
+		}
 		
 		/**
 		 * Get
 		 * @param Name of property
 		 * @return Possibly modified property value
 		 */
-		public function __get($name) {
+		/*public function __get($name) {
 		
 			// Existing properties
 			if(property_exists($this, $name)) {
@@ -152,14 +197,14 @@ namespace Model\Base {
 			
 			}
 		
-		}
+		}*/
 		
 		/**
 		 * Set
 		 * @param Name of property
 		 * @param New value
 		 */
-		public function __set($name, $value) {
+		/*public function __set($name, $value) {
 		
 			// Existing properties
 			if(property_exists($this, $name)) {
@@ -184,7 +229,7 @@ namespace Model\Base {
 			
 			}
 		
-		}
+		}*/
 		
 		/**
 		 * Get Block

@@ -10,6 +10,8 @@ class Main {
 		$s = new \Model\Simple();
 		$s->headline = 'Foo';
 		$s->other = 'Bar';
+		$s->set_articles('Baz');
+		var_dump($s->get_articles());
 		return new Response("headline:{$s->headline}\nother:{$s->other}");
 	
 	}
