@@ -7,21 +7,6 @@ class Main {
 
 	public function index() {
 
-		/*$user = new \Model\User();
-		$user->id = 1;
-		$user->type = \Model\Base\User::level('user');
-		$user->set_email('evantbyrne@gmail.com');
-		$user->set_password('password123');
-		//var_dump($user->check());
-		//return new Response("{$user->email}:{$user->password}");
-		
-		$a = new \Model\Article();
-		//$a->set_owner($user);
-		var_dump($a->can($user, 'read'));
-		var_dump($a->can($user, 'create'));
-		var_dump($a->can($user, 'update'));
-		var_dump($a->can($user, 'delete'));*/
-		
 		$s = new \Model\Simple();
 		$s->headline = 'Foo';
 		$s->other = 'Bar';

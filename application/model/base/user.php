@@ -40,7 +40,8 @@ abstract class User extends Root {
 		return array(
 		
 			new \Block\Email('email'),
-			new \Block\Text('password')
+			new \Block\Text('password'),
+			new \Block\Int('type')
 		
 		);
 		
