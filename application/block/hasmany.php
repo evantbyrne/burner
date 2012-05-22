@@ -26,18 +26,20 @@ class HasMany extends Base {
 		}
 		
 		$this->column = $options['column'];
-	
-	}
-	
-	public function get($value) {
-	
-		return $value;
-	
-	}
-	
-	public function set($value) {
-	
-		return $value;
+		
+		// Get
+		$this->set_method("get_$column_name", function($model) use ($column_name) {
+		
+			return $model->$column_name;
+		
+		});
+		
+		// Set
+		$this->set_method("set_$column_name", function($model, $value) use ($column_name) {
+		
+			$model->$column_name = $value;
+		
+		});
 	
 	}
 

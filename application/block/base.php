@@ -10,6 +10,7 @@ abstract class Base {
 
 	private $_column_name;
 	private $_column;
+	private $_methods;
 	private $_options;
 	
 	/**
@@ -19,6 +20,7 @@ abstract class Base {
 	
 		// TODO: Validate column name
 		$this->_column_name = $column_name;
+		$this->_methods = array();
 		$this->_options = $options;
 		
 		if($column !== null) {
@@ -42,11 +44,13 @@ abstract class Base {
 	/**
 	 * Set Column
 	 * @param Database column
+	 * @return This
 	 */
 	public function set_column($column) {
 	
 		// TODO: Validate that $column inherits \Mysql\Generate\TableColumn
-		return $this->_column = $column;
+		$this->_column = $column;
+		return $this;
 	
 	}
 	
@@ -57,6 +61,27 @@ abstract class Base {
 	public function column_name() {
 	
 		return $this->_column_name;
+	
+	}
+	
+	/**
+	 * Set Method
+	 * @param Name of method
+	 * @param Anonymous function
+	 */
+	public function set_method($name, $method) {
+	
+		$this->_methods[$name] = $method;
+	
+	}
+	
+	/**
+	 * Methods
+	 * @return Associated array of all set methods
+	 */
+	public function methods() {
+	
+		return $this->_methods;
 	
 	}
 	
