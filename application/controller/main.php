@@ -7,16 +7,16 @@ class Main {
 
 	public function index() {
 
-		//\Model\Simple::create_table();
 		$s = new \Model\Simple();
+		//$s->id = 123;
 		$s->headline = 'Baz';
-		$res = $s->select();
-		$res[0]->articles = 654321;
-		print_r($res[0]->update());
-		return new Response();
 		
-		//var_dump($s->get_articles());
-		//return new Response("headline:{$s->headline}\nother:{$s->other}");
+		$a = new \Model\Article();
+		$a->title = 'Foo';
+		$a->content = 'Woooooo!';
+		$s->articles()->insert($a);
+		
+		return new Response();
 	
 	}
 	

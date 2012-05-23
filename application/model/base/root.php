@@ -55,7 +55,11 @@ namespace Model\Base {
 			
 				// Loop block columns
 				$column = $block->column();
-				$t->add($column);
+				if($column !== null) {
+				
+					$t->add($column);
+				
+				}
 			
 			}
 			

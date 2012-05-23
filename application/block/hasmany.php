@@ -13,10 +13,11 @@ class HasMany extends Base {
 	
 	public function __construct($column_name, $options = array()) {
 		
-		parent::__construct($column_name, $options, new \Mysql\Generate\IntColumn($column_name, $options));
+		parent::__construct($column_name, $options);
 		
 		// Model
-		$this->model = (isset($options['model'])) ? $options['model'] : $column_name;
+		$model_class = (isset($options['model'])) ? $options['model'] : $column_name;
+		$this->model = $model_class;
 		
 		// Column
 		if(!isset($options['column'])) {
@@ -25,22 +26,50 @@ class HasMany extends Base {
 		
 		}
 		
-		$this->column = $options['column'];
+		$model_class_column = $options['column'];
+		$this->column = $model_class_column;
 		
-		// Get
-		$this->set_method("get_$column_name", function($model) use ($column_name) {
+		// Selections on remote table
+		$this->set_method($column_name, function($model) use ($column_name, $model_class, $model_class_column) {
 		
-			return (isset($model->$column_name)) ? $model->$column_name : null;
-		
-		});
-		
-		// Set
-		$this->set_method("set_$column_name", function($model, $value) use ($column_name) {
-		
-			$model->$column_name = $value;
+			return new HasManyQuery($model_class, $model_class_column, $model->id);
 		
 		});
 	
+	}
+
+}
+
+/**
+ * Has Many Query
+ * @author Evan Byrne
+ */
+class HasManyQuery {
+	
+	private $model;
+	private $column;
+	private $id;
+	
+	/**
+	 * Construct
+	 */
+	public function __construct($model, $column, $id) {
+		
+		$this->model = $model;
+		$this->column = $column;
+		$this->id = $id;
+		
+	}
+	
+	/**
+	 * Insert
+	 * @param Model instance to be inserted
+	 */
+	public function insert($insertion) {
+		
+		$insertion->{$this->column} = $this->id;
+		return $insertion->insert();
+		
 	}
 
 }
