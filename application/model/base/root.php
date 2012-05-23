@@ -207,7 +207,6 @@ namespace Model\Base {
 				if($col !== 'id' and isset($this->$col)) {
 					
 					$query->value($col, $this->$col);
-					
 				
 				}
 			

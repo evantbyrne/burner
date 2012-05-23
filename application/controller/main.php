@@ -8,14 +8,9 @@ class Main {
 	public function index() {
 
 		$s = new \Model\Simple();
-		//$s->id = 123;
+		$s->id = 123;
 		$s->headline = 'Baz';
-		
-		$a = new \Model\Article();
-		$a->title = 'Foo';
-		$a->content = 'Woooooo!';
-		$s->articles()->insert($a);
-		
+		print_r($s);
 		return new Response();
 	
 	}
