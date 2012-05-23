@@ -15,11 +15,6 @@ namespace Model\Base {
 		public static $engine = 'MyISAM';
 		
 		/**
-		 * Associated array of blocks
-		 */
-		public static $assoc_blocks = array();
-		
-		/**
 		 * Table
 		 * @return Full name of database table (using late static binding)
 		 */
@@ -40,46 +35,6 @@ namespace Model\Base {
 		
 			$res = self::select()->where('id', '=', $id)->limit(1)->execute();
 			return (empty($res)) ? false : $res[0];
-			
-		}
-		
-		/**
-		 * Select
-		 * @return \Model\Query\Select object
-		 */
-		public static function select() {
-		
-			return new \Model\Query\Select(self::table(), '\\'.get_called_class());
-			
-		}
-		
-		/**
-		 * Insert
-		 * @return \Model\Query\Insert object
-		 */
-		public static function insert() {
-		
-			return new \Model\Query\Insert(self::table());
-			
-		}
-		
-		/**
-		 * Update
-		 * @return \Model\Query\Update object
-		 */
-		public static function update() {
-		
-			return new \Model\Query\Update(self::table());
-			
-		}
-		
-		/**
-		 * Delete
-		 * @return \Model\Query\Delete object
-		 */
-		public static function delete() {
-		
-			return new \Model\Query\Delete(self::table());
 			
 		}
 		
@@ -130,11 +85,6 @@ namespace Model\Base {
 		private $_methods = array();
 		
 		/**
-		 * Array of properties used by __get and __set
-		 */
-		private $properties = array();
-		
-		/**
 		 * Call
 		 * @param Name of method
 		 * @param Arguments
@@ -170,85 +120,120 @@ namespace Model\Base {
 		}
 		
 		/**
-		 * Get
-		 * @param Name of property
-		 * @return Possibly modified property value
+		 * Select
+		 * @return Result of database query
 		 */
-		/*public function __get($name) {
+		public function select() {
 		
-			// Existing properties
-			if(property_exists($this, $name)) {
+			$query = new \Model\Query\Select(self::table(), '\\'.get_called_class());
+			$blocks = static::blocks();
+			$first = true;
 			
-				return $this->$name;
+			foreach($blocks as $block) {
 			
-			}
-			
-			// Non-existant properties
-			elseif(isset($this->properties[$name])) {
-			
-				$block = self::get_block($name);
-				if($block !== null and is_callable(array($block, 'get'))) {
+				$col = $block->column_name();
+				if(isset($this->$col)) {
 				
-					return $block->get($this->properties[$name]);
-			
+					if($first) {
+					
+						$query->where($col, '=', $this->$col);
+						$first = false;
+					
+					} else {
+					
+						$query->and_where($col, '=', $this->$col);
+					
+					}
+				
 				}
-				
-				return $this->properties[$name];
 			
 			}
-		
-		}*/
+			
+			return $query->execute();
+			
+		}
 		
 		/**
-		 * Set
-		 * @param Name of property
-		 * @param New value
+		 * Delete
+		 * @return Result of database query
 		 */
-		/*public function __set($name, $value) {
+		public function delete() {
 		
-			// Existing properties
-			if(property_exists($this, $name)) {
+			$query = new \Model\Query\Delete(self::table());
+			$blocks = static::blocks();
+			$first = true;
 			
-				$this->$name = $value;
+			foreach($blocks as $block) {
 			
-			}
-			
-			// Non-existant properties
-			else {
-			
-				$block = self::get_block($name);
-				if($block !== null and is_callable(array($block, 'set'))) {
+				$col = $block->column_name();
+				if(isset($this->$col)) {
 				
-					$this->properties[$name] = $block->set($value);
+					if($first) {
 					
-				} else {
+						$query->where($col, '=', $this->$col);
+						$first = false;
+					
+					} else {
+					
+						$query->and_where($col, '=', $this->$col);
+					
+					}
 				
-					$this->properties[$name] = $value;
-					
 				}
 			
 			}
-		
-		}*/
+			
+			return $query->execute();
+			
+		}
 		
 		/**
-		 * Get Block
-		 * @return
+		 * Update
+		 * @return Result of database query
 		 */
-		private static function get_block($name) {
+		public function update() {
 		
-			if(empty(self::$assoc_blocks)) {
+			$query = new \Model\Query\Update(self::table());
+			$blocks = static::blocks();
+			$query->where('id', '=', $this->id);
 			
-				$blocks = static::blocks();
-				foreach($blocks as $block) {
-				
-					self::$assoc_blocks[$block->column_name()] = $block;
+			foreach($blocks as $block) {
+			
+				$col = $block->column_name();
+				if($col !== 'id' and isset($this->$col)) {
+					
+					$query->value($col, $this->$col);
+					
 				
 				}
 			
 			}
+			
+			return $query->execute();
+			
+		}
 		
-			return (isset(self::$assoc_blocks[$name])) ? self::$assoc_blocks[$name] : null;
+		/**
+		 * Insert
+		 * @return Result of database query
+		 */
+		public function insert() {
+		
+			$query = new \Model\Query\Insert(self::table());
+			$blocks = static::blocks();
+			
+			foreach($blocks as $block) {
+			
+				$col = $block->column_name();
+				if(isset($this->$col)) {
+				
+					$query->value($col, $this->$col);
+				
+				}
+			
+			}
+			
+			return $query->execute();
 			
 		}
 		
