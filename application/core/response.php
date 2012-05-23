@@ -99,3 +99,23 @@ class Response {
 	}
 
 }
+
+/**
+ * JSON Response Class
+ * @author Evan Byrne
+ */
+class JsonResponse extends Response {
+
+	/**
+	 * Constructor
+	 * @param Response content
+	 * @param HTTP status code
+	 */
+	public function __construct($content = '', $code = null) {
+	
+		parent::__construct($content, $code);
+		$this->content = json_encode($content);
+		
+	}
+
+}

@@ -1,7 +1,7 @@
 <?php
 
 namespace Controller;
-use Dingo\DB, Dingo\Route, Dingo\Cookie, Dingo\View, Dingo\Response, Dingo\Shortcut as S;
+use Dingo\DB, Dingo\Route, Dingo\Cookie, Dingo\View, Dingo\Response, Dingo\JsonResponse, Dingo\Shortcut as S;
 
 class Main {
 
@@ -9,8 +9,7 @@ class Main {
 
 		$a = new \Model\Article();
 		$a->simple = 1;
-		print_r($a->simple());
-		return new Response();
+		return new JsonResponse($a->simple());
 	
 	}
 	
