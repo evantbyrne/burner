@@ -124,7 +124,7 @@ class Route {
 				// TODO: Add checks for special segment types
 				if(count($pattern_segments) == count($segments)) {
 					
-					$args = array();
+					$args = array_slice($location, 2); // Get defined argument values in route
 					
 					// Loop pattern segments
 					for($i = 0; $i < count($pattern_segments); $i++) {

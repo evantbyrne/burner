@@ -27,8 +27,7 @@ class Main {
 	
 	public function bar() {
 	
-		print_r(func_get_args());
-		return new Response();
+		return new JsonResponse(func_get_args());
 	
 	}
 
