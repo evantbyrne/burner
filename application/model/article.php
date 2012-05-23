@@ -16,7 +16,7 @@ class Article extends Base\ACL {
 	
 		return array(
 		
-			new \Block\Int('user'),
+			new \Block\BelongsTo('simple'),
 		
 			// Title
 			new \Block\Text('title', array('max_length'=>120, 'valid'=>function($value) {

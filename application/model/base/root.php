@@ -33,7 +33,8 @@ namespace Model\Base {
 		 */
 		public static function get($id) {
 		
-			$res = self::select()->where('id', '=', $id)->limit(1)->execute();
+			$select = new \Model\Query\Select(self::table(), '\\'.get_called_class());
+			$res = $select->where('id', '=', $id)->limit(1)->execute();
 			return (empty($res)) ? false : $res[0];
 			
 		}

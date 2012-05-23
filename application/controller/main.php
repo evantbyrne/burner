@@ -7,10 +7,9 @@ class Main {
 
 	public function index() {
 
-		$s = new \Model\Simple();
-		$s->id = 123;
-		$s->headline = 'Baz';
-		print_r($s);
+		$a = new \Model\Article();
+		$a->simple = 1;
+		print_r($a->simple());
 		return new Response();
 	
 	}
