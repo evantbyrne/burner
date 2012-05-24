@@ -6,7 +6,7 @@ namespace Model\Base;
  * Base Session Model
  * @author Evan Byrne
  */
-class Session extends Root {
+abstract class Session extends Root {
 
 	protected static $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789=_';
 	
@@ -18,9 +18,7 @@ class Session extends Root {
 	
 		return array(
 		
-			new \Block\Text('secret', array('unique'=>true)),
-			new \Block\Text('value'),
-			new \Block\Text('expire')
+			new \Block\Text('secret', array('unique'=>true))
 		
 		);
 	
@@ -36,20 +34,6 @@ class Session extends Root {
 		$select = new \Model\Query\Select(self::table(), '\\'.get_called_class());
 		$res = $select->where('secret', '=', $secret)->limit(1)->execute();
 		return (empty($res)) ? false : $res[0];
-	
-	}
-	
-	/**
-	 * Set
-	 * @param \Model\Base\Session object or false
-	 * @return Generated secret representing session
-	 */
-	public static function set($value) {
-	
-		$insert = new \Model\Query\Insert(self::table());
-		$secret = static::secret();
-		$insert->value('secret', $secret)->value('value', $value)->execute();
-		return $secret;
 	
 	}
 	
@@ -72,6 +56,18 @@ class Session extends Root {
 		}
 		
 		return $salt;
+	
+	}
+	
+	/**
+	 * Insert
+	 * @return Generated secret representing session
+	 */
+	public function insert() {
+	
+		$this->secret = static::secret();
+		parent::insert();
+		return $this->secret;
 	
 	}
 	
