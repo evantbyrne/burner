@@ -9,52 +9,52 @@ namespace Library;
 class input {
 	
 	/**
-	 * Post
 	 * @param Field
+	 * @param Default value
 	 */
-	public static function post($field) {
+	public static function post($field, $default = null) {
 		
-		return (isset($_POST[$field])) ? $_POST[$field] : false;
+		return (isset($_POST[$field])) ? $_POST[$field] : $default;
 	
 	}
 	
 	/**
-	 * Get
 	 * @param Field
+	 * @param Default value
 	 */
-	public static function get($field) {
+	public static function get($field, $default = null) {
 		
-		return (isset($_GET[$field])) ? $_GET[$field] : false;
+		return (isset($_GET[$field])) ? $_GET[$field] : $default;
 
 	}
 	
 	/**
-	 * Cookie
 	 * @param Field
+	 * @param Default value
 	 */
-	public static function cookie($field) {
+	public static function cookie($field, $default = null) {
 	
-		return (isset($_COOKIE[$field])) ? $_COOKIE[$field] : false;
+		return (isset($_COOKIE[$field])) ? $_COOKIE[$field] : $default;
 	
 	}
 	
 	/**
-	 * Files
 	 * @param Field
+	 * @param Default value
 	 */
-	public static function files($field) {
+	public static function files($field, $default = null) {
 	
-		return (isset($_FILES[$field])) ? $_FILES[$field] : false;
+		return (isset($_FILES[$field])) ? $_FILES[$field] : $default;
 
 	}
 	
 	/**
-	 * Request
 	 * @param Field
+	 * @param Default value
 	 */
-	public static function request($field) {
+	public static function request($field, $default = null) {
 
-		return (isset($_REQUEST[$field])) ? $_REQUEST[$field] : false;
+		return (isset($_REQUEST[$field])) ? $_REQUEST[$field] : $default;
 	
 	}
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace Controller;
-use Dingo\DB, Dingo\Route, Dingo\Cookie, Dingo\View, Dingo\Response, Dingo\JsonResponse, Dingo\Shortcut as S;
+use Dingo\Route, Dingo\Response, Dingo\JsonResponse, Dingo\Shortcut as S, Library\Input;
 
 class Main {
 
@@ -17,13 +17,13 @@ class Main {
 	
 	public function foo() {
 	
-		return new Response("<form method='post'><input name='name' /></form>");
+		return new Response("<form method='post'><input name='name' /></form>\n<form method='post'><input type='submit' value='submit nothing' /></form>");
 	
 	}
 	
 	public function foo_action() {
 	
-		return new Response($_POST['name']);
+		return new Response(\Library\Input::post('name', '<em>No Name Given</em>'));
 	
 	}
 	
