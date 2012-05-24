@@ -7,12 +7,11 @@ class Main {
 
 	public function index() {
 
-		$s = new \Model\Session();
-		$s->stuff = 'Awesome secret session data';
-		$secret = $s->insert();
-		$res = $s->get($secret);
-		$res->delete();
-		return new JsonResponse($res);
+		$s = new \Model\Simple();
+		$s->id = 123;
+		$s->headline = 'Awesome Headline';
+		print_r($s->update(false));
+		return new Response();
 	
 	}
 	

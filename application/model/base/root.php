@@ -128,9 +128,10 @@ namespace Model\Base {
 		
 		/**
 		 * Select
+		 * @param Boolean if the query should be executed right away (default true)
 		 * @return Result of database query
 		 */
-		public function select() {
+		public function select($execute = true) {
 		
 			$query = new \Model\Query\Select(self::table(), '\\'.get_called_class());
 			$blocks = static::blocks();
@@ -156,7 +157,7 @@ namespace Model\Base {
 			
 			}
 			
-			return $query->execute();
+			return ($execute) ? $query->execute() : $query;
 			
 		}
 		
@@ -197,9 +198,10 @@ namespace Model\Base {
 		
 		/**
 		 * Update
+		 * @param Boolean if the query should be executed right away (default true)
 		 * @return Result of database query
 		 */
-		public function update() {
+		public function update($execute = true) {
 		
 			$query = new \Model\Query\Update(self::table());
 			$blocks = static::blocks();
@@ -216,15 +218,16 @@ namespace Model\Base {
 			
 			}
 			
-			return $query->execute();
+			return ($execute) ? $query->execute() : $query;
 			
 		}
 		
 		/**
 		 * Insert
+		 * @param Boolean if the query should be executed right away (default true)
 		 * @return Result of database query
 		 */
-		public function insert() {
+		public function insert($execute = true) {
 		
 			$query = new \Model\Query\Insert(self::table());
 			$blocks = static::blocks();
@@ -240,7 +243,7 @@ namespace Model\Base {
 			
 			}
 			
-			return $query->execute();
+			return ($execute) ? $query->execute() : $query;
 			
 		}
 		
