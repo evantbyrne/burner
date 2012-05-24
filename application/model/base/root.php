@@ -160,9 +160,10 @@ namespace Model\Base {
 		
 		/**
 		 * Delete
-		 * @return Result of database query
+		 * @param Boolean if the query should be executed right away (default true)
+		 * @return Result of query if execute is true, \Model\Query object otherwise
 		 */
-		public function delete() {
+		public function delete($execute = true) {
 		
 			$query = new \Model\Query\Delete(self::table());
 			$blocks = static::blocks();
@@ -188,7 +189,7 @@ namespace Model\Base {
 			
 			}
 			
-			return $query->execute();
+			return ($execute) ? $query->execute() : $query;
 			
 		}
 		

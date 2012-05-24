@@ -7,9 +7,11 @@ class Main {
 
 	public function index() {
 
-		$a = new \Model\Article();
-		$a->simple = 1;
-		return new JsonResponse($a->simple());
+		$s = new \Model\Base\Session();
+		$secret = $s->set('Awesome secret session data');
+		$res = $s->get($secret);
+		$res->delete();
+		return new JsonResponse($res);
 	
 	}
 	
