@@ -41,12 +41,13 @@ namespace Model\Base {
 		
 		/**
 		 * Create Table
+		 * @param If true, then create table only if it doesn't exist
 		 * @param If true, then the function should return the SQL, and not create the table
 		 * @return Result of CREATE TABLE query execution, or SQL
 		 */
-		public static function create_table($sql = false) {
+		public static function create_table($if_not_exists = false, $sql = false) {
 		
-			$t = new \Mysql\Generate\CreateTable(self::table());
+			$t = new \Mysql\Generate\CreateTable(self::table(), $if_not_exists);
 			$t->engine(static::$engine);
 			$t->add(new \Mysql\Generate\IncrementingColumn('id'));
 			$t->add(new \Mysql\Generate\PrimaryKey('id'));
@@ -70,11 +71,12 @@ namespace Model\Base {
 		
 		/**
 		 * Drop Table
+		 * @param If true, then drop table only if it exists
 		 * @return Result of DROP TABLE query execution
 		 */
-		public static function drop_table() {
+		public static function drop_table($if_exists = false) {
 		
-			$t = new \Mysql\Generate\DropTable(self::table());
+			$t = new \Mysql\Generate\DropTable(self::table(), $if_exists);
 			return \Dingo\DB::connection()->execute($t->build());
 			
 		}

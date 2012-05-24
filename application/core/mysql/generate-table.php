@@ -9,13 +9,15 @@ class CreateTable {
 	protected $table;
 	protected $additions;
 	protected $engine;
+	protected $id_not_exists;
 	
 	/* Construct */
-	public function __construct($table) {
+	public function __construct($table, $if_not_exists = false) {
 	
 		$this->table = $table;
 		$this->additions = array();
 		$this->engine = null;
+		$this->if_not_exists = $if_not_exists;
 	
 	}
 	
@@ -35,10 +37,25 @@ class CreateTable {
 	
 	}
 	
+	/* If Not Exists */
+	public function if_not_exists() {
+		
+		$this->if_not_exists = true;
+		return $this;
+		
+	}
+	
+	/* Build If Not Exists */
+	protected function build_if_not_exists() {
+		
+		return ($this->if_not_exists) ? ' IF NOT EXISTS' : '';
+		
+	}
+	
 	/* Build */
 	public function build() {
 	
-		$sql = array("CREATE TABLE `{$this->table}`(");
+		$sql = array("CREATE TABLE{$this->build_if_not_exists()} `{$this->table}`(");
 		$sql_cols = array();
 		
 		// Additions (Columns, Keys, Indexes)
@@ -368,18 +385,35 @@ class FulltextIndex extends TableAddition {
 class DropTable {
 	
 	private $table;
+	private $if_exists;
 	
 	/* Construct */
-	public function __construct($table) {
+	public function __construct($table, $if_exists = false) {
 	
 		$this->table = $table;
+		$this->if_exists = $if_exists;
 	
+	}
+	
+	/* If Exists */
+	public function if_exists() {
+		
+		$this->if_exists = true;
+		return $this;
+		
+	}
+	
+	/* Build If Exists */
+	public function build_if_exists() {
+		
+		return ($this->if_exists) ? ' IF EXISTS' : '';
+		
 	}
 	
 	/* Build */
 	public function build() {
 	
-		return new Query("DROP TABLE `{$this->table}`");
+		return new Query("DROP TABLE{$this->build_if_exists()} `{$this->table}`");
 	
 	}
 	

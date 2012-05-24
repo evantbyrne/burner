@@ -41,7 +41,7 @@ class CLI {
 		} else {
 		
 			$model_class = "\\Model\\$model";
-			echo "\n" . $model_class::create_table(true) . "\n\n";
+			echo "\n" . $model_class::create_table(false, true) . "\n\n";
 			
 		}
 		
@@ -64,7 +64,7 @@ class CLI {
 		} else {
 		
 			$model_class = "\\Model\\$model";
-			$model_class::create_table();
+			$model_class::create_table(true);
 			
 		}
 		
@@ -87,7 +87,7 @@ class CLI {
 		} else {
 		
 			$model_class = "\\Model\\$model";
-			$model_class::drop_table();
+			$model_class::drop_table(true);
 		
 		}
 		
