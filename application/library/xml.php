@@ -1,4 +1,6 @@
-<?php if(!defined('DINGO')){die('External Access to File Denied');}
+<?php
+
+namespace Library;
 
 /**
  * Dingo Framework XML Library
@@ -9,13 +11,13 @@
  * @docs            http://www.dingoframework.com/docs/xml-helper
  */
 
-class xml
+class Xml
 {
 	// Parse XML
 	// ---------------------------------------------------------------------------
 	public static function parse($xml=FALSE)
 	{
-		$parser = new DOMDocument();
+		$parser = new \DOMDocument();
 		
 		// Silence any errors and return FALSE if XML failed to parse
 		if(!$parser->loadXML($xml,LIBXML_NOERROR))

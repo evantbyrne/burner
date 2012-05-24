@@ -7,11 +7,8 @@ class Main {
 
 	public function index() {
 
-		$s = new \Model\Simple();
-		$s->id = 123;
-		$s->headline = 'Awesome Headline';
-		print_r($s->update(false));
-		return new Response();
+		$data = '<disallowed>Booo!</disallowed>This is <i>Awesome</i>!';
+		return new Response(\Library\Xss::clean($data));
 	
 	}
 	
