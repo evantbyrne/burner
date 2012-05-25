@@ -34,6 +34,7 @@ class Bootstrap {
 			case 'controller': $start = APPLICATION.'/controller'; break;
 			case 'model':      $start = APPLICATION.'/model'; break;
 			case 'block':      $start = APPLICATION.'/block'; break;
+			case 'command':    $start = APPLICATION.'/command'; break;
 			default: return false; break;
 		
 		}
