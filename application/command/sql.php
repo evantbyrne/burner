@@ -3,7 +3,7 @@
 namespace Command;
 
 /**
- * Create Command
+ * SQL Command
  * @author Evan Byrne
  */
 class Sql {

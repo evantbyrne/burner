@@ -3,7 +3,7 @@
 namespace Command;
 
 /**
- * Create Command
+ * Drop Command
  * @author Evan Byrne
  */
 class Drop {
