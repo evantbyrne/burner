@@ -7,8 +7,16 @@ class Main {
 
 	public function index() {
 
-		$data = '<disallowed>Booo!</disallowed>This is <i>Awesome</i>!';
-		return new Response(\Library\Xss::clean($data));
+		//$data = '<disallowed>Booo!</disallowed>This is <i>Awesome</i>!';
+		//return new Response(\Library\Xss::clean($data));
+		
+		//$s = new \Model\Simple();
+		//$s->headline = 'Wooo!';
+		//$id = $s->insert();
+		$query = new \Model\Query\Insert('simple');
+		$query->value('headline', 'Awesome!');
+		$id = $query->execute();
+		return new Response($id);
 	
 	}
 	

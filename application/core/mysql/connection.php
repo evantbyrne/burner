@@ -189,6 +189,16 @@ class Connection {
 	}
 	
 	/**
+	 * Last Insert ID
+	 * @return ID of last inserted row
+	 */
+	public function last_insert_id() {
+		
+		return $this->connection->lastInsertId();
+		
+	}
+	
+	/**
 	 * Get PDO Connection
 	 * @return The PDO object
 	 */

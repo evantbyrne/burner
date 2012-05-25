@@ -225,7 +225,7 @@ namespace Model\Base {
 		/**
 		 * Insert
 		 * @param Boolean if the query should be executed right away (default true)
-		 * @return Result of database query
+		 * @return Inserted row ID
 		 */
 		public function insert($execute = true) {
 		
@@ -322,7 +322,9 @@ namespace Model\Query {
 		 */
 		public function execute() {
 		
-			return \Dingo\DB::connection()->execute($this->build());
+			$con = \Dingo\DB::connection();
+			$con->execute($this->build());
+			return $con->last_insert_id();
 		
 		}
 	

@@ -104,6 +104,7 @@ class Bootstrap {
 		require_once(APPLICATION.'/config/'.CONFIGURATION.'/db.php');
 		require_once(APPLICATION.'/core/mysql/generate.php');
 		require_once(APPLICATION.'/core/mysql/connection.php');
+		require_once(APPLICATION.'/model/base/root.php');
 		require_once(APPLICATION.'/core/response.php');
 		
 		set_error_handler('Dingo\dingo_error');
