@@ -13,10 +13,12 @@ class Main {
 		//$s = new \Model\Simple();
 		//$s->headline = 'Wooo!';
 		//$id = $s->insert();
-		$query = new \Model\Query\Insert('simple');
+		/*$query = new \Model\Query\Insert('simple');
 		$query->value('headline', 'Awesome!');
 		$id = $query->execute();
-		return new Response($id);
+		return new Response($id);*/
+		
+		return new Response(\Library\Url::page('awesome/three'));
 	
 	}
 	

@@ -6,7 +6,7 @@ namespace Library;
  * Input Library
  * @author Evan Byrne
  */
-class input {
+class Input {
 	
 	/**
 	 * @param Field

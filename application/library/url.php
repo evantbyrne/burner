@@ -1,53 +1,41 @@
-<?php if(!defined('DINGO')){die('External Access to File Denied');}
+<?php
+
+namespace Library;
 
 /**
- * Dingo Framework URL Library
- *
- * @Author          Evan Byrne
- * @Copyright       2008 - 2010
- * @Project Page    http://www.dingoframework.com
- * @docs            http://www.dingoframework.com/docs/url-helper
+ * URL Library
+ * @author Evan Byrne
  */
-
-class url
-{
-	// Base URL
-	// ---------------------------------------------------------------------------
-	public static function base($ShowIndex = FALSE)
-	{
-		if($ShowIndex AND !MOD_REWRITE)
-		{
-			// Include "index.php"
-			return(BASE_URL.'index.php/');
-		}
-		else
-		{
-			// Don't include "index.php"
-			return(BASE_URL);
-		}
+class Url {
+	
+	/**
+	 * @param Whether to include index.php/ in URL
+	 * @return The base URL
+	 */
+	public static function base($show_index = false) {
+		
+		return ($show_index AND !MOD_REWRITE) ? BASE_URL . 'index.php/' : BASE_URL;
+		
 	}
 	
-	
-	// Page URL
-	// ---------------------------------------------------------------------------
-	public static function page($path = FALSE)
-	{
-		if(MOD_REWRITE)
-		{
-			return(url::base().$path);
-		}
-		else
-		{
-			return(url::base(TRUE).$path);
-		}
+	/**
+	 * @param Relative path to page
+	 * @param Full path to page
+	 */
+	public static function page($path = false) {
+		
+		return url::base((MOD_REWRITE) ? true : false) . $path;
+		
 	}
 	
-	
-	// Redirect
-	// ---------------------------------------------------------------------------
-	public static function redirect($url = '')
-	{
+	/**
+	 * @param URL to redirect to
+	 */
+	public static function redirect($url = '') {
+		
 		header('Location: '.url::base(TRUE).$url);
 		exit;
+		
 	}
+	
 }
