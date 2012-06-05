@@ -76,9 +76,9 @@ function dingo_error($level,$message,$file='current file',$line='(unknown)')
 	{
 		ob_clean();
 		
-		if(file_exists(APPLICATION.'/'.Config::get('folder_errors').'/fatal.php'))
+		if(file_exists(APPLICATION.'/error/fatal.php'))
 		{
-			require(APPLICATION.'/'.Config::get('folder_errors').'/fatal.php');
+			require(APPLICATION.'/error/fatal.php');
 		}
 		else
 		{
@@ -92,13 +92,13 @@ function dingo_error($level,$message,$file='current file',$line='(unknown)')
 	{
 		ob_clean();
 		
-		if(file_exists(APPLICATION.'/'.Config::get('folder_errors').'/exception.php'))
+		if(file_exists(APPLICATION.'/error/exception.php'))
 		{
-			require(APPLICATION.'/'.Config::get('folder_errors').'/exception.php');
+			require(APPLICATION.'/error/exception.php');
 		}
 		else
 		{
-			echo 'Dingo could not locate exception file at '.APPLICATION.'/'.Config::get('folder_errors').'/exception.php';
+			echo 'Dingo could not locate exception file at '.APPLICATION.'/error/exception.php';
 		}
 		
 		ob_end_flush();
@@ -106,13 +106,13 @@ function dingo_error($level,$message,$file='current file',$line='(unknown)')
 	}
 	elseif(DEBUG)
 	{
-		if(file_exists(APPLICATION.'/'.Config::get('folder_errors').'/nonfatal.php'))
+		if(file_exists(APPLICATION.'/error/nonfatal.php'))
 		{
-			require(APPLICATION.'/'.Config::get('folder_errors').'/nonfatal.php');
+			require(APPLICATION.'/error/nonfatal.php');
 		}
 		else
 		{
-			echo 'Dingo could not locate error file at '.APPLICATION.'/'.Config::get('folder_errors').'/nonfatal.php';
+			echo 'Dingo could not locate error file at '.APPLICATION.'/error/nonfatal.php';
 		}
 	}
 	
