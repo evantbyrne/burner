@@ -18,7 +18,9 @@ class Main {
 		$id = $query->execute();
 		return new Response($id);*/
 		
-		return new Response(\Library\Url::page('awesome/three'));
+		$col = new \Mysql\Generate\TimestampColumn('foo', array('auto_update' => true));
+		
+		return new Response($col->build());
 	
 	}
 	
