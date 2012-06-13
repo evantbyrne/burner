@@ -225,6 +225,30 @@ class DecimalColumn extends TableColumn {
 	
 }
 
+/* Date Column */
+class DateColumn extends TableColumn {
+	
+	/* Build */
+	public function build() {
+	
+		return "`{$this->name}` DATE{$this->build_null()}";
+	
+	}
+	
+}
+
+/* Time Column */
+class TimeColumn extends TableColumn {
+	
+	/* Build */
+	public function build() {
+	
+		return "`{$this->name}` TIME{$this->build_null()}";
+	
+	}
+	
+}
+
 /* Timestamp Column */
 class TimestampColumn extends TableColumn {
 	
