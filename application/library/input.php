@@ -14,7 +14,7 @@ class Input {
 	 */
 	public static function post($field, $default = null) {
 		
-		return (isset($_POST[$field])) ? $_POST[$field] : $default;
+		return (!empty($_POST[$field])) ? $_POST[$field] : $default;
 	
 	}
 	
@@ -24,7 +24,7 @@ class Input {
 	 */
 	public static function get($field, $default = null) {
 		
-		return (isset($_GET[$field])) ? $_GET[$field] : $default;
+		return (!empty($_GET[$field])) ? $_GET[$field] : $default;
 
 	}
 	
@@ -34,7 +34,7 @@ class Input {
 	 */
 	public static function cookie($field, $default = null) {
 	
-		return (isset($_COOKIE[$field])) ? $_COOKIE[$field] : $default;
+		return (!empty($_COOKIE[$field])) ? $_COOKIE[$field] : $default;
 	
 	}
 	
@@ -44,7 +44,7 @@ class Input {
 	 */
 	public static function files($field, $default = null) {
 	
-		return (isset($_FILES[$field])) ? $_FILES[$field] : $default;
+		return (!empty($_FILES[$field])) ? $_FILES[$field] : $default;
 
 	}
 	
@@ -54,7 +54,7 @@ class Input {
 	 */
 	public static function request($field, $default = null) {
 
-		return (isset($_REQUEST[$field])) ? $_REQUEST[$field] : $default;
+		return (!empty($_REQUEST[$field])) ? $_REQUEST[$field] : $default;
 	
 	}
 
