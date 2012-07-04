@@ -1,16 +1,11 @@
 <?php
 
 namespace Dingo;
-use Dingo\Load;
 
 /**
- * Dingo Framework View Class
- *
- * @Author          Evan Byrne
- * @Copyright       2008 - 2012
- * @Project Page    http://www.dingoframework.com
+ * View Class
+ * @author Evan Byrne
  */
-
 class View {
 	
 	private $extensions = array();
@@ -18,10 +13,14 @@ class View {
 	private $current_section = false;
 	private $current_new_section = false;
 	private $out;
+	private $data;
 	
-	
-	// Render
-	// ---------------------------------------------------------------------------
+	/**
+	 * Render
+	 * @param string View
+	 * @param array Data
+	 * @return string Output
+	 */
 	public static function render($view, $data = array()) {
 	
 		$v = new View($view, $data);
@@ -29,12 +28,15 @@ class View {
 	
 	}
 	
-	
-	// Construct
-	// ---------------------------------------------------------------------------
+	/**
+	 * Construct
+	 * @param string View
+	 * @param array Data
+	 */
 	public function __construct($view, $data = array()) {
 		
 		$this->out = '';
+		$this->data = $data;
 		$this->load($view, $data);
 		
 		// Load extensions
@@ -50,24 +52,28 @@ class View {
 	
 	}
 	
-	
-	// Output
-	// ---------------------------------------------------------------------------
+	/**
+	 * Output
+	 * @return string
+	 */
 	public function output() {
 	
 		return $this->out;
 	
 	}
 	
-	
-	// Load
-	// ---------------------------------------------------------------------------
+	/**
+	 * Load
+	 * @param string View
+	 * @param array Data
+	 * @return boolean Success
+	 */
 	public function load($view,$data = NULL) {
 		
 		// If view does not exist display error
-		if(!file_exists(Config::get('application').'/'.Config::get('folder_views')."/$view.php")) {
+		if(!file_exists(APPLICATION."/view/$view.php")) {
 			
-			dingo_error(E_USER_WARNING,'The requested view ('.Config::get('application').'/'.Config::get('folder_views')."/$view.php) could not be found.");
+			dingo_error(E_USER_WARNING,'The requested view ('.APPLICATION."/view/$view.php) could not be found.");
 			return false;
 			
 		} else {
@@ -79,38 +85,40 @@ class View {
 			
 			}
 			
-			require(Config::get('application').'/'.Config::get('folder_views')."/$view.php");
+			require(APPLICATION."/view/$view.php");
 			return true;
 		
 		}
 		
 	}
 	
-	
-	// Base
-	// ---------------------------------------------------------------------------
+	/**
+	 * Base
+	 * @param string View
+	 * @param array Data
+	 */
 	public function base($view, $data=array()) {
 	
 		$this->extensions[] = array('view'=>$view, 'data'=>$data);
 	
 	}
 	
-	
-	// Extend
-	// ---------------------------------------------------------------------------
+	/**
+	 * Extend
+	 * @param string Section name
+	 */
 	public function extend($name) {
 	
 		ob_clean();
 		$this->current_section = $name;
-		//ob_end_flush();
 		$this->out .= ob_get_clean();
 		ob_start();
 	
 	}
 	
-	
-	// End Extend
-	// ---------------------------------------------------------------------------
+	/**
+	 * End Extend
+	 */
 	public function end_extend() {
 	
 		$data = ob_get_clean();
@@ -121,8 +129,11 @@ class View {
 	}
 	
 	
-	// Section
-	// ---------------------------------------------------------------------------
+	/**
+	 * Section
+	 * @param string Section name
+	 * @param boolean Default
+	 */
 	public function section($name, $default=true) {
 	
 		if(!$default) {
@@ -132,7 +143,6 @@ class View {
 		} else {
 			
 			$this->current_new_section = $name;
-			//ob_end_flush();
 			$this->out .= ob_get_clean();
 			ob_start();
 		
@@ -140,9 +150,9 @@ class View {
 	
 	}
 	
-	
-	// End Section
-	// ---------------------------------------------------------------------------
+	/**
+	 * End Section
+	 */
 	public function end_section() {
 	
 		if(isset($this->sections[$this->current_new_section])) {
@@ -153,6 +163,27 @@ class View {
 		}
 		
 		$this->current_new_section = false;
+	
+	}
+	
+	/**
+	 * Show
+	 * @param string Data key to display
+	 * @param string Fallback value to display
+	 */
+	public function show($key, $default = null) {
+	
+		echo (empty($this->data[$key])) ? $default : $this->data[$key];
+	
+	}
+	
+	/**
+	 * Page
+	 * @param string URL relative to base
+	 */
+	public function page($page = '') {
+	
+		echo \Library\Url::page($page);
 	
 	}
 	
