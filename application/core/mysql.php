@@ -5,7 +5,7 @@
  * @author Beaker Studio http://codecanyon.net/user/Beaker_Studio
  */
 
-namepsace Mysql;
+namespace Mysql;
 
 
 
@@ -404,7 +404,7 @@ abstract class Base {
  * Abstract Mysql Where Base Class
  * @author Beaker Studio
  */
-abstract class WhereBase extends MysqlBase {
+abstract class WhereBase extends Base {
 
 	protected $table;
 	protected $where;
@@ -825,7 +825,7 @@ class Query {
  * Mysql Select
  * @author Beaker Studio
  */
-class Select extends MysqlWhereBase {
+class Select extends WhereBase {
 	
 	protected $columns;
 	protected $joins;
@@ -1125,7 +1125,7 @@ class Select extends MysqlWhereBase {
 		
 		}
 		
-		return new MysqlQuery(implode(' ', $sql), $this->params());
+		return new Query(implode(' ', $sql), $this->params());
 	
 	}
 	
@@ -1134,7 +1134,7 @@ class Select extends MysqlWhereBase {
 	 * @param string Type of object to return
 	 * @return array Objects of type set in first param
 	 */
-	public function fetch($result_class = 'MysqlResult') {
+	public function fetch($result_class = '\Mysql\Result') {
 	
 		if(isset($this->connection)) {
 		
@@ -1150,7 +1150,7 @@ class Select extends MysqlWhereBase {
  * Mysql Update
  * @author Beaker Studio
  */
-class Update extends MysqlWhereBase {
+class Update extends WhereBase {
 
 	protected $values;
 	
@@ -1232,7 +1232,7 @@ class Update extends MysqlWhereBase {
 		
 		}
 		
-		return new MysqlQuery(implode(' ', $sql), $this->params());
+		return new Query(implode(' ', $sql), $this->params());
 	
 	}
 	
@@ -1256,7 +1256,7 @@ class Update extends MysqlWhereBase {
  * Mysql Delete
  * @author Beaker Studio
  */
-class Delete extends MysqlWhereBase {
+class Delete extends WhereBase {
 	
 	/**
 	 * Build
@@ -1287,7 +1287,7 @@ class Delete extends MysqlWhereBase {
 		
 		}
 		
-		return new MysqlQuery(implode(' ', $sql), $this->params());
+		return new Query(implode(' ', $sql), $this->params());
 	
 	}
 	
@@ -1311,7 +1311,7 @@ class Delete extends MysqlWhereBase {
  * Mysql Insert
  * @author Beaker Studio
  */
-class Insert extends MysqlBase {
+class Insert extends Base {
 
 	protected $table;
 	protected $values;
@@ -1367,7 +1367,7 @@ class Insert extends MysqlBase {
 		
 		}
 		
-		return new MysqlQuery(implode(' ', $sql), $this->params());
+		return new Query(implode(' ', $sql), $this->params());
 	
 	}
 	
@@ -1483,7 +1483,7 @@ class CreateTable {
 		// Engine
 		$sql[] = ($this->engine === null) ? ')' : ") ENGINE = {$this->engine}";
 		
-		return new MysqlQuery(implode("\n", $sql));
+		return new Query(implode("\n", $sql));
 	
 	}
 	
@@ -1554,7 +1554,7 @@ class DropTable {
 	 */
 	public function build() {
 	
-		return new MysqlQuery("DROP TABLE{$this->build_if_exists()} `{$this->table}`");
+		return new Query("DROP TABLE{$this->build_if_exists()} `{$this->table}`");
 	
 	}
 	
@@ -1599,7 +1599,7 @@ class TruncateTable {
 	 */
 	public function build() {
 	
-		return new MysqlQuery("TRUNCATE TABLE `{$this->table}`");
+		return new Query("TRUNCATE TABLE `{$this->table}`");
 	
 	}
 	
@@ -1647,7 +1647,7 @@ class RenameTable {
 	 */
 	public function build() {
 	
-		return new MysqlQuery("ALTER TABLE `{$this->table}` RENAME `{$this->new_name}`");
+		return new Query("ALTER TABLE `{$this->table}` RENAME `{$this->new_name}`");
 	
 	}
 	
@@ -1754,7 +1754,7 @@ class AlterTable {
 		
 		}
 		
-		return new MysqlQuery("ALTER TABLE `{$this->table}` " . implode(', ', $sql));
+		return new Query("ALTER TABLE `{$this->table}` " . implode(', ', $sql));
 	
 	}
 	
