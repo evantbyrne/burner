@@ -160,6 +160,17 @@ namespace Model\Base {
 			return ($execute) ? $query->execute() : $query;
 			
 		}
+
+		/**
+		 * Single
+		 * @return Single database result, or null
+		 */
+		public function single() {
+
+			$res = $this->select(false)->limit(1)->execute();
+			return (empty($res)) ? null : $res[0];
+
+		}
 		
 		/**
 		 * Delete
