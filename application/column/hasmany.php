@@ -1,9 +1,9 @@
 <?php
 
-namespace Block;
+namespace Column;
 
 /**
- * Has Many Block
+ * Has Many Column
  * @author Evan Byrne
  */
 class HasMany extends Base {

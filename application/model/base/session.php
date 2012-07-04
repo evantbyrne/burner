@@ -11,14 +11,13 @@ abstract class Session extends Root {
 	protected static $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789=_';
 	
 	/**
-	 * Blocks
-	 * @return Array of blocks that make up model
+	 * @inheritdoc
 	 */
-	public static function blocks() {
+	public static function columns() {
 	
 		return array(
 		
-			new \Block\Text('secret', array('unique'=>true))
+			new \Column\Text('secret', array('unique'=>true))
 		
 		);
 	

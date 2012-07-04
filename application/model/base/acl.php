@@ -9,15 +9,14 @@ namespace Model\Base;
 abstract class ACL extends Root {
 	
 	/**
-	 * Blocks
-	 * @return Array of blocks that make up model
+	 * @inheritdoc
 	 */
-	public static function blocks() {
+	public static function columns() {
 	
 		return array(
 		
 			// Owner ID
-			new \Block\Int('owner_id')
+			new \Column\Int('owner_id')
 		
 		);
 		

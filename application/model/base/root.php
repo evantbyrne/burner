@@ -52,11 +52,11 @@ namespace Model\Base {
 			$t->add(new \Mysql\Generate\IncrementingColumn('id'));
 			$t->add(new \Mysql\Generate\PrimaryKey('id'));
 			
-			// Loop model blocks (using late static binding)
-			foreach(static::blocks() as $block) {
+			// Loop model columns (using late static binding)
+			foreach(static::columns() as $column) {
 			
-				// Loop block columns
-				$column = $block->column();
+				// Loop column columns
+				$column = $column->column();
 				if($column !== null) {
 				
 					$t->add($column);
@@ -87,7 +87,7 @@ namespace Model\Base {
 		private $_methods_set = false;
 		
 		/**
-		 * Array of methods dynamically set by blocks
+		 * Array of methods dynamically set by columns
 		 */
 		private $_methods = array();
 		
@@ -101,9 +101,9 @@ namespace Model\Base {
 			
 			if(!$this->_methods_set) {
 				
-				foreach(static::blocks() as $block) {
+				foreach(static::columns() as $column) {
 
-					$methods = $block->methods();
+					$methods = $column->methods();
 					foreach($methods as $name => $func) {
 						
 						$this->_methods[$name] = $func;
@@ -134,12 +134,12 @@ namespace Model\Base {
 		public function select($execute = true) {
 		
 			$query = new \Model\Query\Select(self::table(), '\\'.get_called_class());
-			$blocks = static::blocks();
+			$columns = static::columns();
 			$first = true;
 			
-			foreach($blocks as $block) {
+			foreach($columns as $column) {
 			
-				$col = $block->column_name();
+				$col = $column->column_name();
 				if(isset($this->$col)) {
 				
 					if($first) {
@@ -180,12 +180,12 @@ namespace Model\Base {
 		public function delete($execute = true) {
 		
 			$query = new \Model\Query\Delete(self::table());
-			$blocks = static::blocks();
+			$columns = static::columns();
 			$first = true;
 			
-			foreach($blocks as $block) {
+			foreach($columns as $column) {
 			
-				$col = $block->column_name();
+				$col = $column->column_name();
 				if(isset($this->$col)) {
 				
 					if($first) {
@@ -215,12 +215,12 @@ namespace Model\Base {
 		public function update($execute = true) {
 		
 			$query = new \Model\Query\Update(self::table());
-			$blocks = static::blocks();
+			$columns = static::columns();
 			$query->where('id', '=', $this->id);
 			
-			foreach($blocks as $block) {
+			foreach($columns as $column) {
 			
-				$col = $block->column_name();
+				$col = $column->column_name();
 				if($col !== 'id' and isset($this->$col)) {
 					
 					$query->value($col, $this->$col);
@@ -241,11 +241,11 @@ namespace Model\Base {
 		public function insert($execute = true) {
 		
 			$query = new \Model\Query\Insert(self::table());
-			$blocks = static::blocks();
+			$columns = static::columns();
 			
-			foreach($blocks as $block) {
+			foreach($columns as $column) {
 			
-				$col = $block->column_name();
+				$col = $column->column_name();
 				if(isset($this->$col)) {
 				
 					$query->value($col, $this->$col);
@@ -266,14 +266,14 @@ namespace Model\Base {
 		
 			$errors = array();
 			$vars = get_object_vars($this);
-			$blocks = static::blocks();
+			$columns = static::columns();
 			
-			foreach($blocks as $block) {
+			foreach($columns as $column) {
 			
-				$res = $block->valid($vars[$block->column_name()]);
+				$res = $column->valid($vars[$column->column_name()]);
 				if($res !== true) {
 				
-					$errors[$block->column_name()] = $res;
+					$errors[$column->column_name()] = $res;
 				
 				}
 			

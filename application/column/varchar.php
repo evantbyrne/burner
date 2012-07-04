@@ -1,9 +1,9 @@
 <?php
 
-namespace Block;
+namespace Column;
 
 /**
- * Varchar Block
+ * Varchar Column
  * @author Evan Byrne
  */
 class Varchar extends Base {

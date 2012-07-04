@@ -1,9 +1,9 @@
 <?php
 
-namespace Block;
+namespace Column;
 
 /**
- * Char Block
+ * Char Column
  * @author Evan Byrne
  */
 class Char extends Base {

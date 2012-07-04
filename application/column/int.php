@@ -1,9 +1,9 @@
 <?php
 
-namespace Block;
+namespace Column;
 
 /**
- * Int Block
+ * Int Column
  * @author Evan Byrne
  */
 class Int extends Base {

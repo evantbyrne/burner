@@ -8,11 +8,14 @@ namespace Model;
  */
 class Session extends \Model\Base\Session {
 	
-	public static function blocks() {
+	/**
+	 * @inheritdoc
+	 */
+	public static function columns() {
 	
-		return array_merge(parent::blocks(), array(
+		return array_merge(parent::columns(), array(
 		
-			new \Block\Text('stuff')
+			new \Column\Text('stuff')
 			
 		));
 	

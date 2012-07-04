@@ -32,16 +32,15 @@ abstract class User extends Root {
 	}
 	
 	/**
-	 * Blocks
-	 * @return Array of blocks that make up model
+	 * @inheritdoc
 	 */
-	public static function blocks() {
+	public static function columns() {
 	
 		return array(
 		
-			new \Block\Email('email'),
-			new \Block\Text('password'),
-			new \Block\Int('type')
+			new \Column\Email('email'),
+			new \Column\Text('password'),
+			new \Column\Int('type')
 		
 		);
 		

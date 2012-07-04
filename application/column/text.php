@@ -1,9 +1,9 @@
 <?php
 
-namespace Block;
+namespace Column;
 
 /**
- * Text Block
+ * Text Column
  * @author Evan Byrne
  */
 class Text extends Base {

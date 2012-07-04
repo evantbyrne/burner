@@ -8,12 +8,15 @@ namespace Model;
  */
 class Simple extends \Model\Base\Root {
 	
-	public static function blocks() {
+	/**
+	 * @inheritdoc
+	 */
+	public static function columns() {
 	
 		return array(
 		
-			new \Block\Text('headline'),
-			new \Block\HasMany('articles', array('model'=>'Article', 'column'=>'simple'))
+			new \Column\Text('headline'),
+			new \Column\HasMany('articles', array('model'=>'Article', 'column'=>'simple'))
 			
 		);
 	

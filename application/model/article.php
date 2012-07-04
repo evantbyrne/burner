@@ -9,24 +9,23 @@ namespace Model;
 class Article extends Base\ACL {
 	
 	/**
-	 * Blocks
-	 * @return Array of blocks that make up model
+	 * @inheritdoc
 	 */
-	public static function blocks() {
+	public static function columns() {
 	
 		return array(
 		
-			new \Block\BelongsTo('simple'),
+			new \Column\BelongsTo('simple'),
 		
 			// Title
-			new \Block\Text('title', array('max_length'=>120, 'valid'=>function($value) {
+			new \Column\Text('title', array('max_length'=>120, 'valid'=>function($value) {
 			
 				return preg_match('/^([a-zA-Z0-9\-\._ ]+)$/', $value) ? true : 'Invalid title. Must be alpha-numeric.';
 			
 			})),
 			
 			// Content
-			new \Block\Text('content')
+			new \Column\Text('content')
 		
 		);
 		

@@ -1,9 +1,9 @@
 <?php
 
-namespace Block;
+namespace Column;
 
 /**
- * Base Block Class
+ * Base Column Class
  * @author Evan Byrne
  */
 abstract class Base {

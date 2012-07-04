@@ -33,7 +33,7 @@ class Bootstrap {
 			case 'library':    $start = APPLICATION.'/library'; break;
 			case 'controller': $start = APPLICATION.'/controller'; break;
 			case 'model':      $start = APPLICATION.'/model'; break;
-			case 'block':      $start = APPLICATION.'/block'; break;
+			case 'column':     $start = APPLICATION.'/column'; break;
 			case 'command':    $start = APPLICATION.'/command'; break;
 			default: return false; break;
 		

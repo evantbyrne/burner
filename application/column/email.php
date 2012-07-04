@@ -1,9 +1,9 @@
 <?php
 
-namespace Block;
+namespace Column;
 
 /**
- * Email Block
+ * Email Column
  * @author Evan Byrne
  */
 class Email extends Varchar {
