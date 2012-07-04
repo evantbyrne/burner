@@ -90,7 +90,7 @@ class Bootstrap {
 	 */
 	public static function init() {
 		
-		define('DINGO_VERSION','0.8');
+		define('DINGO_VERSION','1');
 		
 		// Start buffer
 		ob_start();
@@ -103,8 +103,7 @@ class Bootstrap {
 		require_once(APPLICATION.'/core/error.php');
 		require_once(APPLICATION.'/config/'.CONFIGURATION.'/config.php');
 		require_once(APPLICATION.'/config/'.CONFIGURATION.'/db.php');
-		require_once(APPLICATION.'/core/mysql/generate.php');
-		require_once(APPLICATION.'/core/mysql/connection.php');
+		require_once(APPLICATION.'/core/mysql.php');
 		require_once(APPLICATION.'/model/base/root.php');
 		require_once(APPLICATION.'/core/response.php');
 		

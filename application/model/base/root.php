@@ -10,7 +10,7 @@ namespace Model\Base {
 	abstract class Root {
 		
 		/**
-		 * SySQL storage engine to use
+		 * MySQL storage engine to use
 		 */
 		public static $engine = 'MyISAM';
 		
@@ -33,8 +33,12 @@ namespace Model\Base {
 		 */
 		public static function get($id) {
 		
-			$select = new \Model\Query\Select(self::table(), '\\'.get_called_class());
-			$res = $select->where('id', '=', $id)->limit(1)->execute();
+			$res = \Dingo\DB::connection()
+				->select(self::table(), '\\'.get_called_class())
+				->where('id', '=', $id)
+				->limit(1)
+				->execute();
+
 			return (empty($res)) ? false : $res[0];
 			
 		}
@@ -47,10 +51,11 @@ namespace Model\Base {
 		 */
 		public static function create_table($if_not_exists = false, $sql = false) {
 		
-			$t = new \Mysql\Generate\CreateTable(self::table(), $if_not_exists);
-			$t->engine(static::$engine);
-			$t->add(new \Mysql\Generate\IncrementingColumn('id'));
-			$t->add(new \Mysql\Generate\PrimaryKey('id'));
+			$t = \Dingo\DB::connection()
+				->create_table(self::table(), $if_not_exists)
+				->engine(static::$engine)
+				->add(new \Mysql\Generate\IncrementingColumn('id'))
+				->add(new \Mysql\Generate\PrimaryKey('id'));
 			
 			// Loop model columns (using late static binding)
 			foreach(static::columns() as $column) {
@@ -65,7 +70,7 @@ namespace Model\Base {
 			
 			}
 			
-			return ($sql) ? $t->build()->sql() : \Dingo\DB::connection()->execute($t->build());
+			return ($sql) ? $t->build()->sql() : $t->execute();
 		
 		}
 		
@@ -76,8 +81,7 @@ namespace Model\Base {
 		 */
 		public static function drop_table($if_exists = false) {
 		
-			$t = new \Mysql\Generate\DropTable(self::table(), $if_exists);
-			return \Dingo\DB::connection()->execute($t->build());
+			return \Dingo\DB::connection()->drop_table(self::table(), $if_exists);
 			
 		}
 		
@@ -133,7 +137,7 @@ namespace Model\Base {
 		 */
 		public function select($execute = true) {
 		
-			$query = new \Model\Query\Select(self::table(), '\\'.get_called_class());
+			$query = \Dingo\DB::connection()->select(self::table(), '\\'.get_called_class());
 			$columns = static::columns();
 			$first = true;
 			
@@ -179,7 +183,7 @@ namespace Model\Base {
 		 */
 		public function delete($execute = true) {
 		
-			$query = new \Model\Query\Delete(self::table());
+			$query = \Dingo\DB::connection()->delete(self::table());
 			$columns = static::columns();
 			$first = true;
 			
@@ -214,7 +218,7 @@ namespace Model\Base {
 		 */
 		public function update($execute = true) {
 		
-			$query = new \Model\Query\Update(self::table());
+			$query = \Dingo\DB::connection()->update(self::table());
 			$columns = static::columns();
 			$query->where('id', '=', $this->id);
 			
@@ -240,7 +244,7 @@ namespace Model\Base {
 		 */
 		public function insert($execute = true) {
 		
-			$query = new \Model\Query\Insert(self::table());
+			$values = array();
 			$columns = static::columns();
 			
 			foreach($columns as $column) {
@@ -248,13 +252,13 @@ namespace Model\Base {
 				$col = $column->column_name();
 				if(isset($this->$col)) {
 				
-					$query->value($col, $this->$col);
+					$values[$col] = $this->$col;
 				
 				}
 			
 			}
 			
-			return ($execute) ? $query->execute() : $query;
+			return \Dingo\DB::connection()->insert(self::table(), $values);
 			
 		}
 		
@@ -285,96 +289,4 @@ namespace Model\Base {
 	
 	}
 	
-}
-
-namespace Model\Query {
-
-	/**
-	 * Select Class
-	 * @author Evan Byrne
-	 */
-	class Select extends \Mysql\Generate\Select {
-	
-		private $result_class;
-		
-		/**
-		 * Construct
-		 * @param Table name
-		 * @param Class to use for result set
-		 */
-		public function __construct($table, $result_class) {
-		
-			parent::__construct($table);
-			$this->result_class = $result_class;
-		
-		}
-		
-		/**
-		 * Execute
-		 * @return Result of select
-		 */
-		public function execute() {
-		
-			return \Dingo\DB::connection()->fetch($this->build(), $this->result_class);
-		
-		}
-	
-	}
-	
-	/**
-	 * Insert Class
-	 * @author Evan Byrne
-	 */
-	class Insert extends \Mysql\Generate\Insert {
-	
-		/**
-		 * Execute
-		 * @return Result of insertion
-		 */
-		public function execute() {
-		
-			$con = \Dingo\DB::connection();
-			$con->execute($this->build());
-			return $con->last_insert_id();
-		
-		}
-	
-	}
-	
-	/**
-	 * Update Class
-	 * @author Evan Byrne
-	 */
-	class Update extends \Mysql\Generate\Update {
-	
-		/**
-		 * Execute
-		 * @return Result of update
-		 */
-		public function execute() {
-		
-			return \Dingo\DB::connection()->execute($this->build());
-		
-		}
-	
-	}
-	
-	/**
-	 * Delete Class
-	 * @author Evan Byrne
-	 */
-	class Delete extends \Mysql\Generate\Delete {
-	
-		/**
-		 * Execute
-		 * @return Result of delete
-		 */
-		public function execute() {
-		
-			return \Dingo\DB::connection()->execute($this->build());
-		
-		}
-	
-	}
-
 }
