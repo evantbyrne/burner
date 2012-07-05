@@ -48,7 +48,7 @@ abstract class Base {
 	 */
 	public function set_column($column) {
 	
-		// TODO: Validate that $column inherits \Mysql\Generate\TableColumn
+		// TODO: Validate that $column inherits \Mysql\TableColumn
 		$this->_column = $column;
 		return $this;
 	

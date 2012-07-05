@@ -12,7 +12,7 @@ class BelongsTo extends Base {
 	
 	public function __construct($column_name, $options = array()) {
 		
-		parent::__construct($column_name, $options, new \Mysql\Generate\IntColumn($column_name));
+		parent::__construct($column_name, $options, new \Mysql\IntColumn($column_name));
 		
 		// Model
 		$model_class = (isset($options['model'])) ? $options['model'] : $column_name;

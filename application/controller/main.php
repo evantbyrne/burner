@@ -18,9 +18,10 @@ class Main {
 		$id = $query->execute();
 		return new Response($id);*/
 		
-		$col = new \Mysql\Generate\TimestampColumn('foo', array('auto_update' => true));
+		//$col = new \Mysql\Generate\TimestampColumn('foo', array('auto_update' => true));
 		
-		return new Response($col->build());
+		//return new Response($col->build());
+		return new Response('Yayy!');
 	
 	}
 	

@@ -10,7 +10,7 @@ class Int extends Base {
 	
 	public function __construct($column_name, $options = array()) {
 		
-		parent::__construct($column_name, $options, new \Mysql\Generate\IntColumn($column_name, $options));
+		parent::__construct($column_name, $options, new \Mysql\IntColumn($column_name, $options));
 	
 	}
 

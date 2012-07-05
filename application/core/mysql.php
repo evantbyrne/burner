@@ -8,9 +8,14 @@
 namespace Mysql;
 
 
+/**
+ * Exception Class
+ */
+class Exception extends \Exception {}
+
 
 /**
- * Mysql Connection Class
+ * Connection Class
  * @author Beaker Studio
  */
 class Connection {
@@ -40,10 +45,10 @@ class Connection {
 		
 		try {
 			
-			$this->connection = new PDO("mysql:dbname={$this->db};host={$this->host}", $this->user, $this->pass);
-			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$this->connection = new \PDO("mysql:dbname={$this->db};host={$this->host}", $this->user, $this->pass);
+			$this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 		
-		} catch(PDOException $e) {
+		} catch(\PDOException $e) {
 		
 			throw new Exception($e->getMessage());
 		
@@ -99,11 +104,11 @@ class Connection {
 	
 	/**
 	 * Fetch
-	 * @param MysqlQuery Query to execute
+	 * @param Query
 	 * @param string Class type to use for result object
 	 * @return array An array of result objects
 	 */
-	public function fetch($query, $result_class='MysqlResult') {
+	public function fetch($query, $result_class='Result') {
 	
 		$sql = $query->sql();
 		$params = $query->params();
@@ -135,7 +140,7 @@ class Connection {
 	
 	/**
 	 * Execute
-	 * @param MysqlQuery Query to execute
+	 * @param Query
 	 * @return mixed Result of query
 	 */
 	public function execute($query) {
@@ -235,33 +240,33 @@ class Connection {
 	/**
 	 * Select
 	 * @param string Table name
-	 * @return MysqlSelect
+	 * @return Select
 	 */
 	public function select($table) {
 	
-		return new MysqlSelect($table, $this);
+		return new Select($table, $this);
 	
 	}
 	
 	/**
 	 * Delete
 	 * @param string Table name
-	 * @return MysqlDelete
+	 * @return Delete
 	 */
 	public function delete($table) {
 	
-		return new MysqlDelete($table, $this);
+		return new Delete($table, $this);
 	
 	}
 	
 	/**
 	 * Update
 	 * @param string Table name
-	 * @return MysqlUpdate
+	 * @return Update
 	 */
 	public function update($table) {
 	
-		return new MysqlUpdate($table, $this);
+		return new Update($table, $this);
 	
 	}
 	
@@ -273,7 +278,7 @@ class Connection {
 	 */
 	public function insert($table, $values) {
 	
-		$query = new MysqlInsert($table, $this);
+		$query = new Insert($table, $this);
 		
 		foreach($values as $column => $value) {
 		
@@ -289,11 +294,11 @@ class Connection {
 	 * Create Table
 	 * @param string Table name
 	 * @param boolean Add IF NOT EXISTS clause if true
-	 * @return MysqlCreateTable
+	 * @return CreateTable
 	 */
 	public function create_table($table, $if_not_exists = false) {
 	
-		return new MysqlCreateTable($table, $if_not_exists, $this);
+		return new CreateTable($table, $if_not_exists, $this);
 	
 	}
 	
@@ -305,7 +310,7 @@ class Connection {
 	 */
 	public function drop_table($table, $if_exists = false) {
 	
-		$query = new MysqlDropTable($table, $if_exists, $this);
+		$query = new DropTable($table, $if_exists, $this);
 		return $query->execute();
 	
 	}
@@ -317,7 +322,7 @@ class Connection {
 	 */
 	public function truncate_table($table) {
 	
-		$query = new MysqlTruncateTable($table, $this);
+		$query = new TruncateTable($table, $this);
 		return $query->execute();
 	
 	}
@@ -330,7 +335,7 @@ class Connection {
 	 */
 	public function rename_table($table, $new_name) {
 	
-		$query = new MysqlRenameTable($table, $new_name, $this);
+		$query = new RenameTable($table, $new_name, $this);
 		return $query->execute();
 	
 	}
@@ -338,11 +343,11 @@ class Connection {
 	/**
 	 * Alter Table
 	 * @param string Table name
-	 * @return MysqlAlterTable
+	 * @return AlterTable
 	 */
 	public function alter_table($table) {
 	
-		return new MysqlAlterTable($table, $this);
+		return new AlterTable($table, $this);
 	
 	}
 
@@ -357,7 +362,7 @@ class Result {
 }
 
 /**
- * Abstract Mysql Base
+ * Abstract Base
  * @author Beaker Studio
  */
 abstract class Base {
@@ -367,7 +372,7 @@ abstract class Base {
 	
 	/**
 	 * Construct
-	 * @param MysqlConnection
+	 * @param Connection
 	 */
 	public function __construct($connection = null) {
 	
@@ -401,7 +406,7 @@ abstract class Base {
 }
 
 /**
- * Abstract Mysql Where Base Class
+ * Abstract Where Base Class
  * @author Beaker Studio
  */
 abstract class WhereBase extends Base {
@@ -414,7 +419,7 @@ abstract class WhereBase extends Base {
 	/**
 	 * Construct
 	 * @param string Table
-	 * @param MysqlConnection
+	 * @param Connection
 	 */
 	public function __construct($table, $connection = null) {
 	
@@ -770,7 +775,7 @@ abstract class WhereBase extends Base {
 	
 	/**
 	 * Build
-	 * @return MysqlQuery
+	 * @return Query
 	 */
 	public abstract function build();
 
@@ -779,7 +784,7 @@ abstract class WhereBase extends Base {
 
 
 /**
- * Mysql Query Class
+ * Query Class
  * @author Beaker Studio
  */
 class Query {
@@ -822,7 +827,7 @@ class Query {
 }
 
 /**
- * Mysql Select
+ * Select
  * @author Beaker Studio
  */
 class Select extends WhereBase {
@@ -834,7 +839,7 @@ class Select extends WhereBase {
 	/**
 	 * Construct
 	 * @param string Table
-	 * @param MysqlConnection
+	 * @param Connection
 	 */
 	public function __construct($table, $connection = null) {
 	
@@ -1078,7 +1083,7 @@ class Select extends WhereBase {
 	
 	/**
 	 * Build
-	 * @return MysqlQuery
+	 * @return Query
 	 */
 	public function build() {
 	
@@ -1147,7 +1152,7 @@ class Select extends WhereBase {
 }
 
 /**
- * Mysql Update
+ * Update
  * @author Beaker Studio
  */
 class Update extends WhereBase {
@@ -1157,7 +1162,7 @@ class Update extends WhereBase {
 	/**
 	 * Construct
 	 * @param string Table
-	 * @param MysqlConnection
+	 * @param Connection
 	 */
 	public function __construct($table, $connection = null) {
 	
@@ -1180,7 +1185,7 @@ class Update extends WhereBase {
 	
 	/**
 	 * Build
-	 * @return MysqlQuery
+	 * @return Query
 	 */
 	public function build() {
 	
@@ -1253,14 +1258,14 @@ class Update extends WhereBase {
 }
 
 /**
- * Mysql Delete
+ * Delete
  * @author Beaker Studio
  */
 class Delete extends WhereBase {
 	
 	/**
 	 * Build
-	 * @return MysqlQuery
+	 * @return Query
 	 */
 	public function build() {
 	
@@ -1308,7 +1313,7 @@ class Delete extends WhereBase {
 }
 
 /**
- * Mysql Insert
+ * Insert
  * @author Beaker Studio
  */
 class Insert extends Base {
@@ -1319,7 +1324,7 @@ class Insert extends Base {
 	/**
 	 * Construct
 	 * @param string Table
-	 * @param MysqlConnection
+	 * @param Connection
 	 */
 	public function __construct($table, $connection = null) {
 	
@@ -1344,7 +1349,7 @@ class Insert extends Base {
 	
 	/**
 	 * Build
-	 * @return MysqlQuery
+	 * @return Query
 	 */
 	public function build() {
 	
@@ -1389,7 +1394,7 @@ class Insert extends Base {
 }
 
 /**
- * Mysql Create Table
+ * Create Table
  * @author Beaker Studio
  */
 class CreateTable {
@@ -1404,7 +1409,7 @@ class CreateTable {
 	 * Construct
 	 * @param string Table
 	 * @param boolean If true, then add IF NOT EXISTS clause
-	 * @param MysqlConnection
+	 * @param Connection
 	 */
 	public function __construct($table, $if_not_exists = false, $connection = null) {
 	
@@ -1464,7 +1469,7 @@ class CreateTable {
 	
 	/**
 	 * Build
-	 * @return MysqlQuery
+	 * @return Query
 	 */
 	public function build() {
 	
@@ -1502,7 +1507,7 @@ class CreateTable {
 
 
 /**
- * Mysql Drop Table
+ * Drop Table
  * @author Beaker Studio
  */
 class DropTable {
@@ -1515,7 +1520,7 @@ class DropTable {
 	 * Construct
 	 * @param string Table
 	 * @param boolean If true, then add IF EXISTS clause
-	 * @param MysqlConnection
+	 * @param Connection
 	 */
 	public function __construct($table, $if_exists = false, $connection = null) {
 	
@@ -1550,7 +1555,7 @@ class DropTable {
 	
 	/**
 	 * Build
-	 * @return MysqlQuery
+	 * @return Query
 	 */
 	public function build() {
 	
@@ -1573,7 +1578,7 @@ class DropTable {
 
 
 /**
- * Mysql Truncate Table
+ * Truncate Table
  * @author Beaker Studio
  */
 class TruncateTable {
@@ -1584,7 +1589,7 @@ class TruncateTable {
 	/**
 	 * Construct
 	 * @param string Table
-	 * @param MysqlConnection
+	 * @param Connection
 	 */
 	public function __construct($table, $connection = null) {
 	
@@ -1595,7 +1600,7 @@ class TruncateTable {
 	
 	/**
 	 * Build
-	 * @return MysqlQuery
+	 * @return Query
 	 */
 	public function build() {
 	
@@ -1618,7 +1623,7 @@ class TruncateTable {
 
 
 /**
- * Mysql Rename Table
+ * Rename Table
  * @author Beaker Studio
  */
 class RenameTable {
@@ -1631,7 +1636,7 @@ class RenameTable {
 	 * Construct
 	 * @param string Table
 	 * @param string New name for table
-	 * @param MysqlConnection
+	 * @param Connection
 	 */
 	public function __construct($table, $new_name, $connection = null) {
 	
@@ -1643,7 +1648,7 @@ class RenameTable {
 	
 	/**
 	 * Build
-	 * @return MysqlQuery
+	 * @return Query
 	 */
 	public function build() {
 	
@@ -1666,7 +1671,7 @@ class RenameTable {
 
 
 /**
- * Mysql Alter Table
+ * Alter Table
  * @author Beaker Studio
  */
 class AlterTable {
@@ -1678,7 +1683,7 @@ class AlterTable {
 	/**
 	 * Construct
 	 * @param string Table
-	 * @param MysqlConnection
+	 * @param Connection
 	 */
 	public function __construct($table, $connection = null) {
 	
@@ -1726,7 +1731,7 @@ class AlterTable {
 	
 	/**
 	 * Build
-	 * @return MysqlQuery
+	 * @return Query
 	 */
 	public function build() {
 	

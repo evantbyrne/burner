@@ -10,7 +10,7 @@ class Varchar extends Base {
 	
 	public function __construct($column_name, $options = array()) {
 		
-		parent::__construct($column_name, $options, new \Mysql\Generate\VarcharColumn($column_name, $options));
+		parent::__construct($column_name, $options, new \Mysql\VarcharColumn($column_name, $options));
 	
 	}
 

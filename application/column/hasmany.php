@@ -63,25 +63,25 @@ class HasManyQuery {
 	
 	/**
 	 * Select
-	 * @return \Model\Query\Select object
+	 * @return \Model\Select object
 	 */
 	public function select() {
 		
-		$query = new \Model\Query\Select(call_user_func("{$this->model_class}::table"), $this->model_class);
-		$query->where($this->column, '=', $this->id);
-		return $query;
+		return \Dingo\DB::connection()
+			->select(call_user_func("{$this->model_class}::table"), $this->model_class)
+			->where($this->column, '=', $this->id);
 		
 	}
 	
 	/**
 	 * Delete
-	 * @return \Model\Query\Delete object
+	 * @return \Model\Delete object
 	 */
 	public function delete() {
 		
-		$query = new \Model\Query\Delete(call_user_func("{$this->model_class}::table"));
-		$query->where($this->column, '=', $this->id);
-		return $query;
+		return \Dingo\DB::connection()
+			->delete(call_user_func("{$this->model_class}::table"))
+			->where($this->column, '=', $this->id);
 		
 	}
 	
@@ -92,7 +92,7 @@ class HasManyQuery {
 	 */
 	public function update($instance) {
 		
-		$query = new \Model\Query\Update(call_user_func("{$this->model_class}::table"));
+		$query = \Dingo\DB::connection()->update(call_user_func("{$this->model_class}::table"));
 		$query->where($this->column, '=', $this->id);
 		
 		$blocks = call_user_func("{$this->model_class}::blocks");

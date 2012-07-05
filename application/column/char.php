@@ -10,7 +10,7 @@ class Char extends Base {
 	
 	public function __construct($column_name, $options = array()) {
 		
-		parent::__construct($column_name, $options, new \Mysql\Generate\CharColumn($column_name, $options));
+		parent::__construct($column_name, $options, new \Mysql\CharColumn($column_name, $options));
 	
 	}
 

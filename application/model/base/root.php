@@ -54,8 +54,8 @@ namespace Model\Base {
 			$t = \Dingo\DB::connection()
 				->create_table(self::table(), $if_not_exists)
 				->engine(static::$engine)
-				->add(new \Mysql\Generate\IncrementingColumn('id'))
-				->add(new \Mysql\Generate\PrimaryKey('id'));
+				->add(new \Mysql\IncrementingColumn('id'))
+				->add(new \Mysql\PrimaryKey('id'));
 			
 			// Loop model columns (using late static binding)
 			foreach(static::columns() as $column) {

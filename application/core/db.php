@@ -23,7 +23,6 @@ class DB {
 		
 			$s = Config::get('database');
 			self::$connection = new \Mysql\Connection($s['host'], $s['database'], $s['username'], $s['password']);
-			self::$connection->connect();
 		
 		}
 		
