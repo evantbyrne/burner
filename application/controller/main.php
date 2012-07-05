@@ -6,22 +6,11 @@ use Dingo\Route, Dingo\Response, Dingo\JsonResponse, Dingo\Shortcut as S, Librar
 class Main {
 
 	public function index() {
-
-		//$data = '<disallowed>Booo!</disallowed>This is <i>Awesome</i>!';
-		//return new Response(\Library\Xss::clean($data));
 		
-		//$s = new \Model\Simple();
-		//$s->headline = 'Wooo!';
-		//$id = $s->insert();
-		/*$query = new \Model\Query\Insert('simple');
-		$query->value('headline', 'Awesome!');
-		$id = $query->execute();
-		return new Response($id);*/
+		$s = new \Model\Simple();
+		$s->headline = 'Wooo!';
 		
-		//$col = new \Mysql\Generate\TimestampColumn('foo', array('auto_update' => true));
-		
-		//return new Response($col->build());
-		return new Response('Yayy!');
+		return new JsonResponse($s->single());
 	
 	}
 	

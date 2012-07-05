@@ -37,7 +37,7 @@ namespace Model\Base {
 				->select(self::table(), '\\'.get_called_class())
 				->where('id', '=', $id)
 				->limit(1)
-				->execute();
+				->fetch();
 
 			return (empty($res)) ? false : $res[0];
 			
@@ -161,7 +161,7 @@ namespace Model\Base {
 			
 			}
 			
-			return ($execute) ? $query->execute() : $query;
+			return ($execute) ? $query->fetch() : $query;
 			
 		}
 
@@ -171,7 +171,7 @@ namespace Model\Base {
 		 */
 		public function single() {
 
-			$res = $this->select(false)->limit(1)->execute();
+			$res = $this->select(false)->limit(1)->fetch();
 			return (empty($res)) ? null : $res[0];
 
 		}

@@ -242,9 +242,9 @@ class Connection {
 	 * @param string Table name
 	 * @return Select
 	 */
-	public function select($table) {
+	public function select($table, $result_class = null) {
 	
-		return new Select($table, $this);
+		return new Select($table, $result_class, $this);
 	
 	}
 	
@@ -835,18 +835,20 @@ class Select extends WhereBase {
 	protected $columns;
 	protected $joins;
 	protected $offset;
+	protected $result_class;
 	
 	/**
 	 * Construct
 	 * @param string Table
 	 * @param Connection
 	 */
-	public function __construct($table, $connection = null) {
+	public function __construct($table, $result_class = '\Mysql\Result', $connection = null) {
 	
 		parent::__construct($table, $connection);
 		$this->columns = array();
 		$this->joins = array();
 		$this->offset = null;
+		$this->result_class = '\Mysql\Result';
 	
 	}
 	
@@ -1139,11 +1141,11 @@ class Select extends WhereBase {
 	 * @param string Type of object to return
 	 * @return array Objects of type set in first param
 	 */
-	public function fetch($result_class = '\Mysql\Result') {
+	public function fetch() {
 	
 		if(isset($this->connection)) {
 		
-			return $this->connection->fetch($this->build(), $result_class);
+			return $this->connection->fetch($this->build(), $this->result_class);
 		
 		}
 	
