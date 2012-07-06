@@ -27,6 +27,9 @@ define('ERROR_LOG_FILE','log.txt');
 date_default_timezone_set('America/New_York');
 
 
+// Default language
+Config::set('language', 'english');
+
 /* Sessions */
 Config::set('session',array(
 	'connection'=>'default',

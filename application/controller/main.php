@@ -7,10 +7,7 @@ class Main {
 
 	public function index() {
 		
-		$s = new \Model\Simple();
-		$s->headline = 'Wooo!';
-		
-		return new JsonResponse($s->single());
+		return new Response(\Language\Auth::email_success_message('http://localhost'));
 	
 	}
 	
