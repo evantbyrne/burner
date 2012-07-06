@@ -6,7 +6,7 @@ namespace Model;
  * Simple Model
  * @author Evan Byrne
  */
-class Simple extends \Model\Base\Root {
+class Simple extends Base\Root {
 	
 	/**
 	 * @inheritdoc

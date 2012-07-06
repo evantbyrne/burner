@@ -9,21 +9,32 @@ namespace Model\Base;
 abstract class User extends Root {
 	
 	/**
-	 * User levels, which are primarily used for ACLs
+	 * array User levels, which are primarily used for ACLs
 	 */
-	private static $levels = array(
+	protected static $levels = array(
 	
 		'owner'     => 40,
 		'admin'     => 30,
 		'moderator' => 20,
 		'user'      => 10,
-		'any'       => 0
+		'banned'    => -10
 	
 	);
 	
 	/**
+	 * All Levels
+	 * @return array
+	 */
+	public static function all_levels() {
+	
+		return static::$levels;
+	
+	}
+	
+	/**
 	 * Level
-	 * @param Level to get integer value of
+	 * @param string Level to get integer value of
+	 * @return int
 	 */
 	public static function level($level) {
 	
@@ -32,15 +43,28 @@ abstract class User extends Root {
 	}
 	
 	/**
+	 * Type
+	 * @param int Level to get string value of
+	 * @return string
+	 */
+	public static function type($level) {
+	
+		$types = array_flip(static::$levels);
+		return (isset($types[$level])) ? $types[$level] : '';
+	
+	}
+	
+	/**
 	 * @inheritdoc
 	 */
-	public static function columns() {
+	public static function blocks() {
 	
 		return array(
 		
-			new \Column\Email('email'),
-			new \Column\Text('password'),
-			new \Column\Int('type')
+			new \Block\Email('email', array('length' => 100, 'required' => 'Email field required.')),
+			new \Block\Varchar('password', array('length' => 255, 'required' => 'Password field required.')),
+			new \Block\TinyInt('type'),
+			new \Block\Varchar('verify_code', array('length' => 30, 'null' => true))
 		
 		);
 		
@@ -48,8 +72,9 @@ abstract class User extends Root {
 	
 	/**
 	 * Set Email
-	 * @param Email address
-	 * @return This
+	 *
+	 * @param string Email address
+	 * @return $this
 	 */
 	public function set_email($email) {
 		
@@ -60,13 +85,13 @@ abstract class User extends Root {
 	
 	/**
 	 * Set Password
+	 *
 	 * Hashes and sets the password
-	 * @param Cleartext password
-	 * @return This
+	 * @param string Cleartext password
+	 * @return $this
 	 */
 	public function set_password($password) {
 		
-		// TODO: Add other hash options via encryption library
 		$this->password = sha1($password);
 		return $this;
 		
@@ -74,12 +99,13 @@ abstract class User extends Root {
 	
 	/**
 	 * Check
+	 * @return boolean
 	 */
 	public function check() {
 		
-		$res = self::select()
-			->where('email', '=', $this->email)
-			->and_where('password', '=', $this->password)
+		$res = $this->select(false)
+			->and_where_null('verify_code')
+			->and_where('type', '>', self::level('banned'))
 			->limit(1)
 			->execute();
 		

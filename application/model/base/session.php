@@ -11,28 +11,17 @@ abstract class Session extends Root {
 	protected static $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789=_';
 	
 	/**
-	 * @inheritdoc
+	 * Blocks
+	 * @return Array of blocks that make up model
 	 */
-	public static function columns() {
+	public static function blocks() {
 	
 		return array(
 		
-			new \Column\Text('secret', array('unique'=>true))
+			new \Block\Text('secret', array('unique' => true)),
+			new \Block\Timestamp('expire', array('null' => true))
 		
 		);
-	
-	}
-	
-	/**
-	 * Get
-	 * @param Secret session value
-	 * @return \Model\Base\Session object or false
-	 */
-	public static function get($secret) {
-	
-		$select = new \Model\Query\Select(self::table(), '\\'.get_called_class());
-		$res = $select->where('secret', '=', $secret)->limit(1)->execute();
-		return (empty($res)) ? false : $res[0];
 	
 	}
 	
@@ -55,30 +44,6 @@ abstract class Session extends Root {
 		}
 		
 		return $salt;
-	
-	}
-	
-	/**
-	 * Insert
-	 * @return Generated secret representing session
-	 */
-	public function insert() {
-	
-		$this->secret = static::secret();
-		parent::insert();
-		return $this->secret;
-	
-	}
-	
-	/**
-	 * Delete
-	 * @param Boolean if the query should be executed right away (default true)
-	 * @return Result of query if execute is true, \Model\Query object otherwise
-	 */
-	public function delete($execute = true) {
-	
-		$delete = parent::delete(false);
-		return ($execute) ? $delete->execute() : $delete;
 	
 	}
 
