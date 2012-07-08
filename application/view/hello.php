@@ -2,7 +2,7 @@
 
 
 <!-- Main Content -->
-<?php $this->extend('main_content'); ?>
+<?php $this->extend('content'); ?>
 
 	<p>Hello, World!</p>
 	

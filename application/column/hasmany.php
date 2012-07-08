@@ -63,25 +63,25 @@ class HasManyQuery {
 	
 	/**
 	 * Select
-	 * @return \Model\Select object
+	 * @return \Mysql\Select object
 	 */
 	public function select() {
 		
-		return \Dingo\DB::connection()
-			->select(call_user_func("{$this->model_class}::table"), $this->model_class)
-			->where($this->column, '=', $this->id);
+		$query = \Dingo\DB::connection()->select(call_user_func("{$this->model_class}::table"), $this->model_class);
+		$query->where($this->column, '=', $this->id);
+		return $query;
 		
 	}
 	
 	/**
 	 * Delete
-	 * @return \Model\Delete object
+	 * @return \Mysql\Delete object
 	 */
 	public function delete() {
 		
-		return \Dingo\DB::connection()
-			->delete(call_user_func("{$this->model_class}::table"))
-			->where($this->column, '=', $this->id);
+		$query = \Dingo\DB::connection()->delete(call_user_func("{$this->model_class}::table"));
+		$query->where($this->column, '=', $this->id);
+		return $query;
 		
 	}
 	
@@ -95,10 +95,10 @@ class HasManyQuery {
 		$query = \Dingo\DB::connection()->update(call_user_func("{$this->model_class}::table"));
 		$query->where($this->column, '=', $this->id);
 		
-		$blocks = call_user_func("{$this->model_class}::blocks");
-		foreach($blocks as $block) {
+		$columns = call_user_func("{$this->model_class}::columns");
+		foreach($columns as $column) {
 		
-			$col = $block->column_name();
+			$col = $column->column_name();
 			if($col !== 'id' and isset($instance->$col)) {
 				
 				$query->value($col, $instance->$col);

@@ -9,7 +9,7 @@ class Auth {
 	public static $error_taken_email = 'Given email already belongs to registered user. Are you sure that you don\'t already have an account?';
 
 	// Registration success
-	public static $email_success_from_address = 'noreply@example.com';
+	public static $email_success_from = 'noreply@example.com';
 	public static $email_success_title = 'Verify Your Registration';
 	public static function email_success_message($verify_url) {
 	
@@ -19,7 +19,7 @@ class Auth {
 	}
 
 	// Password reset
-	public static $email_password_reset_from_address = 'noreply@example.com';
+	public static $email_password_reset_from = 'noreply@example.com';
 	public static $email_password_reset_title = 'Password Reset';
 	public static function email_password_reset_message($reset_url) {
 	

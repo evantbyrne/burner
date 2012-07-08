@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<title><?php $this->section('title'); ?>Admin<?php $this->end_section(); ?></title>
+	</head>
 	<body>
-		<?php $this->section('main_content'); ?>
+		<?php $this->section('content'); ?>
 			
-			<p>Boring default content</p>
+			<!-- Default Content -->
 			
 		<?php $this->end_section(); ?>
 	</body>

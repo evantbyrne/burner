@@ -186,5 +186,19 @@ class View {
 		echo \Library\Url::page($page);
 	
 	}
+
+	/**
+	 * Error
+	 * @param string Name of error
+	 */
+	public function error($error) {
+
+		if(isset($this->data['errors'][$error])) {
+
+			echo self::render('error/form', array('content' => $this->data['errors'][$error]));
+
+		}
+
+	}
 	
 }

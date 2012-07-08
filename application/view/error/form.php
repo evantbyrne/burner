@@ -1,0 +1,1 @@
+<p>Error: <?php $this->show('content'); ?></p>

@@ -1,4 +1,4 @@
-<?php $this->base('admin/base'); ?>
+<?php $this->base('base'); ?>
 
 
 <!-- Title -->

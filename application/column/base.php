@@ -3,7 +3,7 @@
 namespace Column;
 
 /**
- * Base Column Class
+ * Base Block Class
  * @author Evan Byrne
  */
 abstract class Base {
@@ -90,6 +90,12 @@ abstract class Base {
 	 * @return True if valid or no validation function given, a string on failure
 	 */
 	public function valid($value) {
+	
+		if(isset($this->_options['required']) and empty($value)) {
+		
+			return $this->_options['required'];
+		
+		}
 	
 		if(isset($this->_options['valid']) and is_callable($this->_options['valid'])) {
 		
