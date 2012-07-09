@@ -8,6 +8,21 @@ namespace Dingo;
  */
 class Response {
 
+	/**
+	 * View
+	 * @param View to load
+	 * @param Associated array of data to pass to view
+	 * @param HTTP status code
+	 * @return HTTP Response object
+	 */
+	public static function view($view, $data = null, $code = null) {
+
+		return new Response(View::render($view, $data), $code);
+
+	}
+	
+	
+	
 	protected $content;
 	protected $code;
 	

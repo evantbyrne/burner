@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-use Library\Input, Library\Url, Library\Email, Dingo\Shortcut as S;
+use Library\Input, Library\Url, Library\Email, Dingo\Response;
 use Model\User, Model\PasswordReset, Model\Country;
 
 /**
@@ -16,7 +16,7 @@ class Auth {
 	 */
 	public function register() {
 		
-		return S::render_response('auth/register');
+		return Response::view('auth/register');
 	
 	}
 	
@@ -69,7 +69,7 @@ class Auth {
 		// Show form if errors exist
 		if(!empty($errors)) {
 		
-			return S::render_response('auth/register', array(
+			return Response::view('auth/register', array(
 			
 				'errors' => $errors,
 				'email'  => $user->email
@@ -90,7 +90,7 @@ class Auth {
 			\Language\Auth::email_success_message($v_url),
 			'From: ' + \Language\Auth::$email_success_from);
 		
-		return S::render_response('auth/register_success');
+		return Response::view('auth/register_success');
 	
 	}
 

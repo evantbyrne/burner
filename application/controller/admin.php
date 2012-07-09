@@ -1,7 +1,7 @@
 <?php
 
 namespace Controller;
-use Dingo\Route, Dingo\Response, Dingo\JsonResponse, Dingo\Shortcut as S, Library\Input;
+use Dingo\Route, Dingo\Response, Dingo\JsonResponse, Library\Input;
 
 class Admin {
 	
@@ -21,7 +21,7 @@ class Admin {
 	public function index() {
 		
 		$models = \Dingo\Config::get('admin');
-		return S::render_response('admin/index', array('models' => $models));
+		return Response::view('admin/index', array('models' => $models));
 	
 	}
 
