@@ -126,6 +126,18 @@ class Template {
 		ob_start();
 	
 	}
+
+
+	/**
+	 * Set
+	 * @param string Section name
+	 * @param string Data
+	 */
+	public function set($name, $data) {
+
+		$this->sections[$name] = $data;
+
+	}
 	
 	
 	/**

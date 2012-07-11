@@ -10,10 +10,4 @@
 
 
 <!-- Title -->
-<?php
-
-$this->extend('title');
-$this->show('title');
-$this->end_extend();
-
-?>
+<?php $this->set('title', $title); ?>

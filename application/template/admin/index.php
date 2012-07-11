@@ -2,7 +2,7 @@
 
 
 <!-- Title -->
-<?php $this->extend('title') ?>Admin Index<?php $this->end_extend(); ?>
+<?php $this->set('title', 'Admin Index') ?>
 
 
 <!-- Content -->
