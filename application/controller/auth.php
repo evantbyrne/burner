@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-use Library\Input, Library\Url, Library\Email, Dingo\Response;
+use Library\Input, Library\Email;
 use Model\User, Model\PasswordReset, Model\Country;
 
 /**
@@ -79,7 +79,7 @@ class Auth extends Base {
 			$user->insert();
 		
 			// Send verification email
-			$v_url = Url::page("verify/{$user->verify_code}");
+			$v_url = url("verify/{$user->verify_code}");
 			mail($user->email,
 				\Language\Auth::$email_success_title,
 				\Language\Auth::email_success_message($v_url),

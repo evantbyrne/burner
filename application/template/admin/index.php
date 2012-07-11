@@ -20,7 +20,7 @@
 		
 			<?php foreach($models as $model): ?>
 		
-				<li><a href="<?php $this->page("admin/$model"); ?>"><?php echo $model; ?></a></li>
+				<li><a href="<?php echo url("admin/$model"); ?>"><?php echo ucfirst($model); ?></a></li>
 			
 			<?php endforeach; ?>
 		

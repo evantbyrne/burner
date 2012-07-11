@@ -91,8 +91,6 @@ class Bootstrap {
 	 */
 	public static function init() {
 		
-		define('DINGO_VERSION','1');
-		
 		// Start buffer
 		ob_start();
 		
