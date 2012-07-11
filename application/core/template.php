@@ -175,16 +175,6 @@ class Template {
 		echo (empty($this->data[$key])) ? $default : $this->data[$key];
 	
 	}
-	
-	/**
-	 * Page
-	 * @param string URL relative to base
-	 */
-	public function page($page = '') {
-	
-		echo \Library\Url::page($page);
-	
-	}
 
 	/**
 	 * Error
