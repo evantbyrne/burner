@@ -63,6 +63,7 @@ class Auth extends Base {
 		// Show form if errors exist
 		if(!empty($errors)) {
 		
+			$this->template('auth/register');
 			$this->data(array(
 			
 				'errors' => $errors,
@@ -70,21 +71,23 @@ class Auth extends Base {
 			
 			));
 		
+		} else {
+		
+			// Create user
+			$user->verify_code = \Model\UserSession::secret();
+			$user->set_password($password);
+			$user->insert();
+		
+			// Send verification email
+			$v_url = Url::page("verify/{$user->verify_code}");
+			mail($user->email,
+				\Language\Auth::$email_success_title,
+				\Language\Auth::email_success_message($v_url),
+				'From: ' + \Language\Auth::$email_success_from);
+		
+			$this->template('auth/register_success');
+		
 		}
-		
-		// Create user
-		$user->verify_code = \Model\UserSession::secret();
-		$user->set_password($password);
-		$user->insert();
-		
-		// Send verification email
-		$v_url = Url::page("verify/{$user->verify_code}");
-		mail($user->email,
-			\Language\Auth::$email_success_title,
-			\Language\Auth::email_success_message($v_url),
-			'From: ' + \Language\Auth::$email_success_from);
-		
-		$this->template('auth/register_success');
 	
 	}
 
