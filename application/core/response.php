@@ -9,15 +9,15 @@ namespace Dingo;
 class Response {
 
 	/**
-	 * View
-	 * @param View to load
-	 * @param Associated array of data to pass to view
-	 * @param HTTP status code
-	 * @return HTTP Response object
+	 * Template
+	 * @param string Template to load
+	 * @param array Associated array of data to pass to view
+	 * @param int HTTP status code
+	 * @return \Dingo\Response HTTP Response object
 	 */
-	public static function view($view, $data = null, $code = null) {
+	public static function template($template, $data = null, $code = null) {
 
-		return new Response(View::render($view, $data), $code);
+		return new Response(Template::render($template, $data), $code);
 
 	}
 	
@@ -28,8 +28,8 @@ class Response {
 	
 	/**
 	 * Constructor
-	 * @param Response content
-	 * @param HTTP status code
+	 * @param string Response content
+	 * @param int HTTP status code
 	 */
 	public function __construct($content = '', $code = null) {
 	
@@ -40,7 +40,7 @@ class Response {
 	
 	/**
 	 * Content
-	 * @return Response content
+	 * @return string Response content
 	 */
 	public function content() {
 	
@@ -50,7 +50,7 @@ class Response {
 	
 	/**
 	 * Code
-	 * @return HTTP status code
+	 * @return int HTTP status code
 	 */
 	public function code() {
 	
@@ -60,7 +60,7 @@ class Response {
 	
 	/**
 	 * Header
-	 * @return HTTP header string
+	 * @return string HTTP header string
 	 */
 	public function header() {
 
@@ -123,8 +123,8 @@ class JsonResponse extends Response {
 
 	/**
 	 * Constructor
-	 * @param Response content
-	 * @param HTTP status code
+	 * @param string Response content
+	 * @param int HTTP status code
 	 */
 	public function __construct($content = '', $code = null) {
 	

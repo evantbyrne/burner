@@ -1,9 +1,9 @@
 <?php
 
 namespace Controller;
-use Dingo\Route, Dingo\Response, Dingo\JsonResponse, Library\Input;
+use Dingo\Config;
 
-class Admin {
+class Admin extends Base {
 	
 	/**
 	 * Construct
@@ -16,12 +16,10 @@ class Admin {
 	
 	/**
 	 * Index
-	 * @return \Dingo\Response
 	 */
 	public function index() {
 		
-		$models = \Dingo\Config::get('admin');
-		return Response::view('admin/index', array('models' => $models));
+		$this->data('models', Config::get('admin'));
 	
 	}
 

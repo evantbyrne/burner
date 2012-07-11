@@ -3,10 +3,10 @@
 namespace Dingo;
 
 /**
- * View Class
+ * Template Class
  * @author Evan Byrne
  */
-class View {
+class Template {
 	
 	private $extensions = array();
 	private $sections = array();
@@ -17,33 +17,32 @@ class View {
 	
 	/**
 	 * Render
-	 * @param string View
+	 * @param string Template
 	 * @param array Data
 	 * @return string Output
 	 */
-	public static function render($view, $data = array()) {
+	public static function render($template, $data = array()) {
 	
-		$v = new View($view, $data);
+		$v = new Template($template, $data);
 		return $v->output();
 	
 	}
 	
 	/**
 	 * Construct
-	 * @param string View
+	 * @param string Template
 	 * @param array Data
 	 */
-	public function __construct($view, $data = array()) {
+	public function __construct($template, $data = array()) {
 		
 		$this->out = '';
 		$this->data = $data;
-		$this->load($view, $data);
+		$this->load($template, $data);
 		
 		// Load extensions
 		foreach($this->extensions as $e) {
 		
-			//print_r($e);
-			$this->load($e['view'], $e['data']);
+			$this->load($e['template'], $e['data']);
 		
 		}
 		
@@ -64,16 +63,16 @@ class View {
 	
 	/**
 	 * Load
-	 * @param string View
+	 * @param string Template
 	 * @param array Data
 	 * @return boolean Success
 	 */
-	public function load($view,$data = NULL) {
+	public function load($template, $data = NULL) {
 		
 		// If view does not exist display error
-		if(!file_exists(APPLICATION."/view/$view.php")) {
+		if(!file_exists(APPLICATION."/template/$template.php")) {
 			
-			dingo_error(E_USER_WARNING,'The requested view ('.APPLICATION."/view/$view.php) could not be found.");
+			dingo_error(E_USER_WARNING,'The requested template ('.APPLICATION."/template/$template.php) could not be found.");
 			return false;
 			
 		} else {
@@ -85,7 +84,7 @@ class View {
 			
 			}
 			
-			require(APPLICATION."/view/$view.php");
+			require(APPLICATION."/template/$template.php");
 			return true;
 		
 		}
@@ -94,12 +93,12 @@ class View {
 	
 	/**
 	 * Base
-	 * @param string View
+	 * @param string Template
 	 * @param array Data
 	 */
-	public function base($view, $data=array()) {
+	public function base($template, $data=array()) {
 	
-		$this->extensions[] = array('view'=>$view, 'data'=>$data);
+		$this->extensions[] = array('template'=>$template, 'data'=>$data);
 	
 	}
 	
