@@ -8,21 +8,15 @@ use Model\User, Model\PasswordReset, Model\Country;
 /**
  * Auth Controller
  */
-class Auth {
+class Auth extends Base {
 
 	/**
 	 * Register
-	 * @return \Dingo\Response
 	 */
-	public function register() {
-		
-		return Response::view('auth/register');
-	
-	}
+	public function register() { }
 	
 	/**
 	 * Register Action
-	 * @return \Dingo\Response
 	 */
 	public function register_action() {
 		
@@ -69,7 +63,7 @@ class Auth {
 		// Show form if errors exist
 		if(!empty($errors)) {
 		
-			return Response::view('auth/register', array(
+			$this->data(array(
 			
 				'errors' => $errors,
 				'email'  => $user->email
@@ -90,7 +84,7 @@ class Auth {
 			\Language\Auth::email_success_message($v_url),
 			'From: ' + \Language\Auth::$email_success_from);
 		
-		return Response::view('auth/register_success');
+		$this->template('auth/register_success');
 	
 	}
 

@@ -9,9 +9,11 @@
 <?php $this->end_extend(); ?>
 
 
-<!-- Optional -->
-<?php $this->extend('optional'); ?>
+<!-- Title -->
+<?php
 
-	<p>WOOOoooOOOooOooo</p>
+$this->extend('title');
+$this->show('title');
+$this->end_extend();
 
-<?php $this->end_extend(); ?>
+?>

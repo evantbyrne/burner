@@ -1,13 +1,17 @@
 <?php
 
 namespace Controller;
-use Dingo\Route, Dingo\Response, Dingo\JsonResponse, Library\Input;
 
-class Main {
+class Main extends Base {
 
+	/**
+	 * Index
+	 */
 	public function index() {
-		
-		return Response::view('hello');
+	
+		$this->data('title', 'Kind of awesome...');
+		$this->data(array('title' => 'Super awesome!'));
+		$this->template('main/awesome');
 	
 	}
 	

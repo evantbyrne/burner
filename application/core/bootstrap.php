@@ -151,7 +151,14 @@ class Bootstrap {
 		}
 		
 		// Run Function
-		$response = call_user_func_array(array($controller, $uri['method']), $uri['args']);
+		call_user_func_array(array($controller, $uri['method']), $uri['args']);
+		$template = $controller->get_template();
+		
+		$response = Response::view(
+			($template === null) ? "{$uri['controller']}/{$uri['method']}" : $template,
+			$controller->get_data(),
+			$controller->get_status_code());
+		
 		header($response->header());
 		echo $response->content();
 		
