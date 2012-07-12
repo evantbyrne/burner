@@ -26,7 +26,7 @@ class Create_Model {
 			} else {
 				
 				$f = fopen($path, 'w');
-				fwrite($f, "<?php\n\nnamespace Model;\n\nclass $model extends \Model\Base\Root {\n\n}");
+				fwrite($f, "<?php\n\nnamespace Model;\n\nclass $model extends Base {\n\n}");
 				fclose($f);
 				
 			}
