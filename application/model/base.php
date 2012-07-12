@@ -32,18 +32,8 @@ class Base {
 	 */
 	public static function select() {
 	
-		return \Dingo\DB::connection()->select(self::table(), '\\'.get_called_class());
+		return \Core\DB::connection()->select(self::table(), '\\'.get_called_class());
 		
-	}
-
-	/**
-	 * Single
-	 * @return \Mysql\Select
-	 */
-	public static function single() {
-
-		return self::select()->limit(1);
-
 	}
 
 	/**
@@ -53,8 +43,7 @@ class Base {
 	 */
 	public static function id($id) {
 	
-		$res = self::single()->where('id', '=', $id)->fetch();
-		return (empty($res)) ? null : $res[0];
+		return self::select()->where('id', '=', $id)->single();
 		
 	}
 
@@ -64,7 +53,7 @@ class Base {
 	 */
 	public static function insert() {
 	
-		return \Dingo\DB::connection()->insert(self::table());
+		return \Core\DB::connection()->insert(self::table());
 		
 	}
 
@@ -74,7 +63,7 @@ class Base {
 	 */
 	public static function update() {
 	
-		return \Dingo\DB::connection()->update(self::table());
+		return \Core\DB::connection()->update(self::table());
 		
 	}
 
@@ -84,7 +73,7 @@ class Base {
 	 */
 	public static function delete() {
 	
-		return \Dingo\DB::connection()->delete(self::table());
+		return \Core\DB::connection()->delete(self::table());
 		
 	}
 	
@@ -138,7 +127,7 @@ class Base {
 	 */
 	public function create_table($if_not_exists = false, $sql = false) {
 	
-		$t = \Dingo\DB::connection()
+		$t = \Core\DB::connection()
 			->create_table(self::table(), $if_not_exists)
 			->engine(static::$engine)
 			->add(new \Mysql\IncrementingColumn('id'))
@@ -168,7 +157,7 @@ class Base {
 	 */
 	public function drop_table($if_exists = false) {
 	
-		return \Dingo\DB::connection()->drop_table(self::table(), $if_exists);
+		return \Core\DB::connection()->drop_table(self::table(), $if_exists);
 		
 	}
 

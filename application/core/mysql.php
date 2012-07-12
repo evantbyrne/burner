@@ -1129,7 +1129,6 @@ class Select extends WhereBase {
 	
 	/**
 	 * Fetch
-	 * @param string Type of object to return
 	 * @return array Objects of type set in first param
 	 */
 	public function fetch() {
@@ -1137,6 +1136,21 @@ class Select extends WhereBase {
 		if(isset($this->connection)) {
 		
 			return $this->connection->fetch($this->build(), $this->result_class);
+		
+		}
+	
+	}
+	
+	/**
+	 * Single
+	 * @return mixed Result object or null
+	 */
+	public function single() {
+	
+		if(isset($this->connection)) {
+		
+			$res = $this->limit(1)->fetch();
+			return (empty($res)) ? null : $res[0];
 		
 		}
 	
