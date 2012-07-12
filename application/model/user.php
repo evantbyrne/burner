@@ -6,7 +6,7 @@ namespace Model;
  * Base User Model
  * @author Evan Byrne
  */
-class User extends Base\Root {
+class User extends Base {
 	
 	/**
 	 * array User levels, which are primarily used for ACLs
@@ -55,17 +55,15 @@ class User extends Base\Root {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * Construct
 	 */
-	public static function columns() {
-	
-		return array(
+	public function __construct() {
 		
+		$this->schema(
 			new \Column\Email('email', array('length' => 100, 'required' => 'Email field required.')),
 			new \Column\Varchar('password', array('length' => 255, 'required' => 'Password field required.')),
 			new \Column\TinyInt('type'),
 			new \Column\Varchar('verify_code', array('length' => 30, 'null' => true))
-		
 		);
 		
 	}

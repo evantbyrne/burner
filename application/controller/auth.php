@@ -3,92 +3,133 @@
 namespace Controller;
 
 use Library\Input, Library\Email;
-use Model\User, Model\PasswordReset, Model\Country;
+use Model\User, Model\PasswordReset;
 
 /**
  * Auth Controller
  */
 class Auth extends Base {
-
+	
 	/**
 	 * Register
 	 */
-	public function register() { }
-	
-	/**
-	 * Register Action
-	 */
-	public function register_action() {
+	public function register() {
 		
-		$errors = array();
+		if(is_post()) {
 		
-		$user = new User();
-		$user->email = Input::post('email');
+			$errors = array();
 		
-		$password = Input::post('password');
-		$password_confirm = Input::post('password_confirm');
-		$user->password = $password;
-		$user->type = User::level('user');
+			$user = new User();
+			$user->email = Input::post('email');
 		
-		// Validate model fields
-		$valid = $user->valid();
-		if(is_array($valid)) {
+			$password = Input::post('password');
+			$password_confirm = Input::post('password_confirm');
+			$user->password = $password;
+			$user->type = User::level('user');
 		
-			$errors = array_merge($errors, $valid);
+			// Validate model fields
+			$valid = $user->valid();
+			if(is_array($valid)) {
 		
-		}
+				$errors = array_merge($errors, $valid);
 		
-		// Check confirmation password
-		if($password !== null and $password !== $password_confirm) {
+			}
 		
-			$errors['password'] = \Language\Auth::$error_confirmation_password;
+			// Check confirmation password
+			if($password !== null and $password !== $password_confirm) {
 		
-		}
+				$errors['password'] = \Language\Auth::$error_confirmation_password;
 		
-		// Check if email already taken
-		if($user->email !== null) {
+			}
 		
-			$s = new User();
-			$s->email = $user->email;
-			$res = $s->single();
+			// Check if email already taken
+			if($user->email !== null) {
+		
+				$res = User::select()->where('email', '=', $user->email)->single();
+				if($res !== null) {
 			
-			if($res !== null) {
+					$errors['email'] = \Language\Auth::$error_taken_email;
 			
-				$errors['email'] = \Language\Auth::$error_taken_email;
+				}
+		
+			}
+		
+			// Show form if errors exist
+			if(!empty($errors)) {
+		
+				$this->template('auth/register');
+				$this->data(array(
 			
+					'errors' => $errors,
+					'email'  => $user->email
+			
+				));
+		
+			} else {
+		
+				// Create user
+				$user->verify_code = \Model\UserSession::secret();
+				$user->set_password($password);
+				
+				User::insert()
+					->value('email', $user->email)
+					->value('password', $user->password)
+					->value('type', $user->type)
+					->value('verify_code', $user->verify_code)
+					->execute();
+		
+				// Send verification email
+				$v_url = url("verify/{$user->verify_code}");
+				mail($user->email,
+					\Language\Auth::$email_success_title,
+					\Language\Auth::email_success_message($v_url),
+					'From: ' + \Language\Auth::$email_success_from);
+		
+				$this->template('auth/register_success');
+		
 			}
 		
 		}
-		
-		// Show form if errors exist
-		if(!empty($errors)) {
-		
-			$this->template('auth/register');
-			$this->data(array(
-			
-				'errors' => $errors,
-				'email'  => $user->email
-			
-			));
-		
-		} else {
-		
-			// Create user
-			$user->verify_code = \Model\UserSession::secret();
-			$user->set_password($password);
-			$user->insert();
-		
-			// Send verification email
-			$v_url = url("verify/{$user->verify_code}");
-			mail($user->email,
-				\Language\Auth::$email_success_title,
-				\Language\Auth::email_success_message($v_url),
-				'From: ' + \Language\Auth::$email_success_from);
-		
-			$this->template('auth/register_success');
-		
-		}
 	
+	}
+	
+	/**
+	 * Login
+	 */
+	public function login() {
+		
+		if(is_post()) {
+			
+			$user = new User();
+			$user->set_email(Input::post('email'));
+			$user->set_password(Input::post('password'));
+			
+			$errors = $user->valid();
+			
+			if(!empty($errors)) {
+				
+				// Bad form input
+				$this->data('errors', $errors);
+				
+			} else {
+				
+				$user = User::select()
+					->where('email', '=', $user->email)
+					->and_where('password', '=', $user->password)
+					->and_where_null('verify_code')
+					->single();
+				
+				if($user === null) {
+					
+					// Doesn't exist
+					$this->data('errors', array('email' => \Language\Auth::$error_invalid_login));
+					
+				}
+				
+			}
+			
+		}
+		
 	}
 
 }

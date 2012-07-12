@@ -31,3 +31,23 @@ function redirect($path = '') {
 	exit;
 	
 }
+
+/**
+ * Is Get
+ * @return boolean
+ */
+function is_get() {
+	
+	return ($_SERVER['REQUEST_METHOD'] == 'GET');
+	
+}
+
+/**
+ * Is Post
+ * @return boolean
+ */
+function is_post() {
+	
+	return ($_SERVER['REQUEST_METHOD'] == 'POST');
+	
+}

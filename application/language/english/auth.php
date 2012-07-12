@@ -7,6 +7,7 @@ class Auth {
 	// Errors
 	public static $error_confirmation_password = 'Confirmation password did not match.';
 	public static $error_taken_email = 'Given email already belongs to registered user. Are you sure that you don\'t already have an account?';
+	public static $error_invalid_login = 'Invalid email or password.';
 
 	// Registration success
 	public static $email_success_from = 'noreply@example.com';
