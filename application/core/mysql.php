@@ -273,20 +273,11 @@ class Connection {
 	/**
 	 * Insert
 	 * @param string Table name
-	 * @param mixed[] Values to insert
-	 * @return int Last insert ID
+	 * @return Insert
 	 */
-	public function insert($table, $values) {
+	public function insert($table) {
 	
-		$query = new Insert($table, $this);
-		
-		foreach($values as $column => $value) {
-		
-			$query->value($column, $value);
-		
-		}
-		
-		return $query->execute();
+		return new Insert($table, $this);
 	
 	}
 	
@@ -532,7 +523,7 @@ abstract class WhereBase extends Base {
 		
 		foreach($this->order as $ord) {
 		
-			$sql[] = "{$this->tick_columm($ord['column'])} {$ord['direction']}";
+			$sql[] = "{$this->tick_column($ord['column'])} {$ord['direction']}";
 		
 		}
 		

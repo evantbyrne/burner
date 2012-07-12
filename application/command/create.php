@@ -18,7 +18,8 @@ class Create {
 			
 			echo "Creating: $model\n";
 			$model_class = "\\Model\\$model";
-			$model_class::create_table(true);
+			$model_instance = new $model_class();
+			$model_instance->create_table(true);
 			
 		}
 		

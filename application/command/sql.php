@@ -17,7 +17,8 @@ class Sql {
 		foreach($models as $model) {
 			
 			$model_class = "\\Model\\$model";
-			echo "\n" . $model_class::create_table(false, true) . ";\n\n";
+			$model_instance = new $model_class();
+			echo "\n" . $model_instance->create_table(false, true) . ";\n\n";
 			
 		}
 		

@@ -3,6 +3,8 @@
 // Application configuration
 //----------------------------------------------------------------------------------------------
 
+ini_set('display_errors', 'On');
+
 // Error reporting level
 error_reporting(E_STRICT|E_ALL);
 

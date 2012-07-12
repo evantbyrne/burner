@@ -18,7 +18,8 @@ class Drop {
 			
 			echo "Dropping: $model\n";
 			$model_class = "\\Model\\$model";
-			$model_class::drop_table(true);
+			$model_instance = new $model_class();
+			$model_instance->drop_table(true);
 			
 		}
 		

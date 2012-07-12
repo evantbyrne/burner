@@ -7,6 +7,10 @@ Route::add(array(
 	// Home
 	'GET:/' => array('main', 'index'),
 	
+	// Blog
+	'GET:blog'         => array('article', 'index'),
+	'GET:article/:int' => array('article', 'view'),
+
 	// Authentication
 	'GET:auth/login'          => array('auth', 'login'),
 	'POST:auth/login'         => array('auth', 'login_action'),
