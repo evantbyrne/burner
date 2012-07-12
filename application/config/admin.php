@@ -1,5 +1,5 @@
 <?php
 
-namespace Dingo;
+namespace Core;
 
 Config::set('admin', array('simple'));

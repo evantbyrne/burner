@@ -25,18 +25,18 @@ define('ALLOWED_CHARS','/^[ \!\,\~\&\.\:\+\@\-_a-zA-Z0-9]+$/');
 // End of configuration
 //----------------------------------------------------------------------------------------------
 require_once(APPLICATION.'/core/bootstrap.php');
-\Dingo\Bootstrap::init();
+\Core\Bootstrap::init();
 require_once(APPLICATION.'/core/functions.php');
 
 if(isset($argv)) {
 	
 	// Command line
 	require_once(APPLICATION.'/core/cli.php');
-	\Dingo\CLI::run();
+	\Core\CLI::run();
 	
 } else {
 
 	// Web server
-	\Dingo\Bootstrap::run();
+	\Core\Bootstrap::run();
 	
 }

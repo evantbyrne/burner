@@ -1,7 +1,7 @@
 <?php
 
 namespace Controller;
-use Dingo\Config;
+use Core\Config;
 
 class Admin extends Base {
 	

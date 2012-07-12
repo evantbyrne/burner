@@ -1,16 +1,11 @@
 <?php
 
-namespace Dingo;
+namespace Core;
 
 /**
- * Dingo Framework Config Class
- *
- * @Author          Evan Byrne
- * @Copyright       2008 - 2010
- * @Project Page    http://www.dingoframework.com
+ * Config Class
+ * @author Evan Byrne
  */
-
-
 class Config
 {
 	private static $x = array();

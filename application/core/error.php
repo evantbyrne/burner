@@ -1,6 +1,6 @@
 <?php
 
-namespace Dingo;
+namespace Core;
 
 /**
  * Dingo Error Handling Functions
@@ -82,7 +82,7 @@ function dingo_error($level,$message,$file='current file',$line='(unknown)')
 		}
 		else
 		{
-			echo 'Dingo could not locate error file at '.APPLICATION.'/'.Config::get('folder_errors').'/fatal.php';
+			echo 'Could not locate error file at '.APPLICATION.'/'.Config::get('folder_errors').'/fatal.php';
 		}
 		
 		ob_end_flush();
@@ -98,7 +98,7 @@ function dingo_error($level,$message,$file='current file',$line='(unknown)')
 		}
 		else
 		{
-			echo 'Dingo could not locate exception file at '.APPLICATION.'/error/exception.php';
+			echo 'Could not locate exception file at '.APPLICATION.'/error/exception.php';
 		}
 		
 		ob_end_flush();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dingo;
+namespace Core;
 
 /**
  * Response Class
@@ -13,7 +13,7 @@ class Response {
 	 * @param string Template to load
 	 * @param array Associated array of data to pass to view
 	 * @param int HTTP status code
-	 * @return \Dingo\Response HTTP Response object
+	 * @return \Core\Response HTTP Response object
 	 */
 	public static function template($template, $data = null, $code = null) {
 

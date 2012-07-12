@@ -1,6 +1,6 @@
 <?php
 
-namespace Dingo;
+namespace Core;
 
 /**
  * Template Class

@@ -1,16 +1,11 @@
 <?php
 
-namespace Dingo;
+namespace Core;
 
 /**
- * Dingo Framework Router Class
- *
- * @Author          Evan Byrne
- * @Copyright       2008 - 2010
- * @Project Page    http://www.dingoframework.com
- * @docs            http://www.dingoframework.com/docs/routes
+ * Route Class
+ * @author Evan Byrne
  */
-
 class Route {
 	
 	private static $route = array();

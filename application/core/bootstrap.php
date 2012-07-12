@@ -1,6 +1,6 @@
 <?php
 
-namespace Dingo;
+namespace Core;
 
 /**
  * Bootstrap Class
@@ -29,7 +29,7 @@ class Bootstrap {
 		
 		switch($segments[$first]) {
 		
-			case 'dingo':      $start = APPLICATION.'/core'; break;
+			case 'core':       $start = APPLICATION.'/core'; break;
 			case 'library':    $start = APPLICATION.'/library'; break;
 			case 'controller': $start = APPLICATION.'/controller'; break;
 			case 'model':      $start = APPLICATION.'/model'; break;
@@ -95,7 +95,7 @@ class Bootstrap {
 		ob_start();
 		
 		// Set autoload
-		spl_autoload_register('Dingo\Bootstrap::autoload', true);
+		spl_autoload_register('Core\Bootstrap::autoload', true);
 		
 		// Load core files
 		require_once(APPLICATION.'/core/config.php');
@@ -106,8 +106,8 @@ class Bootstrap {
 		require_once(APPLICATION.'/model/base/root.php');
 		require_once(APPLICATION.'/core/response.php');
 		
-		set_error_handler('Dingo\dingo_error');
-		set_exception_handler('Dingo\dingo_exception');
+		set_error_handler('Core\dingo_error');
+		set_exception_handler('Core\dingo_exception');
 		
 		// Load route configuration
 		require_once(APPLICATION.'/config/route.php');
