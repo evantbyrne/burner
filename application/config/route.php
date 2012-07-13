@@ -14,6 +14,8 @@ Route::add(array(
 	// Authentication
 	'GET:auth/login'          => array('auth', 'login'),
 	'POST:auth/login'         => array('auth', 'login'),
+	'GET:auth/login/:any'     => array('auth', 'login'),
+	'POST:auth/login/:any'    => array('auth', 'login'),
 	'GET:auth/register'       => array('auth', 'register'),
 	'POST:auth/register'      => array('auth', 'register'),
 	'GET:auth/logout'         => array('auth', 'logout'),

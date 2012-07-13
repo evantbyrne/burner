@@ -13,8 +13,8 @@ function root_url() {
 
 /**
  * URL
- * @param Relative path to page
- * @param Full path to page
+ * @param string Relative path to page
+ * @return string Full path to page
  */
 function url($path = '') {
 
@@ -24,12 +24,22 @@ function url($path = '') {
 	
 /**
  * Redirect
- * @param URL to redirect to
+ * @param string URL to redirect to
  */
 function redirect($path = '') {
 	
 	header('Location: ' . root_url(true) . $path);
 	exit;
+	
+}
+
+/**
+ * Login Redirect
+ * @param string URL to redirect to after logging in
+ */
+function login_redirect($path = '') {
+	
+	redirect('auth/login/' . base64_encode($path));
 	
 }
 

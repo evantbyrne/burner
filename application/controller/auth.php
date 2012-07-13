@@ -71,6 +71,19 @@ class Auth extends Base {
 	}
 	
 	/**
+	 * Enforce
+	 */
+	public static function enforce() {
+		
+		if(!self::logged_in()) {
+			
+			login_redirect(CURRENT_PAGE);
+			
+		}
+		
+	}
+	
+	/**
 	 * Register
 	 */
 	public function register() {
@@ -156,7 +169,7 @@ class Auth extends Base {
 	/**
 	 * Login
 	 */
-	public function login() {
+	public function login($redirect = false) {
 		
 		if(is_post()) {
 			
@@ -187,6 +200,7 @@ class Auth extends Base {
 					
 				} else {
 
+					// Create Session
 					$table = UserSession::table();
 					$secret = UserSession::secret();
 					$expire = new \DateTime();
@@ -204,6 +218,13 @@ class Auth extends Base {
 						'expire' => '+30 days'
 					));
 
+					if($redirect) {
+					
+						// Redirect
+						redirect(base64_decode($redirect));
+					
+					}
+					
 					$this->template('auth/login_success');
 
 				}

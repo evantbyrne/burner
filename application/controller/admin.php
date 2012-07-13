@@ -14,6 +14,7 @@ class Admin extends Base {
 	 */
 	public function __construct() {
 		
+		Auth::enforce();
 		require_once(APPLICATION.'/config/admin.php');
 		
 	}
