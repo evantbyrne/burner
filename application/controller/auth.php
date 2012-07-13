@@ -159,11 +159,11 @@ class Auth extends Base {
 		
 		if(is_post()) {
 			
-			$user = new User();
-			$user->set_email(Input::post('email'));
-			$user->set_password(Input::post('password'));
+			$in = new User();
+			$in->set_email(Input::post('email'));
+			$in->set_password(Input::post('password'));
 			
-			$errors = $user->valid();
+			$errors = $in->valid();
 			
 			if(!empty($errors)) {
 				
@@ -173,8 +173,8 @@ class Auth extends Base {
 			} else {
 				
 				$user = User::select()
-					->where('email', '=', $user->email)
-					->and_where('password', '=', $user->password)
+					->where('email', '=', $in->email)
+					->and_where('password', '=', $in->password)
 					->and_where_null('verify_code')
 					->single();
 				
@@ -182,6 +182,7 @@ class Auth extends Base {
 					
 					// Doesn't exist
 					$this->data('errors', array('email' => \Language\Auth::$error_invalid_login));
+					$this->data('email', $in->email);
 					
 				} else {
 
