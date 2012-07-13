@@ -11,6 +11,65 @@ use Model\User, Model\UserSession, Model\PasswordReset;
 class Auth extends Base {
 	
 	/**
+	 * Cached logged in result
+	 */
+	private static $logged_in = null;
+	
+	/**
+	 * Cached current user
+	 */
+	private static $user = null;
+	
+	/**
+	 * Logged In
+	 * @param boolean Don't cache result
+	 * @return boolean
+	 */
+	public static function logged_in($no_cache = false) {
+		
+		// Check for cached result
+		if(!$no_cache and self::$logged_in !== null) {
+			
+			return self::$logged_in;
+			
+		}
+		
+		self::$logged_in = false;
+		
+		$secret = Input::cookie('auth');
+		if($secret !== null) {
+			
+			$session = UserSession::select()->where('secret', '=', $secret)->single();
+			if($session !== null) {
+				
+				$user = User::select()->where('id', '=', $session->user)->single();
+				if($user !== null) {
+				
+					self::$user = $user;
+					self::$logged_in = true;
+				
+				}
+				
+			}
+			
+		}
+		
+		return self::$logged_in;
+		
+	}
+	
+	/**
+	 * User
+	 * @param boolean Don't cache
+	 * @return mixed Current user, or null
+	 */
+	public static function user($no_cache = false) {
+		
+		return (self::logged_in($no_cache)) ? self::$user : null;
+		
+	}
+	
+	/**
 	 * Register
 	 */
 	public function register() {
@@ -131,7 +190,7 @@ class Auth extends Base {
 					$expire = new \DateTime();
 					$expire->modify('+30 days');
 
-					\Core\DB::connection()->execute(new \Mysql\Query("INSERT INTO `$table` (`secret`, `id`, `expire`) VALUES (?, ?, FROM_UNIXTIME(?))", array(
+					\Core\DB::connection()->execute(new \Mysql\Query("INSERT INTO `$table` (`secret`, `user`, `expire`) VALUES (?, ?, FROM_UNIXTIME(?))", array(
 						$secret,
 						$user->id,
 						$expire->format('U'))));

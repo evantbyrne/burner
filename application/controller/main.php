@@ -9,8 +9,7 @@ class Main extends Base {
 	 */
 	public function index() {
 	
-		$this->data('title', 'Kind of awesome...');
-		$this->data(array('title' => 'Super awesome!'));
+		$this->data(array('title' => (Auth::logged_in()) ? 'Welcome, ' . Auth::user()->email : 'Super awesome!'));
 		$this->template('main/awesome');
 	
 	}
