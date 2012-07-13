@@ -6,50 +6,56 @@ namespace Core;
  * Config Class
  * @author Evan Byrne
  */
-class Config
-{
+class Config {
+	
 	private static $x = array();
 	
-	
-	// Set
-	// ---------------------------------------------------------------------------
-	public static function set($name,$val)
-	{
+	/**
+	 * Set
+	 * @param string Name
+	 * @param mixed Value
+	 */
+	public static function set($name, $val) {
+		
 		self::$x[$name] = $val;
+	
 	}
 	
-	
-	// Get
-	// ---------------------------------------------------------------------------
-	public static function get($name)
-	{
-		if(isset(self::$x[$name]))
-		{
-			return(self::$x[$name]);
-		}
-		else
-		{
-			return FALSE;
-		}
+	/**
+	 * Get
+	 * @param string Name
+	 * @return mixed Value
+	 */
+	public static function get($name) {
+		
+		return (isset(self::$x[$name])) ? self::$x[$name] : false;
+		
 	}
 	
-	
-	// Remove
-	// ---------------------------------------------------------------------------
-	public static function remove($name)
-	{
-		if(isset(self::$x[$name]))
-		{
+	/**
+	 * Remove
+	 * @param string Name
+	 */
+	public static function remove($name) {
+		
+		if(isset(self::$x[$name])) {
+			
 			unset(self::$x[$name]);
+			
 		}
+		
 	}
 	
-	
-	// Rename
-	// ---------------------------------------------------------------------------
-	public static function rename($old,$new)
-	{
+	/**
+	 * Rename
+	 * @param string Old name
+	 * @param string New name
+	 */
+	public static function rename($old, $new) {
+		
 		self::$x[$new] = self::$x[$old];
 		unset(self::$x[$old]);
+	
 	}
+
 }

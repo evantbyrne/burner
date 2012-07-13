@@ -7,6 +7,7 @@ use Model\User, Model\UserSession, Model\PasswordReset;
 
 /**
  * Auth Controller
+ * @author Evan Byrne
  */
 class Auth extends Base {
 	

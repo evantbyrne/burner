@@ -21,9 +21,14 @@ class Response {
 
 	}
 	
-	
-	
+	/**
+	 * Content
+	 */
 	protected $content;
+	
+	/**
+	 * HTTP status code
+	 */
 	protected $code;
 	
 	/**

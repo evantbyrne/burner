@@ -23,6 +23,7 @@ function url($path = '') {
 }
 	
 /**
+ * Redirect
  * @param URL to redirect to
  */
 function redirect($path = '') {

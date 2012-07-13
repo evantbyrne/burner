@@ -8,8 +8,19 @@ namespace Core;
  */
 class Route {
 	
+	/**
+	 * Routes
+	 */
 	private static $route = array();
+	
+	/**
+	 * Current route information
+	 */
 	private static $current = array();
+	
+	/**
+	 * Routes patterns
+	 */
 	private static $pattern = array(
 	
 		'int'           => '/^([0-9]+)$/',
@@ -23,37 +34,41 @@ class Route {
 	
 	);
 	
-	
-	// Validate
-	// ---------------------------------------------------------------------------
+	/**
+	 * Validate
+	 * @param string Route
+	 */
 	public static function valid($r) {
 		
 		foreach($r['segments'] as $segment) {
 			
 			if(!preg_match(ALLOWED_CHARS,$segment)) {
 				
-				return FALSE;
+				return false;
 			
 			}
 		
 		}
 		
-		return TRUE;
+		return true;
 		
 	}
 	
-	
-	// Pattern
-	// ---------------------------------------------------------------------------
+	/**
+	 * Pattern
+	 * @param string Name
+	 * @param string Regular expression
+	 */
 	public static function pattern($name, $regex) {
 	
 		self::$pattern[$name] = $regex;
 	
 	}
 	
-	
-	// Add
-	// ---------------------------------------------------------------------------
+	/**
+	 * Add
+	 * @param array Routes
+	 */
 	public static function add($routes) {
 		
 		foreach($routes as $key=>$val) {
@@ -64,9 +79,11 @@ class Route {
 		
 	}
 	
-	
-	// Get
-	// ---------------------------------------------------------------------------
+	/**
+	 * Get
+	 * @param string URL
+	 * @return array Route
+	 */
 	public static function get($url) {
 	
 		$controller = false;
@@ -168,27 +185,34 @@ class Route {
 		
 	}
 	
-	
-	// Controller
-	// ---------------------------------------------------------------------------
-	public static function controller($path=FALSE)
-	{
+	/**
+	 * Controller
+	 * @param string Path
+	 * @return string
+	 */
+	public static function controller($path = false) {
+		
 		return ($path) ? self::$current['controller'] : self::$current['controller_class'];
+	
 	}
 	
-	
-	// Method
-	// ---------------------------------------------------------------------------
-	public static function method()
-	{
+	/**
+	 * Method
+	 * @return string
+	 */
+	public static function method() {
+		
 		return self::$current['function'];
+		
 	}
 	
-	
-	// Arguments
-	// ---------------------------------------------------------------------------
-	public static function arguments()
-	{
+	/**
+	 * Arguments
+	 */
+	public static function arguments() {
+		
 		return self::$current['arguments'];
+	
 	}
+	
 }

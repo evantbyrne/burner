@@ -10,7 +10,9 @@ class Bootstrap {
 	
 	/**
 	 * Autoload
-	 * @param String representing class to be loaded
+	 * @throws \Exception
+	 * @param string Class to be loaded
+	 * @return boolean
 	 */
 	public static function autoload($class) {
 		
@@ -61,7 +63,7 @@ class Bootstrap {
 	/**
 	 * Get Request URL
 	 * Grabs the requested URL, parses it, then cleans it up.
-	 * @return The cleaned up URL
+	 * @return string The cleaned up URL
 	 */
 	public static function get_request_url() {
 		
@@ -125,10 +127,6 @@ class Bootstrap {
 		
 		// Set current page
 		define('CURRENT_PAGE', $request_url);
-		
-		
-		// Load Controller
-		//----------------------------------------------------------------------------------------------
 		
 		// If controller does not exist, give 404 error
 		if(!file_exists(APPLICATION."/controller/{$uri['controller']}.php")) {

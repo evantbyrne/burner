@@ -4,6 +4,7 @@ namespace Core;
 
 /**
  * CLI Class
+ * @author Evan Byrne
  */
 class CLI {
 	

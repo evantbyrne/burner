@@ -4,6 +4,7 @@ namespace Controller;
 
 /**
  * Base Controller
+ * @author Evan Byrne
  */
 class Base {
 	

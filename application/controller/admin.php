@@ -3,6 +3,10 @@
 namespace Controller;
 use Core\Config;
 
+/**
+ * Admin Controller
+ * @author Evan Byrne
+ */
 class Admin extends Base {
 	
 	/**
