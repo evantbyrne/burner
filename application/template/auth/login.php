@@ -8,7 +8,7 @@
 <!-- Content -->
 <?php $this->extend('content'); ?>
 
-	<h2>Login</h2>
+	<h2>Log In</h2>
 	
 	<form method="post">
 

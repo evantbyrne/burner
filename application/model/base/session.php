@@ -6,24 +6,9 @@ namespace Model\Base;
  * Base Session Model
  * @author Evan Byrne
  */
-abstract class Session extends Root {
+abstract class Session extends \Model\Base {
 
 	protected static $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789=_';
-	
-	/**
-	 * Blocks
-	 * @return Array of blocks that make up model
-	 */
-	public static function blocks() {
-	
-		return array(
-		
-			new \Block\Text('secret', array('unique' => true)),
-			new \Block\Timestamp('expire', array('null' => true))
-		
-		);
-	
-	}
 	
 	/**
 	 * Secret
@@ -44,6 +29,18 @@ abstract class Session extends Root {
 		}
 		
 		return $salt;
+	
+	}
+
+	/**
+	 * Construct
+	 */
+	public function __construct() {
+	
+		$this->schema(
+			new \Column\Text('secret', array('unique' => true)),
+			new \Column\Timestamp('expire', array('null' => true))
+		);
 	
 	}
 

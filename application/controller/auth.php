@@ -2,8 +2,8 @@
 
 namespace Controller;
 
-use Library\Input, Library\Email;
-use Model\User, Model\PasswordReset;
+use Library\Input, Library\Cookie;
+use Model\User, Model\UserSession, Model\PasswordReset;
 
 /**
  * Auth Controller
@@ -124,6 +124,27 @@ class Auth extends Base {
 					// Doesn't exist
 					$this->data('errors', array('email' => \Language\Auth::$error_invalid_login));
 					
+				} else {
+
+					$table = UserSession::table();
+					$secret = UserSession::secret();
+					$expire = new \DateTime();
+					$expire->modify('+30 days');
+
+					\Core\DB::connection()->execute(new \Mysql\Query("INSERT INTO `$table` (`secret`, `id`, `expire`) VALUES (?, ?, FROM_UNIXTIME(?))", array(
+						$secret,
+						$user->id,
+						$expire->format('U'))));
+
+					Cookie::set(array(
+						'path'   => '/',
+						'name'   => 'auth',
+						'value'  => $secret,
+						'expire' => '+30 days'
+					));
+
+					$this->template('auth/login_success');
+
 				}
 				
 			}

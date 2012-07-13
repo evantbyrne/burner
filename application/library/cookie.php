@@ -21,12 +21,12 @@ class Cookie {
 		
 		if(!isset($settings['expire'])) {
 			
-			$ex = new DateTime();
+			$ex = new \DateTime();
 			$time = $ex->format('U');
 			
 		} else {
 			
-			$ex = new DateTime();
+			$ex = new \DateTime();
 			$ex->modify($settings['expire']);
 			$time = $ex->format('U');
 			

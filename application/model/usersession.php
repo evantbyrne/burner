@@ -8,15 +8,12 @@ namespace Model;
 class UserSession extends Base\Session {
 	
 	/**
-	 * @inheritdoc
+	 * Construct
 	 */
-	public static function blocks() {
+	public function __construct() {
 	
-		return array_merge(parent::blocks(), array(
-		
-			new \Block\Int('user')
-			
-		));
+		parent::__construct();
+		$this->schema(new \Column\Int('user'));
 	
 	}
 	

@@ -2,7 +2,7 @@
 
 
 <!-- Title -->
-<?php $this->extend('title') ?>Register<?php $this->end_extend(); ?>
+<?php $this->set('title', 'Register'); ?>
 
 
 <!-- Content -->
