@@ -83,6 +83,11 @@ class Base {
 	private $_schema = array();
 
 	/**
+	 * Admin column settings
+	 */
+	private $_admin = array();
+
+	/**
 	 * Whether methods array has been populated
 	 */
 	private $_methods_set = false;
@@ -116,6 +121,28 @@ class Base {
 	public function get_schema() {
 
 		return $this->_schema;
+
+	}
+
+	/**
+	 * Admin
+	 * @param string Column
+	 * @param array Options
+	 */
+	public function admin($column, $options = array()) {
+
+		$defaults = array('list' => true);
+		$this->_admin[$column] = array_merge($defaults, $options);
+
+	}
+
+	/**
+	 * Get Admin
+	 * @return array
+	 */
+	public function get_admin() {
+
+		return $this->_admin;
 
 	}
 	

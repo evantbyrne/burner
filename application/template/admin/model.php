@@ -31,16 +31,16 @@
 					
 					<tr>
 						<?php foreach($columns as $column => $options): ?>
+
+							<?php if($this->first()): ?>
+								
+								<td><a href="<?php echo url("admin/$model/{$row->id}"); ?>"><?php echo $row->{$column}; ?></a></td>
 							
-								<?php if($options['link']): ?>
-									
-									<td><a href="<?php echo url("admin/$model/{$row->id}"); ?>"><?php echo $row->{$column}; ?></a></td>
+							<?php else: ?>
 								
-								<?php else: ?>
-									
-									<td><?php echo $row->{$column}; ?></td>
-								
-								<?php endif; ?>
+								<td><?php echo $row->{$column}; ?></td>
+							
+							<?php endif; ?>
 						
 						<?php endforeach; ?>
 					</tr>

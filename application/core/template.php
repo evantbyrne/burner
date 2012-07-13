@@ -14,6 +14,7 @@ class Template {
 	private $current_new_section = false;
 	private $out;
 	private $data;
+	private $first;
 	
 	/**
 	 * Render
@@ -37,6 +38,7 @@ class Template {
 		
 		$this->out = '';
 		$this->data = $data;
+		$this->first = true;
 		$this->load($template, $data);
 		
 		// Load extensions
@@ -199,6 +201,23 @@ class Template {
 			echo self::render('error/form', array('content' => $this->data['errors'][$error]));
 
 		}
+
+	}
+
+	/**
+	 * First
+	 * @return boolean
+	 */
+	public function first() {
+
+		if($this->first === true) {
+
+			$this->first = false;
+			return true;
+
+		}
+
+		return false;
 
 	}
 	

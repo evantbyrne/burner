@@ -24,7 +24,7 @@ class Admin extends Base {
 	 */
 	public function index() {
 		
-		$this->data('models', array_keys(Config::get('admin')));
+		$this->data('models', Config::get('admin'));
 	
 	}
 	
@@ -34,10 +34,31 @@ class Admin extends Base {
 	 */
 	public function model($name) {
 		
+		// 404 on unconfigured model
+		if(!in_array($name, Config::get('admin'))) {
+
+			// TODO: Actual 404
+			die('Not found.');
+
+		}
+
 		$model_class = "\\Model\\$name";
-		$config = Config::get('admin');
+		$model = new $model_class();
 		
-		$this->data('columns', $config[$name]);
+		// Remove hidden columns
+		$all_columns = $model->get_admin();
+		$columns = array();
+		foreach($all_columns as $column => $options) {
+
+			if($options['list']) {
+
+				$columns[$column] = $options;
+
+			}
+
+		}
+
+		$this->data('columns', $columns);
 		$this->data('rows', $model_class::select()->order_desc('id')->fetch());
 		$this->data('model', $name);
 		

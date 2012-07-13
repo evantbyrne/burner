@@ -18,7 +18,9 @@ class Article extends Base {
 			new \Column\HasMany('comments', array('model' => 'Comment', 'column' => 'article'))
 		);
 
-		//$this->require('admin');
+		//$this->permission('admin');
+		$this->admin('title');
+		$this->admin('content', array('list' => false));
 		//$this->admin('comments', array('paginate' => 10));
 
 	}
