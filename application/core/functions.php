@@ -28,7 +28,7 @@ function url($path = '') {
  */
 function redirect($path = '') {
 	
-	header('Location: ' . root_url(true) . $url);
+	header('Location: ' . root_url(true) . $path);
 	exit;
 	
 }
