@@ -839,7 +839,7 @@ class Select extends WhereBase {
 		$this->columns = array();
 		$this->joins = array();
 		$this->offset = null;
-		$this->result_class = '\Mysql\Result';
+		$this->result_class = $result_class;
 	
 	}
 	
