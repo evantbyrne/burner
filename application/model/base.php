@@ -78,6 +78,43 @@ class Base {
 	}
 	
 	/**
+	 * From Array
+	 * @param array Associated array of data
+	 * @param mixed Whitelist or null
+	 * @return \Model\Base Populated model object
+	 */
+	public static function from_array($data, $whitelist = null) {
+	
+		$instance = new static();
+		$schema = $instance->get_schema();
+		
+		foreach($schema as $column) {
+		
+			$name = $column->column_name();
+			if(($whitelist === null or in_array($name, $whitelist)) and isset($data[$name])) {
+
+				$instance->{$name} = $data[$name];
+
+			}
+		
+		}
+		
+		return $instance;
+	
+	}
+	
+	/**
+	 * From Post
+	 * @param mixed Whitelist or null
+	 * @return \Model\Base Model object populated from $_POST
+	 */
+	public static function from_post($whitelist = null) {
+		
+		return self::from_array($_POST, $whitelist);
+		
+	}
+	
+	/**
 	 * MySQL schema
 	 */
 	private $_schema = array();
@@ -186,6 +223,118 @@ class Base {
 	
 		return \Core\DB::connection()->drop_table(self::table(), $if_exists);
 		
+	}
+
+	/**
+	 * Valid
+	 * @return True if valid, an associative array of errors otherwise
+	 */
+	public function valid() {
+	
+		$errors = array();
+		$vars = get_object_vars($this);
+		$schema = $this->get_schema();
+		
+		foreach($schema as $column) {
+		
+			$res = $column->valid((isset($vars[$column->column_name()])) ? $vars[$column->column_name()] : null);
+			if($res !== true) {
+			
+				$errors[$column->column_name()] = $res;
+			
+			}
+		
+		}
+		
+		return (empty($errors)) ? true : $errors;
+	
+	}
+
+	/**
+	 * Save
+	 * Executes update query when ID is set, inserts new row otherwise
+	 * @return mixed ID on insert, result of update execution otherwise
+	 */
+	public function save() {
+	
+		$query = (isset($this->id)) ? self::update()->where('id', '=', $this->id)->limit(1) : self::insert();
+		$vars = get_object_vars($this);
+		$schema = $this->get_schema();
+		
+		foreach($schema as $column) {
+		
+			if(isset($vars[$column->column_name()])) {
+
+				$query->value($column->column_name(), $vars[$column->column_name()]);
+
+			}
+		
+		}
+		
+		return $query->execute();
+	
+	}
+	
+	/**
+	 * Merge Array
+	 * @param array Associated array of data
+	 * @param mixed Whitelist array or null
+	 * @return $this
+	 */
+	public function merge_array($data, $whitelist = null) {
+	
+		$schema = $this->get_schema();
+		
+		foreach($schema as $column) {
+		
+			$name = $column->column_name();
+			if(($whitelist === null or in_array($name, $whitelist)) and isset($data[$name])) {
+
+				$this->{$name} = $data[$name];
+
+			}
+		
+		}
+		
+		return $this;
+	
+	}
+	
+	/**
+	 * Merge Post
+	 * @param mixed Whitelist array or null
+	 * @return $this
+	 */
+	public function merge_post($whitelist = null) {
+	
+		return $this->merge_array($_POST, $whitelist);
+	
+	}
+	
+	/**
+	 * To Array
+	 * @param mixed Whitelist array or null
+	 * @return array Associated array of data from model instance
+	 */
+	public function to_array($whitelist = null) {
+	
+		$data = array();
+		$schema = $this->get_schema();
+		$schema['id'] = new \Column\Int('id');
+		
+		foreach($schema as $column) {
+		
+			$name = $column->column_name();
+			if(($whitelist === null or in_array($name, $whitelist)) and isset($this->$name)) {
+
+				$data[$name] = $this->$name;
+
+			}
+		
+		}
+		
+		return $data;
+	
 	}
 
 	/**
