@@ -19,11 +19,11 @@ Route::add(array(
 	'GET:auth/register'       => array('auth', 'register'),
 	'POST:auth/register'      => array('auth', 'register'),
 	'GET:auth/logout'         => array('auth', 'logout'),
-	'GET:auth/verify/:any'    => array('auth', 'verify_action'),
+	'GET:auth/verify/:any'    => array('auth', 'verify'),
 	'GET:auth/reset_request'  => array('auth', 'reset_request'),
-	'POST:auth/reset_request' => array('auth', 'reset_request_action'),
+	'POST:auth/reset_request' => array('auth', 'reset_request'),
 	'GET:auth/reset/:any'     => array('auth', 'reset'),
-	'POST:auth/reset/:any'    => array('auth', 'reset_action'),
+	'POST:auth/reset/:any'    => array('auth', 'reset'),
 
 	// Admin
 	'GET:admin'      => array('admin', 'index'),
