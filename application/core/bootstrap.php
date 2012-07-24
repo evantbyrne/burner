@@ -93,6 +93,34 @@ class Bootstrap {
 	 */
 	public static function init() {
 		
+		// Fix magic quotes (from php.net)
+		if(get_magic_quotes_gpc()) {
+			
+			$process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
+			while(list($key, $val) = each($process)) {
+				
+				foreach($val as $k => $v) {
+					
+					unset($process[$key][$k]);
+					if (is_array($v)) {
+					
+						$process[$key][stripslashes($k)] = $v;
+						$process[] = &$process[$key][stripslashes($k)];
+					
+					} else {
+					
+						$process[$key][stripslashes($k)] = stripslashes($v);
+					
+					}
+				
+				}
+			
+			}
+			
+			unset($process);
+			
+		}
+		
 		// Start buffer
 		ob_start();
 		
@@ -105,7 +133,6 @@ class Bootstrap {
 		require_once(APPLICATION.'/config/'.CONFIGURATION.'/config.php');
 		require_once(APPLICATION.'/config/'.CONFIGURATION.'/db.php');
 		require_once(APPLICATION.'/core/mysql.php');
-		require_once(APPLICATION.'/model/base/root.php');
 		require_once(APPLICATION.'/core/response.php');
 		
 		set_error_handler('Core\dingo_error');
@@ -131,7 +158,7 @@ class Bootstrap {
 		// If controller does not exist, give 404 error
 		if(!file_exists(APPLICATION."/controller/{$uri['controller']}.php")) {
 		
-			Load::error('404');
+			die('not found.');//Load::error('404');
 		
 		}
 		
@@ -142,7 +169,7 @@ class Bootstrap {
 		// Check to see if function exists
 		if(!is_callable(array($controller, $uri['method']))) {
 		
-			Load::error('404');
+			die('Not callable.');//Load::error('404');
 		
 		}
 		
