@@ -221,4 +221,13 @@ class Template {
 
 	}
 	
+	/**
+	 * Reset First
+	 */
+	public function reset_first() {
+
+		$this->first = true;
+
+	}
+	
 }
