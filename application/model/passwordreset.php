@@ -5,17 +5,17 @@ namespace Model;
 /**
  * Password Reset Model
  */
-class PasswordReset extends \Model\Base\Root {
+class PasswordReset extends \Model\Base {
 	
 	/**
-	 * @inheritdoc
+	 * Construct
 	 */
-	public static function blocks() {
+	public function __construct() {
 	
-		return array(
+		$this->schema(
 		
-			new \Block\TinyInt('user'),
-			new \Block\Varchar('secret', array('length' => 30))
+			new \Column\Int('user'),
+			new \Column\Varchar('secret', array('length' => 30))
 			
 		);
 	
