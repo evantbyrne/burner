@@ -30,7 +30,7 @@ class Admin extends Base {
 	
 	/**
 	 * Model
-	 * @param string Name
+	 * @param string Model
 	 */
 	public function model($name) {
 		
@@ -38,7 +38,7 @@ class Admin extends Base {
 		if(!in_array($name, Config::get('admin'))) {
 
 			// TODO: Actual 404
-			die('Not found.');
+			die('Model not found.');
 
 		}
 
@@ -62,6 +62,38 @@ class Admin extends Base {
 		$this->data('rows', $model_class::select()->order_desc('id')->fetch());
 		$this->data('model', $name);
 		
+	}
+
+	/**
+	 * Row
+	 * @param string Model
+	 * @param string Row ID
+	 */
+	public function row($model, $id) {
+
+		// 404 on unconfigured model
+		if(!in_array($model, Config::get('admin'))) {
+
+			// TODO: Actual 404
+			die('Model not found.');
+
+		}
+
+		$model_class = "\\Model\\$model";
+		$row = $model_class::id($id);
+
+		// 404 on missing row
+		if($row === null) {
+
+			// TODO: Actual 404
+			die('Row not found.');
+
+		}
+		
+		$this->data('model', $model);
+		$this->data('row', $row);
+		$this->data('columns', $row->get_admin());
+
 	}
 
 }

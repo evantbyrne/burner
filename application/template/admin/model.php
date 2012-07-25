@@ -43,6 +43,7 @@
 							<?php endif; ?>
 						
 						<?php endforeach; ?>
+						<?php $this->reset_first(); ?>
 					</tr>
 					
 				<?php endforeach; ?>
