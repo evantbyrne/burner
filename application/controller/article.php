@@ -41,7 +41,7 @@ class Article extends Base {
 	 */
 	public function view($id) {
 
-		$this->data('article', \Model\Article::id($id));
+		$this->data('article', \Model\Article::id($id) or $this->error(404));
 
 	}
 

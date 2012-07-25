@@ -88,4 +88,25 @@ class Base {
 		
 	}
 	
+	/**
+	 * Error
+	 * @param int Status code
+	 * @param array Arguments
+	 */
+	public function error($code, $args = array()) {
+		
+		$controller = new \Controller\Error();
+		call_user_func_array(array($controller, "_$code"), $args);
+
+		$response = \Core\Response::template(
+			$controller->get_template(),
+			$controller->get_data(),
+			$controller->get_status_code());
+		
+		header($response->header());
+		echo $response->content();
+		exit;
+		
+	}
+	
 }
