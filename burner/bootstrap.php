@@ -31,13 +31,13 @@ class Bootstrap {
 		
 		switch($segments[$first]) {
 		
-			case 'core':       $start = APPLICATION.'/core'; break;
-			case 'library':    $start = APPLICATION.'/library'; break;
-			case 'controller': $start = APPLICATION.'/controller'; break;
-			case 'model':      $start = APPLICATION.'/model'; break;
-			case 'column':     $start = APPLICATION.'/column'; break;
-			case 'language':   $start = APPLICATION.'/language/'.Config::get('language'); break;
-			case 'command':    $start = APPLICATION.'/command'; break;
+			case 'core':       $start = BURNER; break;
+			case 'library':    $start = APPLICATION . '/library'; break;
+			case 'controller': $start = APPLICATION . '/controller'; break;
+			case 'model':      $start = APPLICATION . '/model'; break;
+			case 'column':     $start = APPLICATION . '/column'; break;
+			case 'language':   $start = APPLICATION . '/language/' . Config::get('language'); break;
+			case 'command':    $start = APPLICATION . '/command'; break;
 			default: return false; break;
 		
 		}
@@ -128,13 +128,13 @@ class Bootstrap {
 		spl_autoload_register('Core\Bootstrap::autoload', true);
 		
 		// Load core files
-		require_once(APPLICATION.'/core/config.php');
-		require_once(APPLICATION.'/core/error.php');
-		require_once(APPLICATION.'/config/'.CONFIGURATION.'/config.php');
-		require_once(APPLICATION.'/config/'.CONFIGURATION.'/db.php');
-		require_once(APPLICATION.'/config/'.CONFIGURATION.'/hash.php');
-		require_once(APPLICATION.'/core/mysql.php');
-		require_once(APPLICATION.'/core/response.php');
+		require_once(BURNER . '/config.php');
+		require_once(BURNER . '/error.php');
+		require_once(APPLICATION . '/config/' . CONFIGURATION . '/config.php');
+		require_once(APPLICATION . '/config/' . CONFIGURATION . '/db.php');
+		require_once(APPLICATION . '/config/' . CONFIGURATION . '/hash.php');
+		require_once(BURNER . '/mysql.php');
+		require_once(BURNER . '/response.php');
 		
 		set_error_handler('Core\dingo_error');
 		set_exception_handler('Core\dingo_exception');

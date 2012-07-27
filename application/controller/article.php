@@ -32,10 +32,6 @@ class Article extends Base {
 	public function index() {
 
 		$this->data('articles', \Model\Article::select()->order_desc('id')->fetch());
-		$a = new \Model\Article();
-		$a->title = 'Awesome Article';
-		$a->sync() or $this->error(404);
-		print_r($a);exit;
 
 	}
 
