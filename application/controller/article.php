@@ -18,10 +18,9 @@ class Article extends Base {
 
 		if(\Model\Article::id(1) === null) {
 
-			\Model\Article::insert()
-				->value('title', 'Awesome Article')
-				->value('content', 'Even more awesome article content.')
-				->execute();
+			$article->title = 'Awesome Article';
+			$article->content = 'Even more awesome article content.';
+			$article->save();
 
 		}
 
@@ -41,7 +40,8 @@ class Article extends Base {
 	 */
 	public function view($id) {
 
-		$this->data('article', \Model\Article::id($id) or $this->error(404));
+		$article = \Model\Article::id($id) or $this->error(404);
+		$this->data('article', $article);
 
 	}
 

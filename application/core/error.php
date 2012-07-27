@@ -82,7 +82,7 @@ function dingo_error($level,$message,$file='current file',$line='(unknown)')
 		}
 		else
 		{
-			echo 'Could not locate error file at '.APPLICATION.'/'.Config::get('folder_errors').'/fatal.php';
+			echo 'Could not locate error file at '.APPLICATION.'/error/fatal.php';
 		}
 		
 		ob_end_flush();
