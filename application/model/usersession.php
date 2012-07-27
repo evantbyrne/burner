@@ -5,7 +5,7 @@ namespace Model;
 /**
  * User Session Model
  */
-class UserSession extends Base\Session {
+class UserSession extends \Core\Model\Session {
 	
 	/**
 	 * Construct

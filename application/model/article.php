@@ -5,7 +5,7 @@ namespace Model;
 /**
  * Example Article Model
  */
-class Article extends Base {
+class Article extends \Core\Model\Base {
 	
 	/**
 	 * Construct

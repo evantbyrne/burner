@@ -1,12 +1,12 @@
 <?php
 
-namespace Model\Base;
+namespace Core\Model;
 
 /**
  * Base Session Model
  * @author Evan Byrne
  */
-abstract class Session extends \Model\Base {
+abstract class Session extends Base {
 
 	protected static $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789=_';
 	

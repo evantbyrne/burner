@@ -1,12 +1,12 @@
 <?php
 
-namespace Model\Base;
+namespace Core\Model;
 
 /**
  * Base ACL Model
  * @author Evan Byrne
  */
-abstract class ACL extends Root {
+abstract class ACL extends Base {
 	
 	/**
 	 * @inheritdoc

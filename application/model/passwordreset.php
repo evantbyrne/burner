@@ -5,7 +5,7 @@ namespace Model;
 /**
  * Password Reset Model
  */
-class PasswordReset extends \Model\Base {
+class PasswordReset extends \Core\Model\Base {
 	
 	/**
 	 * Construct
