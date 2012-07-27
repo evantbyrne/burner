@@ -251,8 +251,78 @@ class Base {
 	}
 
 	/**
+	 * Sync
+	 *
+	 * Updates the contents of current object, if a matching row is found 
+	 * in database. Will use \Model\Base::id() if the ID is set.
+	 *
+	 * @return boolean True on success, false otherwise
+	 */
+	public function sync() {
+	
+		$result = null;
+		$schema = $this->get_schema();
+		
+		// Use ID if set
+		if(isset($this->id)) {
+
+			$result = self::id($this->id);
+
+		// Use other column values otherwise
+		} else {
+		
+			$query = self::select();
+			$vars = get_object_vars($this);
+			$first_where = true;
+
+			foreach($schema as $column) {
+			
+				if(isset($vars[$column->column_name()])) {
+
+					if($first_where) {
+
+						$query->where($column->column_name(), '=', $vars[$column->column_name()]);
+
+					} else {
+
+						$query->and_where($column->column_name(), '=', $vars[$column->column_name()]);
+
+					}
+
+				}
+			
+			}
+
+			$result = $query->single();
+
+		}
+
+		if($result !== null) {
+
+			// Update model instance
+			foreach($schema as $column) {
+
+				if(isset($result->{$column->column_name()})) {
+
+					$this->{$column->column_name()} = $result->{$column->column_name()};
+
+				}
+
+			}
+
+			return true;
+
+		}
+
+		return false;
+	
+	}
+
+	/**
 	 * Save
+	 *
 	 * Executes update query when ID is set, inserts new row otherwise
+	 *
 	 * @return mixed ID on insert, result of update execution otherwise
 	 */
 	public function save() {
