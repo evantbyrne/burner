@@ -135,7 +135,7 @@ class Auth extends Base {
 		
 				// Create user
 				$user->verify_code = \Model\UserSession::secret();
-				$user->set_password($password);
+				$user->set_password($user->password);
 				$user->save();
 		
 				// Send verification email
