@@ -32,8 +32,8 @@ class Bootstrap {
 		switch($segments[$first]) {
 		
 			case 'core':       $start = BURNER; break;
-			case 'column':     $start = BURNER      . '/column'; break;
-			case 'library':    $start = APPLICATION . '/library'; break;
+			case 'column':     $start = BURNER . '/column'; break;
+			case 'library':    $start = BURNER . '/library'; break;
 			case 'controller': $start = APPLICATION . '/controller'; break;
 			case 'model':      $start = APPLICATION . '/model'; break;
 			case 'language':   $start = APPLICATION . '/language/' . Config::get('language'); break;
