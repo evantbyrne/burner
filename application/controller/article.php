@@ -20,6 +20,7 @@ class Article extends Base {
 
 			$article->title = 'Awesome Article';
 			$article->content = 'Even more awesome article content.';
+			$article->set_json(array(1 => 'one', 'two' => 'foo', 'three' => array(1.1, 2.2, 3.3)));
 			$article->save();
 
 		}

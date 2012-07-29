@@ -15,6 +15,7 @@ class Article extends \Core\Model\Base {
 		$this->schema(
 			new \Column\Varchar('title', array('length' => 125)),
 			new \Column\Text('content'),
+			new \Column\Json('json'),
 			new \Column\HasMany('comments', array('model' => 'Comment', 'column' => 'article'))
 		);
 
