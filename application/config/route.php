@@ -10,6 +10,8 @@ Route::add(array(
 	// Blog
 	'GET:blog'         => array('article', 'index'),
 	'GET:article/:int' => array('article', 'view'),
+	'GET:article/add'  => array('article', 'add'),
+	'POST:article/add' => array('article', 'add'),
 
 	// Authentication
 	'GET:auth/login'          => array('auth', 'login'),

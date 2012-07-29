@@ -6,32 +6,6 @@ namespace Controller;
  * Example Article Controller
  */
 class Article extends Base {
-	
-	/**
-	 * Constructor
-	 * For testing
-	 */
-	public function __construct() {
-
-		$article = new \Model\Article();
-		$article->create_table(true);
-
-		if(\Model\Article::id(1) === null) {
-
-			$article->title = 'Awesome Article';
-			$article->content = 'Even more awesome article content.';
-			$article->authors_add(3)->authors_add('foo');
-			$article->save();
-
-			var_dump($article->in_authors(1));
-			var_dump($article->in_authors(2));
-			var_dump($article->in_authors(3));
-			var_dump($article->get_authors());
-			exit;
-
-		}
-
-	}
 
 	/**
 	 * Index
@@ -49,6 +23,32 @@ class Article extends Base {
 
 		$article = \Model\Article::id($id) or $this->error(404);
 		$this->data('article', $article);
+
+	}
+
+	/**
+	 * Add
+	 */
+	public function add() {
+
+		if(is_post()) {
+
+			$article = \Model\Article::from_post(array('title', 'content'));
+			$errors = $article->valid();
+
+			if(is_array($errors)) {
+
+				$this->data($article->to_array());
+				$this->data('errors', $errors);
+
+			} else {
+
+				$id = $article->save();
+				redirect("article/$id");
+
+			}
+
+		}
 
 	}
 
