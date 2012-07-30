@@ -7,7 +7,7 @@ use Core\Config;
  * Admin Controller
  * @author Evan Byrne
  */
-class Admin extends Base {
+class Admin extends \Core\Controller\Base {
 	
 	/**
 	 * Construct

@@ -8,7 +8,7 @@ use Library\Input, Library\Cookie;
  * Auth Controller
  * @author Evan Byrne
  */
-class Auth extends Base {
+class Auth extends \Core\Controller\Base {
 	
 	/**
 	 * Cached logged in result

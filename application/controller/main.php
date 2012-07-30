@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-class Main extends Base {
+class Main extends \Core\Controller\Base {
 
 	/**
 	 * Index

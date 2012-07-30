@@ -5,7 +5,7 @@ namespace Controller;
 /**
  * Example Article Controller
  */
-class Article extends Base {
+class Article extends \Core\Controller\Base {
 
 	/**
 	 * Index

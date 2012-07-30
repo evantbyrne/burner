@@ -5,7 +5,7 @@ namespace Controller;
 /**
  * Error Controller
  */
-class Error extends Base {
+class Error extends \Core\Controller\Base {
 
 	/**
 	 * 404
