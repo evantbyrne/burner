@@ -153,13 +153,28 @@ class Bootstrap {
 		$request_url = self::get_request_url();
 		$uri = Route::get($request_url);
 		
+		if($uri === false) {
+			
+			$controller = new \Controller\Error();
+			$controller->_404();
+			$response = \Core\Response::template(
+				$controller->get_template(),
+				$controller->get_data(),
+				$controller->get_status_code());
+
+			header($response->header());
+			echo $response->content();
+			exit;
+			
+		}
+		
 		// Set current page
 		define('CURRENT_PAGE', $request_url);
 		
 		// If controller does not exist, give 404 error
 		if(!file_exists(APPLICATION."/controller/{$uri['controller']}.php")) {
 		
-			die('not found.');//Load::error('404');
+			throw new \Exception("Controller <em>{$uri['controller']}</em> not found.");
 		
 		}
 		
@@ -170,7 +185,7 @@ class Bootstrap {
 		// Check to see if function exists
 		if(!is_callable(array($controller, $uri['method']))) {
 		
-			die('Not callable.');//Load::error('404');
+			throw new \Exception("Controller method <em>{$uri['method']}</em> not callable.");
 		
 		}
 		

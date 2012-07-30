@@ -4,7 +4,7 @@ namespace Core;
 
 
 // Application's Base URL
-define('BASE_URL','http://localhost:8888/beaker-cms/');
+define('BASE_URL','http://localhost:8888/beaker-burner/');
 
 // Does Application Use Mod_Rewrite URLs?
 define('MOD_REWRITE', true);

@@ -106,7 +106,7 @@ class Route {
 			// No default route
 			else {
 			
-				die('No default route set. WTF'); // TODO: remove this
+				throw new Exception('Default route not set.');
 			
 			}
 		
@@ -181,7 +181,7 @@ class Route {
 		
 		}
 		
-		die('No route found'); // TODO: change to 404
+		return false;
 		
 	}
 	
