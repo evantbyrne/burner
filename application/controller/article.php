@@ -34,19 +34,39 @@ class Article extends Base {
 		if(is_post()) {
 
 			$article = \Model\Article::from_post(array('title', 'content'));
-			$errors = $article->valid();
-
-			if(is_array($errors)) {
-
-				$this->data($article->to_array());
-				$this->data('errors', $errors);
-
-			} else {
+			
+			if($this->valid($article)) {
 
 				$id = $article->save();
 				redirect("article/$id");
 
 			}
+
+		}
+
+	}
+
+	/**
+	 * Edit
+	 */
+	public function edit($id) {
+
+		$article = \Model\Article::id($id) or $this->error(404);
+
+		if(is_post()) {
+
+			$article->merge_post(array('title', 'content'));
+			
+			if($this->valid($article)) {
+
+				$article->save();
+				redirect("article/$id");
+
+			}
+
+		} else {
+
+			$this->data($article->to_array());
 
 		}
 

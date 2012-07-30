@@ -8,10 +8,12 @@ Route::add(array(
 	'GET:/' => array('main', 'index'),
 	
 	// Blog
-	'GET:blog'         => array('article', 'index'),
-	'GET:article/:int' => array('article', 'view'),
-	'GET:article/add'  => array('article', 'add'),
-	'POST:article/add' => array('article', 'add'),
+	'GET:blog'               => array('article', 'index'),
+	'GET:article/:int'       => array('article', 'view'),
+	'GET:article/add'        => array('article', 'add'),
+	'POST:article/add'       => array('article', 'add'),
+	'GET:article/edit/:int'  => array('article', 'edit'),
+	'POST:article/edit/:int' => array('article', 'edit'),
 
 	// Authentication
 	'GET:auth/login'          => array('auth', 'login'),

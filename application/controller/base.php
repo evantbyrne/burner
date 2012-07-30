@@ -108,5 +108,26 @@ class Base {
 		exit;
 		
 	}
+
+	/**
+	 * Valid
+	 * @param \Core\Model\Base Model instance to validate
+	 * @return boolean
+	 */
+	public function valid($model) {
+
+		$errors = $model->valid();
+
+		if(is_array($errors)) {
+
+			$this->data($model->to_array());
+			$this->data('errors', $errors);
+			return false;
+
+		}
+
+		return true;
+
+	}
 	
 }
