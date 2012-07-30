@@ -95,16 +95,7 @@ class Base {
 	 */
 	public function error($code, $args = array()) {
 		
-		$controller = new \Controller\Error();
-		call_user_func_array(array($controller, "_$code"), $args);
-
-		$response = \Core\Response::template(
-			$controller->get_template(),
-			$controller->get_data(),
-			$controller->get_status_code());
-		
-		header($response->header());
-		echo $response->content();
+		\Core\Bootstrap::controller('error', "_$code", $args);
 		exit;
 		
 	}

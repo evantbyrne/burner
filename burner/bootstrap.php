@@ -145,6 +145,40 @@ class Bootstrap {
 	}
 	
 	/**
+	 * Controller
+	 * @param string Controller name
+	 * @param string Method
+	 * @param array Arguments
+	 * @return \Core\Controller\Base Controller instance
+	 */
+	public static function controller($controller_name, $method, $args = array()) {
+		
+		$tmp = '\\Controller\\' . ucfirst($controller_name);
+		$controller = new $tmp();
+		
+		// Check to see if method is callable
+		if(!is_callable(array($controller, $method))) {
+		
+			throw new \Exception("Controller method <em>{$uri['method']}</em> not callable.");
+		
+		}
+		
+		call_user_func_array(array($controller, $method), $args);
+		
+		$template = $controller->get_template();
+		$response = Response::template(
+			($template === null) ? "$controller_name/$method" : $template,
+			$controller->get_data(),
+			$controller->get_status_code());
+		
+		header($response->header());
+		echo $response->content();
+		
+		return $controller;
+		
+	}
+	
+	/**
 	 * Run
 	 */
 	public static function run() {
@@ -155,15 +189,7 @@ class Bootstrap {
 		
 		if($uri === false) {
 			
-			$controller = new \Controller\Error();
-			$controller->_404();
-			$response = \Core\Response::template(
-				$controller->get_template(),
-				$controller->get_data(),
-				$controller->get_status_code());
-
-			header($response->header());
-			echo $response->content();
+			self::controller('error', '_404');
 			exit;
 			
 		}
@@ -171,35 +197,8 @@ class Bootstrap {
 		// Set current page
 		define('CURRENT_PAGE', $request_url);
 		
-		// If controller does not exist, give 404 error
-		if(!file_exists(APPLICATION."/controller/{$uri['controller']}.php")) {
-		
-			throw new \Exception("Controller <em>{$uri['controller']}</em> not found.");
-		
-		}
-		
-		// Initialize controller
-		$tmp = '\\Controller\\'.ucfirst($uri['controller']);
-		$controller = new $tmp();
-		
-		// Check to see if function exists
-		if(!is_callable(array($controller, $uri['method']))) {
-		
-			throw new \Exception("Controller method <em>{$uri['method']}</em> not callable.");
-		
-		}
-		
-		// Run Function
-		call_user_func_array(array($controller, $uri['method']), $uri['args']);
-		$template = $controller->get_template();
-		
-		$response = Response::template(
-			($template === null) ? "{$uri['controller']}/{$uri['method']}" : $template,
-			$controller->get_data(),
-			$controller->get_status_code());
-		
-		header($response->header());
-		echo $response->content();
+		// Load controller
+		self::controller($uri['controller'], $uri['method'], $uri['args']);
 		
 		// Display echoed content
 		ob_end_flush();
