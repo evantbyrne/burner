@@ -3,143 +3,89 @@
 namespace Core;
 
 /**
- * Dingo Error Handling Functions
- *
- * @Author          Evan Byrne
- * @Copyright       2008 - 2011
- * @Project Page    http://www.dingoframework.com
- *
- * Many thanks to Kalle for providing code
- * http://www.talkphp.com/show-off/4070-dingo-framework-alpha-testing-open-3.html#post23025
+ * Dingo Error
+ * @param int Level
+ * @param string Message
+ * @param string File
+ * @param mixed Line
  */
-
-
-// Errors
-// ---------------------------------------------------------------------------
-function dingo_error($level,$message,$file='current file',$line='(unknown)')
-{
+function burner_error($level, $message, $file = 'current file', $line='(unknown)') {
+	
 	$fatal = false;
 	$exception = false;
 	
-	switch($level)
-	{
+	switch($level) {
+		
 		case('exception'):
-		{
 			$prefix = 'Uncaught Exception';
 			$exception = true;
-		}
-		break;
+			break;
+			
 		case(E_RECOVERABLE_ERROR):
-		{
 			$prefix = 'Recoverable Error';
 			$fatal	 = true;
-		}
-		break;
+			break;
+			
 		case(E_USER_ERROR):
-		{
 			$prefix = 'Fatal Error';
 			$fatal	 = true;
-		}
-		break;
+			break;
+		
 		case(E_NOTICE):
 		case(E_USER_NOTICE):
-		{
 			$prefix = 'Notice';
-		}
-		break;
-		/* E_DEPRECATED & E_USER_DEPRECATED, available as of PHP 5.3 - Use their numbers here to prevent redefining them and two E_NOTICE's */
-		case(8192):
-		case(16384):
-		{
+			break;
+			
+		case(E_DEPRECATED):
+		case(E_USER_DEPRECATED):
 			$prefix = 'Deprecated';
-		}
+			break;
+		
 		case(E_STRICT):
-		{
 			$prefix = 'Strict Standards';
-		}
-		break;
+			break;
+			
 		default:
-		{
 			$prefix = 'Warning';
-		}
+			
 	}
 	
 	$error = array(
-		'level'=>$level,
-		'prefix'=>$prefix,
-		'message'=>$message,
-		'file'=>$file,
-		'line'=>$line
+		'level'   => $level,
+		'prefix'  => $prefix,
+		'message' => $message,
+		'file'    => $file,
+		'line'    => $line
 	);
 	
-	if($fatal)
-	{
+	if($fatal or $exception or DEBUG) {
+	
 		ob_clean();
-		
-		if(file_exists(APPLICATION.'/error/fatal.php'))
-		{
-			require(APPLICATION.'/error/fatal.php');
-		}
-		else
-		{
-			echo 'Could not locate error file at '.APPLICATION.'/error/fatal.php';
-		}
-		
+		echo "<p>{$error['prefix']}: <strong>{$error['message']}</strong> In {$error['file']} At Line {$error['line']}</p>";
 		ob_end_flush();
 		exit;
-	}
-	elseif($exception)
-	{
-		ob_clean();
-		
-		if(file_exists(APPLICATION.'/error/exception.php'))
-		{
-			require(APPLICATION.'/error/exception.php');
-		}
-		else
-		{
-			echo 'Could not locate exception file at '.APPLICATION.'/error/exception.php';
-		}
-		
-		ob_end_flush();
-		exit;
-	}
-	elseif(DEBUG)
-	{
-		if(file_exists(APPLICATION.'/error/nonfatal.php'))
-		{
-			require(APPLICATION.'/error/nonfatal.php');
-		}
-		else
-		{
-			echo 'Dingo could not locate error file at '.APPLICATION.'/error/nonfatal.php';
-		}
+	
 	}
 	
-	if(ERROR_LOGGING)
-	{
-		dingo_error_log($error);
+	if(ERROR_LOGGING) {
+		
+		$date = date('g:i A M d Y');
+		$fh = fopen(ERROR_LOG_FILE, 'a');
+		flock($fh, LOCK_EX);
+		fwrite($fh, "[$date] {$error['prefix']}: {$error['message']} IN {$error['file']} ON LINE {$error['line']}\n");
+		flock($fh, LOCK_UN);
+		fclose($fh);
+		
 	}
-}
-
-
-// Exceptions
-// ---------------------------------------------------------------------------
-function dingo_exception($ex)
-{
-	dingo_error('exception',$ex->getMessage(),$ex->getFile(),$ex->getLine());
-}
-
-
-// Error Logging
-// ---------------------------------------------------------------------------
-function dingo_error_log($error)
-{
-	$date = date('g:i A M d Y');
 	
-	$fh = fopen(ERROR_LOG_FILE,'a');
-	flock($fh,LOCK_EX);
-	fwrite($fh,"[$date] {$error['prefix']}: {$error['message']} IN {$error['file']} ON LINE {$error['line']}\n");
-	flock($fh,LOCK_UN);
-	fclose($fh);
+}
+
+/**
+ * Burner Exception
+ * @param \Exception
+ */
+function burner_exception($ex) {
+	
+	burner_error('exception', $ex->getMessage(), $ex->getFile(), $ex->getLine());
+
 }

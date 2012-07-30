@@ -13,7 +13,7 @@ define('MOD_REWRITE', true);
 define('DEBUG', true);
 
 // Turn Error Logging On?
-define('ERROR_LOGGING', true);
+define('ERROR_LOGGING', false);
 
 // Error Log File Location
 define('ERROR_LOG_FILE','log.txt');

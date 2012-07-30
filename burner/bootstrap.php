@@ -136,8 +136,8 @@ class Bootstrap {
 		require_once(BURNER . '/mysql.php');
 		require_once(BURNER . '/response.php');
 		
-		set_error_handler('Core\dingo_error');
-		set_exception_handler('Core\dingo_exception');
+		set_error_handler('Core\burner_error');
+		set_exception_handler('Core\burner_exception');
 		
 		// Load route configuration
 		require_once(APPLICATION.'/config/route.php');
@@ -159,7 +159,7 @@ class Bootstrap {
 		// Check to see if method is callable
 		if(!is_callable(array($controller, $method))) {
 		
-			throw new \Exception("Controller method <em>{$uri['method']}</em> not callable.");
+			throw new \Exception("Controller method <em>$method</em> not callable.");
 		
 		}
 		
