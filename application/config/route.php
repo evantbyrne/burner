@@ -32,7 +32,9 @@ Route::add(array(
 	// Admin
 	'GET:admin'            => array('admin', 'index'),
 	'GET:admin/:any'       => array('admin', 'model'),
-	'GET:admin/:any/:int'  => array('admin', 'row'),
-	'POST:admin/:any/:int' => array('admin', 'row')
+	'GET:admin/:any/:int'  => array('admin', 'edit'),
+	'POST:admin/:any/:int' => array('admin', 'edit'),
+	'GET:admin/:any/add'   => array('admin', 'add'),
+	'POST:admin/:any/add'  => array('admin', 'add')
 	
 ));

@@ -64,11 +64,11 @@ class Admin extends \Core\Controller\Base {
 	}
 
 	/**
-	 * Row
+	 * Edit
 	 * @param string Model
 	 * @param string Row ID
 	 */
-	public function row($model, $id) {
+	public function edit($model, $id) {
 
 		// 404 on unconfigured model
 		if(!in_array($model, Config::get('admin'))) {
