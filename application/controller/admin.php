@@ -15,7 +15,7 @@ class Admin extends \Core\Controller\Base {
 	public function __construct() {
 		
 		Auth::enforce();
-		require_once(APPLICATION.'/config/admin.php');
+		require_once(APPLICATION . '/config/admin.php');
 		
 	}
 	
@@ -37,8 +37,7 @@ class Admin extends \Core\Controller\Base {
 		// 404 on unconfigured model
 		if(!in_array($name, Config::get('admin'))) {
 
-			// TODO: Actual 404
-			die('Model not found.');
+			$this->error(404);
 
 		}
 
@@ -74,25 +73,37 @@ class Admin extends \Core\Controller\Base {
 		// 404 on unconfigured model
 		if(!in_array($model, Config::get('admin'))) {
 
-			// TODO: Actual 404
-			die('Model not found.');
+			$this->error(404);
 
 		}
 
 		$model_class = "\\Model\\$model";
-		$row = $model_class::id($id);
+		$row = $model_class::id($id) or $this->error(404);
+		
+		$schema = $row->get_schema();
+		$admin = $row->get_admin();
+		$columns = array();
 
-		// 404 on missing row
-		if($row === null) {
+		foreach($schema as $column) {
+		
+			$name = $column->column_name();
+			if(isset($admin[$name])) {
 
-			// TODO: Actual 404
-			die('Row not found.');
+				$columns[$name] = array(
+
+					'options' => array_merge($column->options(), $admin[$name]),
+					'value'   => (isset($row->{$name})) ? $row->{$name} : null
+
+				);
+
+			}
 
 		}
-		
+
+
 		$this->data('model', $model);
 		$this->data('row', $row);
-		$this->data('columns', $row->get_admin());
+		$this->data('columns', $columns);
 
 	}
 

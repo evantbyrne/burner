@@ -21,7 +21,7 @@ abstract class Base {
 		// TODO: Validate column name
 		$this->_column_name = $column_name;
 		$this->_methods = array();
-		$this->_options = $options;
+		$this->_options = array_merge(array('list' => true, 'choices' => null, 'template' => 'text'), $options);
 		
 		if($column !== null) {
 		
@@ -61,6 +61,16 @@ abstract class Base {
 	public function column_name() {
 	
 		return $this->_column_name;
+	
+	}
+
+	/**
+	 * Options
+	 * @return array
+	 */
+	public function options() {
+	
+		return $this->_options;
 	
 	}
 	
