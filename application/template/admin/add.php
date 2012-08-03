@@ -2,13 +2,13 @@
 
 
 <!-- Title -->
-<?php $this->set('title', 'Edit ' . ucfirst($model) . ' | Admin ') ?>
+<?php $this->set('title', 'Add ' . ucfirst($model) . ' | Admin ') ?>
 
 
 <!-- Content -->
 <?php $this->extend('content') ?>
 
-	<h2>Edit <?php echo ucfirst($model); ?></h2>
+	<h2>Add <?php echo ucfirst($model); ?></h2>
 
 	<form method="post">
 

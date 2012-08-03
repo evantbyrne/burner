@@ -9,7 +9,7 @@
 <?php $this->extend('content') ?>
 
 	<h2>Models</h2>
-	
+
 	<?php if(empty($models)): ?>
 		
 		<p>No models configured to be manageable from admin.</p>

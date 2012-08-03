@@ -10,6 +10,8 @@
 
 	<h2><?php echo ucfirst($model); ?></h2>
 	
+	<p><a href="<?php echo url("admin/$model/add"); ?>">Add</a></p>
+	
 	<?php if(empty($rows)): ?>
 		
 		<p>No rows found.</p>

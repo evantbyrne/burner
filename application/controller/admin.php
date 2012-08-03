@@ -128,4 +128,68 @@ class Admin extends \Core\Controller\Base {
 
 	}
 
+	/**
+	 * Add
+	 * @param string Model
+	 */
+	public function add($model) {
+
+		// 404 on unconfigured model
+		if(!in_array($model, Config::get('admin'))) {
+
+			$this->error(404);
+
+		}
+
+		$model_class = "\\Model\\$model";
+		$row = new $model_class();
+		
+		$schema = $row->get_schema();
+		$admin = $row->get_admin();
+		$columns = array();
+
+		foreach($schema as $column) {
+		
+			$name = $column->column_name();
+			if(isset($admin[$name])) {
+
+				$columns[$name] = array(
+
+					'options' => array_merge($column->options(), $admin[$name]),
+					'value'   => null
+
+				);
+
+			}
+
+		}
+
+		if(is_post()) {
+
+			$row->merge_post(array_keys($columns));
+			
+			if($this->valid($row)) {
+
+				$id = $row->save();
+				redirect("admin/$model");
+
+			} else {
+
+				foreach($columns as $name => $value) {
+					
+					$columns[$name]['value'] = $row->{$name};
+
+				}
+
+			}
+
+		}
+
+
+		$this->data('model', $model);
+		$this->data('row', $row);
+		$this->data('columns', $columns);
+
+	}
+
 }
