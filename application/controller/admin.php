@@ -14,7 +14,7 @@ class Admin extends \Core\Controller\Base {
 	 */
 	public function __construct() {
 		
-		Auth::enforce();
+		Auth::enforce('admin');
 		require_once(APPLICATION . '/config/admin.php');
 		
 	}

@@ -72,12 +72,24 @@ class Auth extends \Core\Controller\Base {
 	/**
 	 * Enforce
 	 */
-	public static function enforce() {
+	public static function enforce($level = false) {
 		
 		if(!self::logged_in()) {
 			
 			login_redirect(CURRENT_PAGE);
 			
+		}
+
+		if($level !== false) {
+
+			$user = self::user();
+			if($user->type < \Model\User::level($level)) {
+
+				\Core\Bootstrap::controller('error', '_403');
+				exit;
+
+			}
+
 		}
 		
 	}
