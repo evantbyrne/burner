@@ -67,29 +67,24 @@ class Template {
 	 * Load
 	 * @param string Template
 	 * @param array Data
-	 * @return boolean Success
 	 */
 	public function load($template, $data = NULL) {
 		
 		// If view does not exist display error
 		if(!file_exists(APPLICATION."/template/$template.php")) {
 			
-			dingo_error(E_USER_WARNING,'The requested template ('.APPLICATION."/template/$template.php) could not be found.");
-			return false;
+			throw new \Exception('The requested template ('. APPLICATION. "/template/$template.php) could not be found.");
 			
-		} else {
+		}
+		
+		// If data is array, convert keys to variables
+		if(is_array($data)) {
 			
-			// If data is array, convert keys to variables
-			if(is_array($data)) {
-				
-				extract($data, EXTR_OVERWRITE);
-			
-			}
-			
-			require(APPLICATION."/template/$template.php");
-			return true;
+			extract($data, EXTR_OVERWRITE);
 		
 		}
+		
+		require(APPLICATION . "/template/$template.php");
 		
 	}
 	
