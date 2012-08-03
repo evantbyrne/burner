@@ -100,6 +100,27 @@ class Admin extends \Core\Controller\Base {
 
 		}
 
+		if(is_post()) {
+
+			$row->merge_post(array_keys($columns));
+			
+			if($this->valid($row)) {
+
+				$row->save();
+				redirect("admin/$model");
+
+			} else {
+
+				foreach($columns as $name => $value) {
+					
+					$columns[$name]['value'] = $row->{$name};
+
+				}
+
+			}
+
+		}
+
 
 		$this->data('model', $model);
 		$this->data('row', $row);

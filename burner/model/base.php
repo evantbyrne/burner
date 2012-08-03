@@ -168,7 +168,7 @@ class Base {
 	 */
 	public function admin($column, $options = array()) {
 
-		$this->_admin[$column] = $options;
+		$this->_admin[$column] = array_merge(array('list' => true), $options);
 
 	}
 
