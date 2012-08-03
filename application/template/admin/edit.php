@@ -10,6 +10,8 @@
 
 	<h2>Edit <?php echo ucfirst($model); ?></h2>
 
+	<p><a href="<?php echo url("admin/$model/delete/{$row->id}"); ?>">Delete</a></p>
+
 	<form method="post">
 
 		<?php foreach($columns as $name => $c): ?>

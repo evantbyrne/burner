@@ -30,11 +30,13 @@ Route::add(array(
 	'POST:auth/reset/:any'    => array('auth', 'reset'),
 
 	// Admin
-	'GET:admin'            => array('admin', 'index'),
-	'GET:admin/:any'       => array('admin', 'model'),
-	'GET:admin/:any/:int'  => array('admin', 'edit'),
-	'POST:admin/:any/:int' => array('admin', 'edit'),
-	'GET:admin/:any/add'   => array('admin', 'add'),
-	'POST:admin/:any/add'  => array('admin', 'add')
+	'GET:admin'                   => array('admin', 'index'),
+	'GET:admin/:any'              => array('admin', 'model'),
+	'GET:admin/:any/:int'         => array('admin', 'edit'),
+	'POST:admin/:any/:int'        => array('admin', 'edit'),
+	'GET:admin/:any/add'          => array('admin', 'add'),
+	'POST:admin/:any/add'         => array('admin', 'add'),
+	'GET:admin/:any/delete/:int'  => array('admin', 'delete'),
+	'POST:admin/:any/delete/:int' => array('admin', 'delete')
 	
 ));

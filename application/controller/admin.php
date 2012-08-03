@@ -129,6 +129,37 @@ class Admin extends \Core\Controller\Base {
 	}
 
 	/**
+	 * Delete
+	 * @param string Model
+	 * @param string Row ID
+	 */
+	public function delete($model, $id) {
+
+		// 404 on unconfigured model
+		if(!in_array($model, Config::get('admin'))) {
+
+			$this->error(404);
+
+		}
+
+		$model_class = "\\Model\\$model";
+		$row = $model_class::id($id) or $this->error(404);
+
+		if(is_post()) {
+
+			$model_class::delete()->where('id', '=', $id)->limit(1)->execute();
+			redirect("admin/$model");
+
+		} else {
+
+			$this->data('model', $model);
+			$this->data('id', $id);
+
+		}
+
+	}
+
+	/**
 	 * Add
 	 * @param string Model
 	 */
