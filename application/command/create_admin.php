@@ -25,14 +25,14 @@ class Create_Admin {
 		
 		if(is_array($user->valid())) {
 			
-			echo "Error: email and password are required\n";
+			echo "Error: valid email and password are required\n";
 		
 		} else {
 			
 			$user->set_password($user->password);
 			$user->type = \Model\User::level('admin');
 			$user->save();
-			echo "Success: created admin user with email: {$user->email}\n";
+			echo "Successfully created admin user\n";
 			
 		}
 		
