@@ -1,16 +1,31 @@
-<?php $this->base('base'); ?>
+<?php $this->base('admin/base'); ?>
 
 
 <!-- Title -->
 <?php $this->set('title', 'Add ' . ucfirst($model) . ' | Admin ') ?>
 
 
+<!-- Header -->
+<?php $this->set('header', 'Add ' . ucfirst($model)); ?>
+
+
+<!-- Breadcrumbs -->
+<?php $this->extend('breadcrumbs'); ?>
+
+	<ul class="breadcrumb">
+		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo url('admin'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo url("admin/$model"); ?>"><?php echo ucfirst($model); ?></a> <span class="divider">/</span></li>
+		<li class="active">Add</li>
+	</ul>
+
+<?php $this->end_extend(); ?>
+
+
 <!-- Content -->
 <?php $this->extend('content') ?>
 
-	<h2>Add <?php echo ucfirst($model); ?></h2>
-
-	<form method="post">
+	<form method="post" class="form-horizontal">
 
 		<?php foreach($columns as $name => $c): ?>
 
@@ -18,7 +33,7 @@
 
 		<?php endforeach; ?>
 
-		<p><input type="submit" value="Save" /></p>
+		<p><input type="submit" value="Save" class="btn btn-primary" /></p>
 
 	</form>
 

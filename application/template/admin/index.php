@@ -1,14 +1,16 @@
-<?php $this->base('base'); ?>
+<?php $this->base('admin/base'); ?>
 
 
 <!-- Title -->
-<?php $this->set('title', 'Admin Index') ?>
+<?php $this->set('title', 'Admin Index'); ?>
+
+
+<!-- Header -->
+<?php $this->set('header', 'Models'); ?>
 
 
 <!-- Content -->
 <?php $this->extend('content') ?>
-
-	<h2>Models</h2>
 
 	<?php if(empty($models)): ?>
 		
@@ -16,15 +18,24 @@
 		
 	<?php else: ?>
 	
-		<ul>
-		
-			<?php foreach($models as $model): ?>
-		
-				<li><a href="<?php echo url("admin/$model"); ?>"><?php echo ucfirst($model); ?></a></li>
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				<?php foreach($models as $model): ?>
 			
-			<?php endforeach; ?>
-		
-		</ul>
+					<tr>
+						<td><a href="<?php echo url("admin/$model"); ?>"><?php echo ucfirst($model); ?></a></td>
+					</tr>
+				
+				<?php endforeach; ?>
+
+			</tbody>
+		</table>
 		
 	<?php endif; ?>
 

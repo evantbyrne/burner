@@ -1,20 +1,36 @@
-<?php $this->base('base'); ?>
+<?php $this->base('admin/base'); ?>
 
 
 <!-- Title -->
 <?php $this->set('title', 'Delete ' . ucfirst($model) . ' | Admin ') ?>
 
 
+<!-- Header -->
+<?php $this->set('header', 'Delete ' . ucfirst($model)); ?>
+
+
+<!-- Breadcrumbs -->
+<?php $this->extend('breadcrumbs'); ?>
+
+	<ul class="breadcrumb">
+		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo url('admin'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo url("admin/$model"); ?>"><?php echo ucfirst($model); ?></a> <span class="divider">/</span></li>
+		<li><a href="<?php echo url("admin/$model/$id"); ?>">Edit</a> <span class="divider">/</span></li>
+		<li class="active">Delete</li>
+	</ul>
+
+<?php $this->end_extend(); ?>
+
+
 <!-- Content -->
 <?php $this->extend('content') ?>
 
-	<h2>Delete <?php echo ucfirst($model); ?></h2>
-
-	<p>Are you sure that you want to delete this database record? <a href="<?php echo url("admin/$model/$id"); ?>">Cancel</a></p>
+	<p>Are you sure that you want to delete this database record?</p>
 
 	<form method="post">
 
-		<p><input type="submit" value="Delete" /></p>
+		<p><input type="submit" value="Delete" class="btn btn-danger" /></p>
 
 	</form>
 
