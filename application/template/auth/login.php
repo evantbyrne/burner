@@ -12,17 +12,9 @@
 	
 	<form method="post">
 
-		<?php $this->error('email'); ?>
-		<p>
-			<label for="email">Email:</label>
-			<input type="email" name="email" id="email" value="<?php $this->show('email'); ?>" />
-		</p>
+		<?php $this->field('Email:', 'email', 'email'); ?>
 
-		<?php $this->error('password'); ?>
-		<p>
-			<label for="password">Password:</label>
-			<input type="password" name="password" id="password" />
-		</p>
+		<?php $this->field('Password:', 'password', 'password'); ?>
 
 		<p><input type="submit" value="Login" /></p>
 

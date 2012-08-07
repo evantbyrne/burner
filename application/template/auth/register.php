@@ -12,23 +12,11 @@
 	
 	<form method="post">
 
-		<?php $this->error('email'); ?>
-		<p>
-			<label for="email">Email:</label>
-			<input type="email" name="email" id="email" value="<?php $this->show('email'); ?>" />
-		</p>
+		<?php $this->field('Email:', 'email', 'email'); ?>
 
-		<?php $this->error('password'); ?>
-		<p>
-			<label for="password">Password:</label>
-			<input type="password" name="password" id="password" />
-		</p>
+		<?php $this->field('Password:', 'password', 'password'); ?>
 
-		<?php $this->error('password_confirm'); ?>
-		<p>
-			<label for="password_confirm">Confirm Password:</label>
-			<input type="password" name="password_confirm" id="password_confirm" />
-		</p>
+		<?php $this->field('Confirm Password:', 'password_confirm', 'password'); ?>
 
 		<p><input type="submit" value="Register" /></p>
 

@@ -394,9 +394,9 @@ class Base {
 		foreach($schema as $column) {
 		
 			$name = $column->column_name();
-			if(($whitelist === null or in_array($name, $whitelist)) and isset($this->$name)) {
+			if(($whitelist === null or in_array($name, $whitelist))) {
 
-				$data[$name] = $this->$name;
+				$data[$name] = (isset($this->$name)) ? $this->$name : null;
 
 			}
 		

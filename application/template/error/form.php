@@ -1,1 +1,1 @@
-<p>Error: <?php $this->show('content'); ?></p>
+<p>Error: <?php echo $content; ?></p>

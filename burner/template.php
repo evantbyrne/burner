@@ -173,17 +173,6 @@ class Template {
 		$this->current_new_section = false;
 	
 	}
-	
-	/**
-	 * Show
-	 * @param string Data key to run htmlentities on and then display
-	 * @param string Fallback value to display
-	 */
-	public function show($key, $default = null) {
-	
-		echo (empty($this->data[$key])) ? $default : htmlentities($this->data[$key]);
-	
-	}
 
 	/**
 	 * Error
