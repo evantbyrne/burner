@@ -14,8 +14,8 @@
 
 	<ul class="breadcrumb">
 		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo url('admin'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo url("admin/$model"); ?>"><?php echo ucfirst($model); ?></a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'admin', 'model', array($model)); ?>"><?php echo ucfirst($model); ?></a> <span class="divider">/</span></li>
 		<li class="active">Edit</li>
 	</ul>
 
@@ -27,7 +27,7 @@
 
 	<div class="well">
 		<ul class="nav nav-list">
-			<li><a href="<?php echo url("admin/$model/delete/{$row->id}"); ?>"><i class="icon-minus"></i>Delete</a></li>
+			<li><a href="<?php echo route_url('get', 'admin', 'delete', array($model, $row->id)); ?>"><i class="icon-minus"></i>Delete</a></li>
 		</ul>
 	</div>
 

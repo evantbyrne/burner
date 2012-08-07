@@ -32,7 +32,7 @@
 							<?php if(\Controller\Auth::logged_in()): ?>
 								
 								<li class="active"><a href="javascript:;"><?php echo 'Welcome, ' . \Controller\Auth::user()->email; ?></a></li>
-								<li><a href="<?php echo url('auth/logout'); ?>">Log Out</a></li>
+								<li><a href="<?php echo route_url('get', 'auth', 'logout'); ?>">Log Out</a></li>
 							
 							<?php endif; ?>
 

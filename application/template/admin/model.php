@@ -14,7 +14,7 @@
 
 	<ul class="breadcrumb">
 		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo url('admin'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
 		<li class="active"><?php echo ucfirst($model); ?></li>
 	</ul>
 
@@ -26,7 +26,7 @@
 
 	<div class="well">
 		<ul class="nav nav-list">
-			<li><a href="<?php echo url("admin/$model/add"); ?>"><i class="icon-plus"></i>Add <?php echo ucfirst($model); ?></a></li>
+			<li><a href="<?php echo route_url('get', 'admin', 'add', array($model)); ?>"><i class="icon-plus"></i>Add <?php echo ucfirst($model); ?></a></li>
 		</ul>
 	</div>
 
@@ -60,7 +60,7 @@
 
 							<?php if($this->first()): ?>
 								
-								<td><a href="<?php echo url("admin/$model/{$row->id}"); ?>"><?php echo $row->{$column}; ?></a></td>
+								<td><a href="<?php echo route_url('get', 'admin', 'edit', array($model, $row->id)); ?>"><?php echo $row->{$column}; ?></a></td>
 							
 							<?php else: ?>
 								

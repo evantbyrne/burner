@@ -29,7 +29,7 @@
 				<?php foreach($models as $model): ?>
 			
 					<tr>
-						<td><a href="<?php echo url("admin/$model"); ?>"><?php echo ucfirst($model); ?></a></td>
+						<td><a href="<?php echo route_url('get', 'admin', 'model', array($model)); ?>"><?php echo ucfirst($model); ?></a></td>
 					</tr>
 				
 				<?php endforeach; ?>

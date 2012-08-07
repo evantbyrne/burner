@@ -14,7 +14,7 @@
 
 	<ul class="breadcrumb">
 		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo url('auth/login'); ?>">Log In</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'auth', 'login'); ?>">Log In</a> <span class="divider">/</span></li>
 		<li class="active">Password Reset</li>
 	</ul>
 

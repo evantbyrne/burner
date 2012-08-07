@@ -25,7 +25,7 @@
 
 	<div class="well">
 		<ul class="nav nav-list">
-			<li><a href="<?php echo url("auth/login"); ?>"><i class="icon-lock"></i>Log In</a></li>
+			<li><a href="<?php echo route_url('get', 'auth', 'login'); ?>"><i class="icon-lock"></i>Log In</a></li>
 		</ul>
 	</div>
 
