@@ -1,8 +1,24 @@
-<?php $this->base('base'); ?>
+<?php $this->base('admin/base'); ?>
 
 
 <!-- Title -->
-<?php $this->set('title', 'Password Reset Request'); ?>
+<?php $this->set('title', 'Password Reset'); ?>
+
+
+<!-- Headline -->
+<?php $this->extend('header'); ?>Password Reset<?php $this->end_extend(); ?>
+
+
+<!-- Breadcrumbs -->
+<?php $this->extend('breadcrumbs'); ?>
+
+	<ul class="breadcrumb">
+		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo url('auth/login'); ?>">Log In</a> <span class="divider">/</span></li>
+		<li class="active">Password Reset</li>
+	</ul>
+
+<?php $this->end_extend(); ?>
 
 
 <!-- Content -->

@@ -1,16 +1,30 @@
-<?php $this->base('base'); ?>
+<?php $this->base('admin/base'); ?>
 
 
 <!-- Title -->
 <?php $this->set('title', 'Password Reset'); ?>
 
 
+<!-- Headline -->
+<?php $this->extend('header'); ?>Password Reset<?php $this->end_extend(); ?>
+
+
+<!-- Breadcrumbs -->
+<?php $this->extend('breadcrumbs'); ?>
+
+	<ul class="breadcrumb">
+		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo url('auth/login'); ?>">Log In</a> <span class="divider">/</span></li>
+		<li class="active">Password Reset</li>
+	</ul>
+
+<?php $this->end_extend(); ?>
+
+
 <!-- Main Content -->
 <?php $this->extend('content'); ?>
 
-	<h2>Request Password</h2>
-
-	<form method="post">
+	<form method="post" class="form-horizontal">
 	
 		<?php if(isset($error)): ?>
 		
@@ -19,7 +33,7 @@
 		<?php endif; ?>
 		
 		<p>New Password: <input type="password" name="password" /></p>
-		<p><input type="submit" value="Reset Password" /></p>
+		<p><input type="submit" value="Reset Password" class="btn btn-primary" /></p>
 		
 	</form>
 	

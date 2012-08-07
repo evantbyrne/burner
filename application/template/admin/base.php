@@ -20,7 +20,7 @@
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container-fluid">
-					<a class="brand"><?php $this->section('brand'); ?>Burner Admin<?php $this->end_section(); ?></a>
+					<a class="brand"><?php $this->section('brand'); ?>Burner<?php $this->end_section(); ?></a>
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
@@ -29,8 +29,12 @@
 					<div class="nav-collapse">
 						<ul class="nav pull-right">
 							
-							<li class="active"><a href="javascript:;"><?php echo 'Welcome, ' . \Controller\Auth::user()->email; ?></a></li>
-							<li><a href="<?php echo url('auth/logout'); ?>">Log Out</a></li>
+							<?php if(\Controller\Auth::logged_in()): ?>
+								
+								<li class="active"><a href="javascript:;"><?php echo 'Welcome, ' . \Controller\Auth::user()->email; ?></a></li>
+								<li><a href="<?php echo url('auth/logout'); ?>">Log Out</a></li>
+							
+							<?php endif; ?>
 
 						</ul>
 					</div>
