@@ -21,6 +21,54 @@ function url($path = '') {
 	return root_url() . $path;
 
 }
+
+/**
+ * Route URL
+ * @param string GET or POST
+ * @param string Controller
+ * @param string Method
+ * @param mixed Array of arguments, or null
+ * @return mixed Full path to page, or null
+ */
+function route_url($type, $controller, $method, $args = null) {
+
+	$routes = \Core\Route::all();
+	foreach($routes as $path => $route) {
+		
+		// Check for matching controller and method
+		if($route[0] == $controller and $route[1] == $method and preg_match("/^$type\:/is", $path)) {
+			
+			// Format the path
+			$path = preg_replace('/^(get|post)\:/is', '', $path);
+			$path = preg_replace('/^\//', '', $path);
+			
+			if(is_array($args)) {
+				
+				// Add arguments
+				$segments = explode('/', $path);
+				for($i = 0; $i < count($segments); $i++) {
+						
+					if(preg_match('/^\:/', $segments[$i])) {
+							
+						$segments[$i] = array_shift($args);
+							
+					}
+					
+				}
+				
+				$path = implode('/', $segments);
+				
+			}
+			
+			return url($path);
+			
+		}
+		
+	}
+	
+	return null;
+
+}
 	
 /**
  * Redirect

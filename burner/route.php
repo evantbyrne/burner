@@ -80,6 +80,16 @@ class Route {
 	}
 	
 	/**
+	 * All
+	 * @return array
+	 */
+	public static function all() {
+		
+		return self::$route;
+		
+	}
+	
+	/**
 	 * Get
 	 * @param string URL
 	 * @return array Route
