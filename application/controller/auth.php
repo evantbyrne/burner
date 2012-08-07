@@ -234,7 +234,10 @@ class Auth extends \Core\Controller\Base {
 		if($secret !== null) {
 		
 			\Model\UserSession::delete()->where('secret', '=', $secret)->limit(1)->execute();
-			Cookie::delete('auth');
+			Cookie::delete(array(
+				'path' => '/',
+				'name' => 'auth'
+			));
 		
 		}
 
