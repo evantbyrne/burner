@@ -62,6 +62,44 @@ class Admin extends Base {
 		$this->data('model', $name);
 		
 	}
+	
+	/**
+	 * Children
+	 * @param string Parent model
+	 * @param string Parent row ID
+	 * @param string Model
+	 */
+	public function children($parent_model, $parent_id, $name) {
+		
+		// 404 on unconfigured model
+		if(!in_array($name, Config::get('admin'))) {
+
+			$this->error(404);
+
+		}
+
+		$model_class = "\\Model\\$name";
+		$model = new $model_class();
+		
+		// Remove hidden columns
+		$all_columns = $model->get_admin();
+		$columns = array();
+		foreach($all_columns as $column => $options) {
+
+			if($options['list']) {
+
+				$columns[$column] = $options;
+
+			}
+
+		}
+
+		$this->data('columns', $columns);
+		$this->data('rows', $model_class::select()->where($parent_model, '=', $parent_id)->order_desc('id')->fetch());
+		$this->data('model', $name);
+		$this->template('admin/model');
+		
+	}
 
 	/**
 	 * Edit
@@ -83,18 +121,25 @@ class Admin extends Base {
 		$schema = $row->get_schema();
 		$admin = $row->get_admin();
 		$columns = array();
+		$children = array();
 
 		foreach($schema as $column) {
 		
 			$name = $column->column_name();
 			if(isset($admin[$name])) {
+				
+				if(is_a($column, '\\Column\\HasMany')) {
+				
+					// HasMany columns
+					$children[$column->column_name()] = strtolower($column->get_option('model'));
+				
+				} else {
+				
+					// All other columns
+					$columns[$name] = array('options' => array_merge($column->options(), $admin[$name]));
+					$columns[$name]['value'] = (isset($row->{$name})) ? $row->{$name} : null;
 
-				$columns[$name] = array(
-
-					'options' => array_merge($column->options(), $admin[$name]),
-					'value'   => (isset($row->{$name})) ? $row->{$name} : null
-
-				);
+				}
 
 			}
 
@@ -121,10 +166,10 @@ class Admin extends Base {
 
 		}
 
-
 		$this->data('model', $model);
 		$this->data('row', $row);
 		$this->data('columns', $columns);
+		$this->data('children', $children);
 
 	}
 

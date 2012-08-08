@@ -160,6 +160,27 @@ class Base {
 		return $this->_schema;
 
 	}
+	
+	/**
+	 * Get Schema Column
+	 * @param string Column name
+	 * @return mixed \Column\Base, or null
+	 */
+	public function get_schema_column($name) {
+		
+		foreach($this->_schema as $column) {
+			
+			if($column->column_name() == $name) {
+				
+				return $column;
+				
+			}
+			
+		}
+		
+		return null;
+		
+	}
 
 	/**
 	 * Admin
@@ -168,7 +189,7 @@ class Base {
 	 */
 	public function admin($column, $options = array()) {
 
-		$this->_admin[$column] = array_merge(array('list' => true), $options);
+		$this->_admin[$column] = array_merge(array('list' => true), $this->get_schema_column($column)->options(), $options);
 
 	}
 

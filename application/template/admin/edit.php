@@ -27,7 +27,21 @@
 
 	<div class="well">
 		<ul class="nav nav-list">
+			
 			<li><a href="<?php echo route_url('get', 'admin', 'delete', array($model, $row->id)); ?>"><i class="icon-minus"></i>Delete</a></li>
+		
+			<?php if(!empty($children)): ?>
+				
+					<li class="divider"></li>
+				
+				<?php foreach($children as $name => $child_model): ?>
+					
+					<li><a href="<?php echo route_url('get', 'admin', 'children', array($model, $row->id, $child_model)); ?>"><i class="icon-pencil"></i><?php echo ucfirst($name); ?></a></li>
+					
+				<?php endforeach; ?>
+			
+			<?php endif; ?>
+		
 		</ul>
 	</div>
 

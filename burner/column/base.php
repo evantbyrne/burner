@@ -75,6 +75,16 @@ abstract class Base {
 	}
 	
 	/**
+	 * Get Option
+	 * @return array
+	 */
+	public function get_option($option) {
+	
+		return isset($this->_options[$option]) ? $this->_options[$option] : null;
+	
+	}
+	
+	/**
 	 * Set Method
 	 * @param Name of method
 	 * @param Anonymous function

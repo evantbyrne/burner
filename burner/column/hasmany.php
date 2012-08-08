@@ -13,7 +13,7 @@ class HasMany extends Base {
 	
 	public function __construct($column_name, $options = array()) {
 		
-		parent::__construct($column_name, $options);
+		parent::__construct($column_name, array_merge(array('list' => false), $options));
 		
 		// Model
 		$model_class = (isset($options['model'])) ? $options['model'] : $column_name;
