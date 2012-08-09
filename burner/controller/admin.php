@@ -225,6 +225,29 @@ class Admin extends Base {
 		$this->data('children', $children);
 
 	}
+	
+	/**
+	 * Edit Child
+	 * @param string Parent model
+	 * @param string Parent row ID
+	 * @param string Child model
+	 * @param string Child row ID
+	 */
+	public function edit_child($parent_model, $parent_id, $child_model, $child_id) {
+		
+		$parent_model_class = "\\Model\\$parent_model";
+		$parent = $parent_model_class::id($parent_id) or $this->error(404);
+		
+		$this->edit($child_model, $child_id);
+		$this->data(array(
+			
+			'parent'       => $parent,
+			'parent_model' => $parent_model,
+			'parent_id'    => $parent_id
+		
+		));
+		
+	}
 
 	/**
 	 * Delete

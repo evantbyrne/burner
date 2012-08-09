@@ -30,16 +30,18 @@ Route::add(array(
 	'POST:auth/reset/:any'    => array('auth', 'reset'),
 
 	// Admin
-	'GET:admin'                   => array('admin', 'index'),
-	'GET:admin/:any'              => array('admin', 'model'),
+	'GET:admin' => array('admin', 'index'),
+	'GET:admin/:any' => array('admin', 'model'),
 	'GET:admin/:any/:int/children/:any' => array('admin', 'children'),
-	'GET:admin/:any/:int'         => array('admin', 'edit'),
-	'POST:admin/:any/:int'        => array('admin', 'edit'),
-	'GET:admin/:any/add'          => array('admin', 'add'),
-	'POST:admin/:any/add'         => array('admin', 'add'),
+	'GET:admin/:any/:int' => array('admin', 'edit'),
+	'POST:admin/:any/:int' => array('admin', 'edit'),
+	'GET:admin/:any/:int/children/:any/edit/:int' => array('admin', 'edit_child'),
+	'POST:admin/:any/:int/children/:any/edit/:int' => array('admin', 'edit_child'),
+	'GET:admin/:any/add' => array('admin', 'add'),
+	'POST:admin/:any/add' => array('admin', 'add'),
 	'GET:admin/:any/:int/children/:any/add' => array('admin', 'add_child'),
 	'POST:admin/:any/:int/children/:any/add' => array('admin', 'add_child'),
-	'GET:admin/:any/delete/:int'  => array('admin', 'delete'),
+	'GET:admin/:any/delete/:int' => array('admin', 'delete'),
 	'POST:admin/:any/delete/:int' => array('admin', 'delete')
 	
 ));

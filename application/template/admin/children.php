@@ -62,7 +62,7 @@
 
 							<?php if($this->first()): ?>
 								
-								<td><a href="<?php echo route_url('get', 'admin', 'edit', array($model, $row->id)); ?>"><?php e($row->{$column}); ?></a></td>
+								<td><a href="<?php echo route_url('get', 'admin', 'edit_child', array($parent_model, $parent_id, $model, $row->id)); ?>"><?php e($row->{$column}); ?></a></td>
 							
 							<?php else: ?>
 								
