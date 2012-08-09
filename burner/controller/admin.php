@@ -32,7 +32,7 @@ class Admin extends Base {
 	 * Model
 	 * @param string Model
 	 */
-	public function model($name) {
+	public function model($name, $select = false) {
 		
 		// 404 on unconfigured model
 		if(!in_array($name, Config::get('admin'))) {
@@ -41,24 +41,92 @@ class Admin extends Base {
 
 		}
 
+		// Remove hidden columns and start building query
 		$model_class = "\\Model\\$name";
 		$model = new $model_class();
-		
-		// Remove hidden columns
 		$all_columns = $model->get_admin();
+		
+		$select = ($select === false) ? $model_class::select()->order_desc('id') : $select;
+		$select->column('id');
 		$columns = array();
-		foreach($all_columns as $column => $options) {
+		$belongsto = array();
+
+		foreach($all_columns as $column_name => $options) {
 
 			if($options['list']) {
 
-				$columns[$column] = $options;
+				$columns[$column_name] = $options;
+				$select->column($column_name);
+
+				// BelongsTo column?
+				$column = $model->get_schema_column($column_name);
+				if(is_a($column, '\\Column\\BelongsTo')) {
+
+					$belongsto[$column_name] = $column;
+
+				}
+
+			}
+
+		}
+
+		// Fetch rows
+		$rows = $select->fetch();
+
+		// Build BelongsTo column query
+		if(!empty($belongsto)) {
+
+			$row_count = count($rows);
+			foreach($belongsto as $column_name => $column) {
+
+				$belongsto_class = '\\Model\\' . $column->get_option('model');
+				$belongsto_select = $belongsto_class::select();
+				$values = array();
+
+				// Get unique values for column
+				foreach($rows as $row) {
+
+					$id = $row->{$column_name};
+					if(!in_array($id, $values)) {
+
+						if(empty($values)) {
+						
+							$belongsto_select->where('id', '=', $id);
+
+						} else {
+
+							$belongsto_select->or_where('id', '=', $id);							
+
+						}
+
+						$values[] = $id;
+
+					}
+
+				}
+
+				// Query the database
+				$tmp = $belongsto_select->fetch();
+				$belongsto_results = array();
+				foreach($tmp as $res) {
+
+					$belongsto_results[$res->id] = $res;
+
+				}
+
+				for($i = 0; $i < $row_count; $i++) {
+
+					$id = $rows[$i]->{$column_name};
+					$rows[$i]->{$column_name} = $belongsto_results[$id];
+
+				}
 
 			}
 
 		}
 
 		$this->data('columns', $columns);
-		$this->data('rows', $model_class::select()->order_desc('id')->fetch());
+		$this->data('rows', $rows);
 		$this->data('model', $name);
 		
 	}
@@ -70,34 +138,13 @@ class Admin extends Base {
 	 * @param string Model
 	 */
 	public function children($parent_model, $parent_id, $name) {
-		
-		// 404 on unconfigured model
-		if(!in_array($name, Config::get('admin'))) {
-
-			$this->error(404);
-
-		}
 
 		$model_class = "\\Model\\$name";
 		$model = new $model_class();
-		$rows = $model_class::select()->where($parent_model, '=', $parent_id)->order_desc('id')->fetch();
-		
-		// Remove hidden columns
-		$all_columns = $model->get_admin();
-		$columns = array();
-		foreach($all_columns as $column => $options) {
+		$select = $model_class::select()->where($parent_model, '=', $parent_id)->order_desc('id');
 
-			if($options['list']) {
+		$this->model($name, $select);
 
-				$columns[$column] = $options;
-
-			}
-
-		}
-
-		$this->data('columns', $columns);
-		$this->data('rows', $rows);
-		$this->data('model', $name);
 		$this->template('admin/model');
 		
 	}

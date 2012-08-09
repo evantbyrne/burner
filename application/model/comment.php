@@ -18,7 +18,7 @@ class Comment extends \Core\Model\Base {
 		);
 		
 		$this->admin('article');
-		$this->admin('content', array('list' => false));
+		$this->admin('content');
 	
 	}
 

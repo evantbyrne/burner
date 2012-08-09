@@ -24,4 +24,14 @@ class Article extends \Core\Model\Base {
 
 	}
 
+	/**
+	 * To String
+	 * @return string Title
+	 */
+	public function __toString() {
+
+		return $this->title;
+
+	}
+
 }

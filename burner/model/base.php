@@ -462,4 +462,14 @@ class Base {
 		
 	}
 
+	/**
+	 * To String
+	 * @return string ID
+	 */
+	public function __toString() {
+
+		return $this->id;
+
+	}
+
 }
