@@ -79,7 +79,7 @@ class Admin extends Base {
 			$row_count = count($rows);
 			foreach($belongsto as $column_name => $column) {
 
-				$belongsto_class = '\\Model\\' . $column->get_option('model');
+				$belongsto_class = '\\Model\\' . $column_name;
 				$belongsto_select = $belongsto_class::select();
 				$values = array();
 
