@@ -853,7 +853,8 @@ class Select extends WhereBase {
 	protected function build_column_name($column, $alias=false, $func=false) {
 		
 		$sql = $this->tick_column($column);
-		$last = end(explode('.', $column));
+		$tmp = explode('.', $column);
+		$last = end($tmp);
 		
 		// Function (e.g., MAX, MIN)
 		if($func !== false) {
