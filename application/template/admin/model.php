@@ -60,11 +60,11 @@
 
 							<?php if($this->first()): ?>
 								
-								<td><a href="<?php echo route_url('get', 'admin', 'edit', array($model, $row->id)); ?>"><?php echo $row->{$column}; ?></a></td>
+								<td><a href="<?php echo route_url('get', 'admin', 'edit', array($model, $row->id)); ?>"><?php e($row->{$column}); ?></a></td>
 							
 							<?php else: ?>
 								
-								<td><?php echo $row->{$column}; ?></td>
+								<td><?php echo e($row->{$column}); ?></td>
 							
 							<?php endif; ?>
 						
