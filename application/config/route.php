@@ -37,6 +37,8 @@ Route::add(array(
 	'POST:admin/:any/:int'        => array('admin', 'edit'),
 	'GET:admin/:any/add'          => array('admin', 'add'),
 	'POST:admin/:any/add'         => array('admin', 'add'),
+	'GET:admin/:any/:int/children/:any/add' => array('admin', 'add_child'),
+	'POST:admin/:any/:int/children/:any/add' => array('admin', 'add_child'),
 	'GET:admin/:any/delete/:int'  => array('admin', 'delete'),
 	'POST:admin/:any/delete/:int' => array('admin', 'delete')
 	

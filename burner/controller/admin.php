@@ -137,15 +137,20 @@ class Admin extends Base {
 	 * @param string Parent row ID
 	 * @param string Model
 	 */
-	public function children($parent_model, $parent_id, $name) {
+	public function children($parent_model, $parent_id, $child_model) {
 
-		$model_class = "\\Model\\$name";
+		$model_class = "\\Model\\$child_model";
 		$model = new $model_class();
 		$select = $model_class::select()->where($parent_model, '=', $parent_id)->order_desc('id');
 
-		$this->model($name, $select);
-
-		$this->template('admin/model');
+		$this->model($child_model, $select);
+		$this->data(array(
+			
+			'parent_model' => $parent_model,
+			'parent_id'    => $parent_id,
+			'child_model'  => $child_model
+			
+		));
 		
 	}
 
@@ -325,6 +330,28 @@ class Admin extends Base {
 		$this->data('columns', $columns);
 		$this->data('children', $children);
 
+	}
+	
+	/**
+	 * Add Child
+	 * @param string Parent model
+	 * @param string Parent row ID
+	 * @param string Child model
+	 */
+	public function add_child($parent_model, $parent_id, $child_model) {
+		
+		$parent_model_class = "\\Model\\$parent_model";
+		$parent = $parent_model_class::id($parent_id) or $this->error(404);
+		
+		$this->add($child_model, $parent_model, $parent_id);
+		$this->data(array(
+			
+			'parent'       => $parent,
+			'parent_model' => $parent_model,
+			'parent_id'    => $parent_id
+		
+		));
+		
 	}
 
 }
