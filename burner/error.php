@@ -86,6 +86,6 @@ function burner_error($level, $message, $file = 'current file', $line='(unknown)
  */
 function burner_exception($ex) {
 	
-	burner_error('exception', $ex->getMessage(), $ex->getFile(), $ex->getLine());
+	burner_error('exception', "\n{$ex->getMessage()}<pre>\n{$ex->getTraceAsString()}</pre>\n", $ex->getFile(), $ex->getLine());
 
 }
