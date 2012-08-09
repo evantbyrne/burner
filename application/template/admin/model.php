@@ -2,7 +2,7 @@
 
 
 <!-- Title -->
-<?php $this->set('title', "$model | Admin ") ?>
+<?php $this->set('title', ucfirst($model) . ' | Admin ') ?>
 
 
 <!-- Header -->

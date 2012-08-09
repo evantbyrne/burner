@@ -2,7 +2,7 @@
 
 
 <!-- Title -->
-<?php $this->set('title', "$model | Admin ") ?>
+<?php $this->set('title', ucfirst($model) . ' | Admin ') ?>
 
 
 <!-- Header -->
@@ -15,6 +15,8 @@
 	<ul class="breadcrumb">
 		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
 		<li><a href="<?php echo route_url('get', 'admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'admin', 'model', array($parent_model)); ?>"><?php echo ucfirst($parent_model); ?></a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'admin', 'edit', array($parent_model, $parent_id)); ?>">Edit</a> <span class="divider">/</span></li>
 		<li class="active"><?php echo ucfirst($model); ?></li>
 	</ul>
 
