@@ -24,7 +24,15 @@ class Admin extends Base {
 	 */
 	public function index() {
 		
-		$this->data('models', Config::get('admin'));
+		$models = array();
+		foreach(Config::get('admin') as $model) {
+			
+			$model_class = "\\Model\\$model";
+			$models[$model] = $model_class::select()->count_column('id', 'total')->single()->total;
+			
+		}
+		
+		$this->data('models', $models);
 	
 	}
 	

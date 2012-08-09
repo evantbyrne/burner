@@ -22,14 +22,16 @@
 			<thead>
 				<tr>
 					<th>Name</th>
+					<th width="80">Count</th>
 				</tr>
 			</thead>
 			<tbody>
 
-				<?php foreach($models as $model): ?>
+				<?php foreach($models as $model => $count): ?>
 			
 					<tr>
 						<td><a href="<?php echo route_url('get', 'admin', 'model', array($model)); ?>"><?php echo ucfirst($model); ?></a></td>
+						<td><span class="badge"><?php echo $count; ?></span></td>
 					</tr>
 				
 				<?php endforeach; ?>
