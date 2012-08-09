@@ -17,7 +17,7 @@
 	<body>
 
 		<!-- Navigation -->
-		<div class="navbar navbar-fixed-top">
+		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container-fluid">
 					<a class="brand"><?php $this->section('brand'); ?>Burner<?php $this->end_section(); ?></a>
