@@ -16,14 +16,10 @@ class BelongsTo extends Base {
 		
 		parent::__construct($column_name, $options, new \Mysql\IntColumn($column_name, $column_options));
 		
-		// Model
-		$model_class = (isset($options['model'])) ? $options['model'] : $column_name;
-		$this->model = $model_class;
-		
 		// Get parent
-		$this->set_method($column_name, function($model) use ($column_name, $model_class) {
+		$this->set_method($column_name, function($model) use ($column_name) {
 
-			return call_user_func("\\Model\\$model_class::id", $model->$column_name);
+			return call_user_func("\\Model\\$column_name::id", $model->$column_name);
 
 		});
 	

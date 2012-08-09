@@ -13,7 +13,7 @@ class Comment extends \Core\Model\Base {
 	public function __construct() {
 
 		$this->schema(
-			new \Column\BelongsTo('article', array('model' => 'Article')),
+			new \Column\BelongsTo('article'),
 			new \Column\Text('content', array('required' => 'Content field is required.'))
 		);
 		
