@@ -33,6 +33,15 @@ abstract class Session extends Base {
 	}
 
 	/**
+	 * Clean
+	 */
+	public static function clean() {
+
+		self::delete()->where('expire', '<=', date('Y-m-d H:i:s', time()))->execute();
+
+	}
+
+	/**
 	 * Construct
 	 */
 	public function __construct() {
