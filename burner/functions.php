@@ -119,3 +119,29 @@ function e($value) {
 	echo htmlentities($value);
 
 }
+
+/**
+ * Hook
+ * @param string Hook name
+ * @param string Static method to call
+ * @param mixed Array of arguments, or null
+ * @return mixed Result of method call, or null on hook not found
+ */
+function hook($hook, $method, $arguments = null) {
+	
+	if(file_exists(APPLICATION . '/hook/' . strtolower($hook) . '.php')) {
+		
+		$name = "\\Hook\\$hook::$method";
+		if(is_callable($name)) {
+		
+			return call_user_func($name, $arguments);
+		
+		}
+		
+	} else {
+		
+		return null;
+		
+	}
+	
+}
