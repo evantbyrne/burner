@@ -19,4 +19,14 @@ class User extends \Core\Model\User {
 
 	}
 	
+	/**
+	 * To String
+	 * @return string Email
+	 */
+	public function __toString() {
+
+		return $this->email;
+
+	}
+	
 }

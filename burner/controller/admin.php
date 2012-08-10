@@ -199,6 +199,23 @@ class Admin extends Base {
 					// All other columns
 					$columns[$name] = array('options' => array_merge($column->options(), $admin[$name]));
 					$columns[$name]['value'] = (isset($row->{$name})) ? $row->{$name} : null;
+					
+					// BelongsTo columns
+					if(is_a($column, '\\Column\\BelongsTo')) {
+						
+						$column_model_class = "\\Model\\$name";
+						$choices = array();
+						
+						foreach($column_model_class::select()->order_desc('id')->fetch() as $r) {
+							
+							$choices[$r->id] = $r;
+							
+						}
+						
+						$columns[$name]['options']['choices'] = $choices;
+						$columns[$name]['options']['template'] = 'select';
+						
+					}
 
 				}
 
@@ -328,6 +345,23 @@ class Admin extends Base {
 						'value'   => null
 					
 					);
+					
+					// BelongsTo columns
+					if(is_a($column, '\\Column\\BelongsTo')) {
+						
+						$column_model_class = "\\Model\\$name";
+						$choices = array();
+						
+						foreach($column_model_class::select()->order_desc('id')->fetch() as $r) {
+							
+							$choices[$r->id] = $r;
+							
+						}
+						
+						$columns[$name]['options']['choices'] = $choices;
+						$columns[$name]['options']['template'] = 'select';
+						
+					}
 
 				}
 
