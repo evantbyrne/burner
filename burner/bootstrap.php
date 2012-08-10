@@ -31,14 +31,12 @@ class Bootstrap {
 		
 		switch($segments[$first]) {
 		
-			case 'core':       $start = BURNER; break;
-			case 'column':     $start = BURNER . '/column'; break;
-			case 'library':    $start = BURNER . '/library'; break;
-			case 'controller': $start = APPLICATION . '/controller'; break;
-			case 'model':      $start = APPLICATION . '/model'; break;
-			case 'language':   $start = APPLICATION . '/language/' . Config::get('language'); break;
-			case 'command':    $start = APPLICATION . '/command'; break;
-			default: return false; break;
+			case 'core':     $start = BURNER; break;
+			case 'column':   $start = BURNER . '/column'; break;
+			case 'library':  $start = BURNER . '/library'; break;
+			case 'language': $start = APPLICATION . '/language/' . Config::get('language'); break;
+			case true:       $start = APPLICATION . "/{$segments[$first]}"; break;
+			default:         $start = APPLICATION; break;
 		
 		}
 		
