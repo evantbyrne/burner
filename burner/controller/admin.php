@@ -55,19 +55,25 @@ class Admin extends Base {
 		$all_columns = $model->get_admin();
 		
 		$select = ($select === false) ? $model_class::select()->order_desc('id') : $select;
-		$select->column('id');
 		$columns = array();
 		$belongsto = array();
+		$choices = array();
 
 		foreach($all_columns as $column_name => $options) {
 
 			if($options['list']) {
 
 				$columns[$column_name] = $options;
-				$select->column($column_name);
-
-				// BelongsTo column?
 				$column = $model->get_schema_column($column_name);
+
+				// Columns with defined static choices
+				if(is_array($column->get_option('choices'))) {
+
+					$choices[$column_name] = $column->get_option('choices');
+
+				}
+
+				// BelongsTo columns
 				if(is_a($column, '\\Column\\BelongsTo')) {
 
 					$belongsto[$column_name] = $column;
@@ -80,11 +86,26 @@ class Admin extends Base {
 
 		// Fetch rows
 		$rows = $select->fetch();
+		$row_count = count($rows);
+
+		// Build columns with choices
+		if(!empty($choices)) {
+
+			for($i = 0; $i < $row_count; $i++) {
+
+				foreach($choices as $column_name => $c) {
+
+					$rows[$i]->{$column_name} = $c[$rows[$i]->{$column_name}];
+
+				}
+
+			}
+
+		}
 
 		// Build BelongsTo column query
 		if(!empty($belongsto)) {
 
-			$row_count = count($rows);
 			foreach($belongsto as $column_name => $column) {
 
 				$belongsto_class = '\\Model\\' . $column_name;

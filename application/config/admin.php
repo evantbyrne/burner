@@ -2,4 +2,4 @@
 
 namespace Core;
 
-Config::set('admin',  array('user', 'article', 'comment'));
+Config::set('admin',  array('user', 'article', 'comment', 'ticket'));

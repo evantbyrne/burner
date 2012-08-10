@@ -116,6 +116,12 @@ abstract class Base {
 			return $this->_options['required'];
 		
 		}
+
+		if(!empty($this->_options['choices']) and !in_array($value, array_keys($this->_options['choices']))) {
+
+			return 'Invalid choice.';
+
+		}
 	
 		if(isset($this->_options['valid']) and is_callable($this->_options['valid'])) {
 		
