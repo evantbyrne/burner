@@ -26,7 +26,7 @@ class Create_Controller {
 			} else {
 				
 				$f = fopen($path, 'w');
-				fwrite($f, "<?php\n\nnamespace Controller;\n\nclass $con extends Base {\n\n}");
+				fwrite($f, "<?php\n\nnamespace Controller;\n\nclass $con extends \Core\Controller\Base {\n\n}");
 				fclose($f);
 				
 			}
