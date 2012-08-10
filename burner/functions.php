@@ -134,7 +134,7 @@ function hook($hook, $method, $arguments = null) {
 		$name = "\\Hook\\$hook::$method";
 		if(is_callable($name)) {
 		
-			return call_user_func($name, $arguments);
+			return call_user_func_array($name, $arguments);
 		
 		}
 		
