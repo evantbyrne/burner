@@ -2,11 +2,11 @@
 
 
 <!-- Title -->
-<?php $this->set('title', ucfirst($model) . ' | Admin ') ?>
+<?php $this->set('title', $model_name . ' | Admin ') ?>
 
 
 <!-- Header -->
-<?php $this->set('header', ucfirst($model)); ?>
+<?php $this->set('header', $model_name); ?>
 
 
 <!-- Breadcrumbs -->
@@ -15,7 +15,7 @@
 	<ul class="breadcrumb">
 		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
 		<li><a href="<?php echo route_url('get', 'admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li class="active"><?php echo ucfirst($model); ?></li>
+		<li class="active"><?php echo $model_name; ?></li>
 	</ul>
 
 <?php $this->end_extend(); ?>
@@ -26,7 +26,7 @@
 
 	<div class="well">
 		<ul class="nav nav-list">
-			<li><a href="<?php echo route_url('get', 'admin', 'add', array($model)); ?>"><i class="icon-plus"></i>Add <?php echo ucfirst($model); ?></a></li>
+			<li><a href="<?php echo route_url('get', 'admin', 'add', array($model)); ?>"><i class="icon-plus"></i> Add <?php echo $model_name; ?></a></li>
 		</ul>
 	</div>
 

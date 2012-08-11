@@ -27,11 +27,11 @@
 			</thead>
 			<tbody>
 
-				<?php foreach($models as $model => $count): ?>
+				<?php foreach($models as $model_class => $model): ?>
 			
 					<tr>
-						<td><a href="<?php echo route_url('get', 'admin', 'model', array($model)); ?>"><?php echo ucfirst($model); ?></a></td>
-						<td><span class="badge"><?php echo $count; ?></span></td>
+						<td><a href="<?php echo route_url('get', 'admin', 'model', array($model_class)); ?>"><?php echo $model['name']; ?></a></td>
+						<td><span class="badge"><?php echo $model['count']; ?></span></td>
 					</tr>
 				
 				<?php endforeach; ?>

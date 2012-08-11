@@ -28,7 +28,11 @@ class Admin extends Base {
 		foreach(Config::get('admin') as $model) {
 			
 			$model_class = "\\Model\\$model";
-			$models[$model] = $model_class::select()->count_column('id', 'total')->single()->total;
+			$models[$model] = array(
+				'count'       => $model_class::select()->count_column('id', 'total')->single()->total,
+				'name'        => $model_class::get_verbose(),
+				'name_plural' => $model_class::get_verbose_plural()
+			);
 			
 		}
 		
@@ -157,6 +161,7 @@ class Admin extends Base {
 		$this->data('columns', $columns);
 		$this->data('rows', $rows);
 		$this->data('model', $name);
+		$this->data('model_name', $model_class::get_verbose());
 		
 	}
 	
@@ -173,10 +178,13 @@ class Admin extends Base {
 		$select = $model_class::select()->where($parent_model, '=', $parent_id)->order_desc('id');
 
 		$this->model($child_model, $select);
+
+		$parent_model_class = '\\Model\\' . $parent_model;
 		$this->data(array(
 			
 			'parent_model' => $parent_model,
 			'parent_id'    => $parent_id,
+			'parent_name'  => $parent_model_class::get_verbose(),
 			'child_model'  => $child_model
 			
 		));
@@ -213,7 +221,8 @@ class Admin extends Base {
 				if(is_a($column, '\\Column\\HasMany')) {
 				
 					// HasMany columns
-					$children[$column->column_name()] = strtolower($column->get_option('model'));
+					$child_model_class = '\\Model\\' . $column->get_option('model');
+					$children[$child_model_class::get_verbose_plural()] = strtolower($column->get_option('model'));
 				
 				} else {
 				
@@ -266,6 +275,7 @@ class Admin extends Base {
 		}
 
 		$this->data('model', $model);
+		$this->data('model_name', $model_class::get_verbose());
 		$this->data('row', $row);
 		$this->data('columns', $columns);
 		$this->data('children', $children);
@@ -285,10 +295,13 @@ class Admin extends Base {
 		$parent = $parent_model_class::id($parent_id) or $this->error(404);
 		
 		$this->edit($child_model, $child_id);
+
+		$parent_model_class = '\\Model\\' . $parent_model;
 		$this->data(array(
 			
 			'parent'       => $parent,
 			'parent_model' => $parent_model,
+			'parent_name'  => $parent_model_class::get_verbose(),
 			'parent_id'    => $parent_id
 		
 		));
@@ -320,6 +333,7 @@ class Admin extends Base {
 		} else {
 
 			$this->data('model', $model);
+			$this->data('model_name', $model_class::get_verbose());
 			$this->data('id', $id);
 
 		}
@@ -412,6 +426,7 @@ class Admin extends Base {
 		}
 		
 		$this->data('model', $model);
+		$this->data('model_name', $model_class::get_verbose());
 		$this->data('row', $row);
 		$this->data('columns', $columns);
 		$this->data('children', $children);
@@ -430,10 +445,13 @@ class Admin extends Base {
 		$parent = $parent_model_class::id($parent_id) or $this->error(404);
 		
 		$this->add($child_model, $parent_model, $parent_id);
+
+		$parent_model_class = '\\Model\\' . $parent_model;
 		$this->data(array(
 			
 			'parent'       => $parent,
 			'parent_model' => $parent_model,
+			'parent_name'  => $parent_model_class::get_verbose(),
 			'parent_id'    => $parent_id
 		
 		));

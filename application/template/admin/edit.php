@@ -2,11 +2,11 @@
 
 
 <!-- Title -->
-<?php $this->set('title', 'Edit ' . ucfirst($model) . ' | Admin ') ?>
+<?php $this->set('title', 'Edit ' . $model_name . ' | Admin ') ?>
 
 
 <!-- Header -->
-<?php $this->set('header', 'Edit ' . ucfirst($model)); ?>
+<?php $this->set('header', 'Edit ' . $model_name); ?>
 
 
 <!-- Breadcrumbs -->
@@ -15,7 +15,7 @@
 	<ul class="breadcrumb">
 		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
 		<li><a href="<?php echo route_url('get', 'admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'admin', 'model', array($model)); ?>"><?php echo ucfirst($model); ?></a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'admin', 'model', array($model)); ?>"><?php echo $model_name; ?></a> <span class="divider">/</span></li>
 		<li class="active">Edit</li>
 	</ul>
 
@@ -28,7 +28,7 @@
 	<div class="well">
 		<ul class="nav nav-list">
 			
-			<li><a href="<?php echo route_url('get', 'admin', 'delete', array($model, $row->id)); ?>"><i class="icon-minus"></i>Delete</a></li>
+			<li><a href="<?php echo route_url('get', 'admin', 'delete', array($model, $row->id)); ?>"><i class="icon-minus"></i> Delete</a></li>
 		
 			<?php if(!empty($children)): ?>
 				
@@ -36,7 +36,7 @@
 				
 				<?php foreach($children as $name => $child_model): ?>
 					
-					<li><a href="<?php echo route_url('get', 'admin', 'children', array($model, $row->id, $child_model)); ?>"><i class="icon-pencil"></i><?php echo ucfirst($name); ?></a></li>
+					<li><a href="<?php echo route_url('get', 'admin', 'children', array($model, $row->id, $child_model)); ?>"><i class="icon-pencil"></i> <?php echo $name; ?></a></li>
 					
 				<?php endforeach; ?>
 			

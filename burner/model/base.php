@@ -13,6 +13,16 @@ class Base {
 	 * MySQL storage engine to use
 	 */
 	public static $engine = 'MyISAM';
+
+	/**
+	 * Verbose name
+	 */
+	public static $verbose = null;
+
+	/**
+	 * Verbose plural name
+	 */
+	public static $verbose_plural = null;
 	
 	/**
 	 * Table
@@ -24,6 +34,33 @@ class Base {
 		$parts = explode('\\', get_called_class());
 		return strtolower(end($parts));
 	
+	}
+
+	/**
+	 * Get Verbose
+	 * @return string
+	 */
+	public static function get_verbose() {
+
+		if(static::$verbose === null) {
+
+			$c = explode('\\', get_called_class());
+			return end($c);
+
+		}
+
+		return static::$verbose;
+
+	}
+
+	/**
+	 * Get Verbose Plural
+	 * @return string
+	 */
+	public static function get_verbose_plural() {
+
+		return (static::$verbose_plural === null) ? self::get_verbose() . 's' : static::$verbose_plural;
+
 	}
 
 	/**
