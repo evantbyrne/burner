@@ -128,10 +128,11 @@ class Route {
 			
 			$is_get = preg_match('/^GET/', $pattern);
 			$is_post = preg_match('/^POST/', $pattern);
-			$pattern = preg_replace('/^(GET|POST)\:/', '', $pattern);
+			$is_both = preg_match('/^BOTH/', $pattern);
+			$pattern = preg_replace('/^(GET|POST|BOTH)\:/', '', $pattern);
 			
 			// Skip routes of wrong request type
-			if(($is_get and $_SERVER['REQUEST_METHOD'] != 'GET') or ($is_post and $_SERVER['REQUEST_METHOD'] != 'POST')) {
+			if((!$is_both) and (($is_get and $_SERVER['REQUEST_METHOD'] != 'GET') or ($is_post and $_SERVER['REQUEST_METHOD'] != 'POST'))) {
 			
 				continue;
 			

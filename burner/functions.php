@@ -36,10 +36,10 @@ function route_url($type, $controller, $method, $args = null) {
 	foreach($routes as $path => $route) {
 		
 		// Check for matching controller and method
-		if($route[0] == $controller and $route[1] == $method and preg_match("/^$type\:/is", $path)) {
+		if($route[0] == $controller and $route[1] == $method and preg_match("/^$type|both\:/is", $path)) {
 			
 			// Format the path
-			$path = preg_replace('/^(get|post)\:/is', '', $path);
+			$path = preg_replace('/^(get|post|both)\:/is', '', $path);
 			$path = preg_replace('/^\//', '', $path);
 			
 			if(is_array($args)) {
