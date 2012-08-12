@@ -406,7 +406,7 @@ class Admin extends Base {
 
 		if(is_post()) {
 
-			$row->merge_post(array_keys($columns));
+			$row = $model_class::from_post(array_keys($columns));
 			
 			if($this->valid($row)) {
 

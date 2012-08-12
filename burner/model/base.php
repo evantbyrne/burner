@@ -417,7 +417,11 @@ class Base {
 			$name = $column->column_name();
 			if(($whitelist === null or in_array($name, $whitelist)) and isset($data[$name])) {
 
-				$this->{$name} = $data[$name];
+				if(!empty($data[$name]) or !$column->get_option('blank')) {
+
+					$this->{$name} = $data[$name];
+
+				}
 
 			}
 		

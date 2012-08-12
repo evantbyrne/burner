@@ -74,13 +74,14 @@ class User extends Base {
 		
 		$this->schema(
 			new \Column\Email('email', array('length' => 100, 'required' => 'Email field required.')),
-			new \Column\Char('password', array('length' => 128, 'required' => 'Password field required.')),
+			new \Column\Password('password', array('length' => 128, 'required' => 'Password field required.')),
 			new \Column\TinyInt('type', array('template' => 'select', 'choices' => array_flip(static::$levels))),
 			new \Column\Varchar('verify_code', array('length' => 30, 'null' => true))
 		);
 
 		$this->admin('email');
 		$this->admin('type');
+		$this->admin('password');
 		
 	}
 	
