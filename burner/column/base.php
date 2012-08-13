@@ -3,7 +3,7 @@
 namespace Column;
 
 /**
- * Base Block Class
+ * Base Column Class
  * @author Evan Byrne
  */
 abstract class Base {
@@ -76,7 +76,8 @@ abstract class Base {
 	
 	/**
 	 * Get Option
-	 * @return array
+	 * @param string Name
+	 * @return mixed
 	 */
 	public function get_option($option) {
 	
@@ -92,6 +93,17 @@ abstract class Base {
 	public function set_method($name, $method) {
 	
 		$this->_methods[$name] = $method;
+	
+	}
+
+	/**
+	 * Get Method
+	 * @param string Name
+	 * @return mixed
+	 */
+	public function get_method($name) {
+	
+		return isset($this->_methods[$name]) ? $this->_methods[$name] : null;
 	
 	}
 	

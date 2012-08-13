@@ -74,7 +74,7 @@ class User extends Base {
 		
 		$this->schema(
 			new \Column\Email('email', array('length' => 100, 'required' => 'Email field required.')),
-			new \Column\Password('password', array('length' => 128, 'required' => 'Password field required.')),
+			new \Column\Password('password', array('required' => 'Password field required.')),
 			new \Column\TinyInt('type', array('template' => 'select', 'choices' => array_flip(static::$levels))),
 			new \Column\Varchar('verify_code', array('length' => 30, 'null' => true))
 		);
@@ -82,33 +82,6 @@ class User extends Base {
 		$this->admin('email');
 		$this->admin('type');
 		$this->admin('password');
-		
-	}
-	
-	/**
-	 * Set Email
-	 *
-	 * @param string Email address
-	 * @return $this
-	 */
-	public function set_email($email) {
-		
-		$this->email = $email;
-		return $this;
-		
-	}
-	
-	/**
-	 * Set Password
-	 *
-	 * Hashes and sets the password
-	 * @param string Cleartext password
-	 * @return $this
-	 */
-	public function set_password($password) {
-		
-		$this->password = self::hash($password);
-		return $this;
 		
 	}
 
@@ -120,22 +93,6 @@ class User extends Base {
 
 		return $this->email;
 
-	}
-	
-	/**
-	 * Check
-	 * @return boolean
-	 */
-	public function check() {
-		
-		$res = $this->select(false)
-			->and_where_null('verify_code')
-			->and_where('type', '>', self::level('banned'))
-			->limit(1)
-			->execute();
-		
-		return !empty($res);
-		
 	}
 
 }

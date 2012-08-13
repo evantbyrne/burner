@@ -8,20 +8,24 @@ namespace Column;
  */
 class Password extends Char {
 	
+	/**
+	 * @inheritdoc
+	 */
 	public function __construct($column_name, $options = array()) {
 		
-		/*if(!isset($options['valid'])) {
-		
-			$options['valid'] = function($value) {
-			
-				return \Library\Valid::email($value) ? true : 'Invalid email address.';
-			
-			};
-		
-		}*/
-		
-		parent::__construct($column_name, array_merge(array('blank' => true, 'template' => 'password', 'list' => false), $options));
+		parent::__construct($column_name, array_merge(array('length' => 128, 'blank' => true, 'template' => 'password', 'list' => false), $options));
 	
+	}
+
+	/**
+	 * Set
+	 * @param mixed Input
+	 * @return mixed Hashed value, or null on empty() input
+	 */
+	public function set($value) {
+
+		return (empty($value)) ? null : \Model\User::hash($value);
+
 	}
 	
 }

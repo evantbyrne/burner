@@ -107,6 +107,7 @@ class Auth extends Base {
 
 			$user->type = \Model\User::level('user');
 			$password_confirm = Input::post('password_confirm');
+			$password_confirm = empty($password_confirm) ? null : \Model\User::hash($password_confirm);
 			
 			// Validate model fields
 			$valid = $user->valid();
@@ -147,7 +148,6 @@ class Auth extends Base {
 		
 				// Create user
 				$user->verify_code = \Model\UserSession::secret();
-				$user->set_password($user->password);
 				$user->save();
 		
 				// Send verification email
@@ -172,9 +172,7 @@ class Auth extends Base {
 		
 		if(is_post()) {
 			
-			$in = new \Model\User();
-			$in->set_email(Input::post('email'));
-			$in->set_password(Input::post('password'));
+			$in = \Model\User::from_post(array('email', 'password'));
 		
 			
 			$user = \Model\User::select()
@@ -320,7 +318,7 @@ class Auth extends Base {
 			if($reset !== null and !empty($password)) {
 				
 				$user = \Model\User::id($reset->user) or die('Error: User not found');
-				$user->set_password($password);
+				$user->merge_post(array('password'));
 
 				// Update password
 				\Model\User::update()

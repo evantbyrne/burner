@@ -130,7 +130,8 @@ class Base {
 			$name = $column->column_name();
 			if(($whitelist === null or in_array($name, $whitelist)) and isset($data[$name])) {
 
-				$instance->{$name} = $data[$name];
+				//$instance->{$name} = $data[$name];
+				$instance->{$name} = (is_callable(array($column, 'set'))) ? $column->set($data[$name]) : $data[$name];
 
 			}
 		
@@ -419,7 +420,7 @@ class Base {
 
 				if(!empty($data[$name]) or !$column->get_option('blank')) {
 
-					$this->{$name} = $data[$name];
+					$this->{$name} = (is_callable(array($column, 'set'))) ? $column->set($data[$name]) : $data[$name];
 
 				}
 
