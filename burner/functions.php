@@ -145,3 +145,25 @@ function hook($hook, $method, $arguments = null) {
 	}
 	
 }
+
+/**
+ * Random
+ * @param int Minimum length of random range
+ * @param int Maximum length of random range
+ * @param string Available characters to be randomized
+ * @return string A mixture of random characters
+ */
+function random($min = 10, $max = 30, $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789=_') {
+	
+	$len = rand($min, $max);
+	$salt = '';
+
+	for($i = 0; $i < $len; $i++) {
+	
+		$salt .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+	
+	}
+	
+	return $salt;
+
+}

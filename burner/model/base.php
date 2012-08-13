@@ -146,9 +146,9 @@ class Base {
 	 * @param mixed Whitelist or null
 	 * @return \Model\Base Model object populated from $_POST
 	 */
-	public static function from_post($whitelist = null) {
+	public static function from_post($whitelist = null, $include_files = false) {
 		
-		return self::from_array($_POST, $whitelist);
+		return self::from_array(($include_files) ? array_merge($_POST, $_FILES) : $_POST, $whitelist);
 		
 	}
 	

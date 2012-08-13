@@ -15,11 +15,15 @@ class Article extends \Core\Model\Base {
 		$this->schema(
 			new \Column\Varchar('title', array('length' => 125, 'required' => 'Title field is required.')),
 			new \Column\Text('content', array('required' => 'Content field is required.')),
+			new \Column\File('banner', array('dir' => 'static/article/tmp')),
+			new \Column\Boolean('awesome'),
 			new \Column\HasMany('comments', array('model' => 'Comment', 'column' => 'article'))
 		);
 
 		$this->admin('title');
 		$this->admin('content', array('list' => false));
+		$this->admin('awesome');
+		$this->admin('banner');
 		$this->admin('comments');
 
 	}

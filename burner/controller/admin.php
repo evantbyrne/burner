@@ -360,6 +360,7 @@ class Admin extends Base {
 		$admin = $row->get_admin();
 		$columns = array();
 		$children = array();
+		$is_multipart = false;
 
 		foreach($schema as $column) {
 		
@@ -381,9 +382,9 @@ class Admin extends Base {
 					
 					);
 					
-					// BelongsTo columns
 					if(is_a($column, '\\Column\\BelongsTo')) {
 						
+						// BelongsTo columns
 						$column_model_class = "\\Model\\$name";
 						$choices = array();
 						
@@ -396,6 +397,10 @@ class Admin extends Base {
 						$columns[$name]['options']['choices'] = $choices;
 						$columns[$name]['options']['template'] = 'select';
 						
+					} elseif(is_a($column, '\\Column\\File')) {
+						
+						$is_multipart = true;
+						
 					}
 
 				}
@@ -406,7 +411,7 @@ class Admin extends Base {
 
 		if(is_post()) {
 
-			$row = $model_class::from_post(array_keys($columns));
+			$row = $model_class::from_post(array_keys($columns), $is_multipart);
 			
 			if($this->valid($row)) {
 
@@ -430,6 +435,7 @@ class Admin extends Base {
 		$this->data('row', $row);
 		$this->data('columns', $columns);
 		$this->data('children', $children);
+		$this->data('is_multipart', $is_multipart);
 
 	}
 	
