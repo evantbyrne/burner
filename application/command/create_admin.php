@@ -13,15 +13,19 @@ class Create_Admin {
 	 */
 	public function run() {
 		
-		$user = new \Model\User();
-		
 		echo 'Email: ';
 		ob_flush();
-		$user->email = trim(fgets(STDIN));
+		$email = trim(fgets(STDIN));
 		
 		echo 'Password: ';
 		ob_flush();
-		$user->password = trim(fgets(STDIN));
+		$password = trim(fgets(STDIN));
+		
+		$user = \Model\User::from_array(array(
+			'email'    => $email,
+			'password' => $password,
+			'type'     => \Model\User::level('admin')
+		));
 		
 		if(is_array($user->valid())) {
 			
@@ -29,8 +33,6 @@ class Create_Admin {
 		
 		} else {
 			
-			$user->set_password($user->password);
-			$user->type = \Model\User::level('admin');
 			$user->save();
 			echo "Successfully created admin user\n";
 			
