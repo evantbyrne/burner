@@ -7,7 +7,7 @@ use Library\Input;
  * File Column
  * @author Evan Byrne
  */
-class File extends Char {
+class File extends Varchar {
 	
 	/**
 	 * @inheritdoc
@@ -24,7 +24,7 @@ class File extends Char {
 		parent::__construct($column_name, array_merge(array(
 			
 			'blank'    => true,
-			'length'   => 30,
+			'length'   => 255,
 			'template' => 'file',
 			'list'     => false
 		
@@ -35,19 +35,23 @@ class File extends Char {
 	/**
 	 * @inheritdoc
 	 */
-	public function set($value) {
+	public function finalize($value) {
 		
 		if(empty($value['tmp_name'])) {
 			
-			echo 'Empty';
-			
-		} else {
-			
-			print_r($value);
+			return null;
 			
 		}
-		//var_dump($this->get_option('dir') . '/' . random());
-		exit;
+			
+		//mkdir($this->get_option('dir'), 0777, true);
+
+		$e = explode('.', $value['name']);
+		$end = array_pop($e);
+		$name = random() . '.' . implode('.', $e) . '.' . $end;
+		//die($name);
+		move_uploaded_file($value['tmp_name'], $this->get_option('dir') . "/$name");
+
+		return $name;
 		
 	}
 

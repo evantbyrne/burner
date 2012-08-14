@@ -23,7 +23,7 @@ class Article extends \Core\Model\Base {
 		$this->admin('title');
 		$this->admin('content', array('list' => false));
 		$this->admin('awesome');
-		$this->admin('banner');
+		$this->admin('banner', array('list' => true));
 		$this->admin('comments');
 
 	}

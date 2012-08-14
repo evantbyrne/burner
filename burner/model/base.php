@@ -391,9 +391,16 @@ class Base {
 		
 		foreach($schema as $column) {
 		
-			if(isset($vars[$column->column_name()])) {
+			$name = $column->column_name();
+			if(isset($vars[$name])) {
 
-				$query->value($column->column_name(), $vars[$column->column_name()]);
+				if(is_callable(array($column, 'finalize'))) {
+
+					$vars[$name] = $column->finalize($vars[$name]);
+
+				}
+
+				$query->value($name, $vars[$name]);
 
 			}
 		
@@ -420,7 +427,11 @@ class Base {
 
 				if(!empty($data[$name]) or !$column->get_option('blank')) {
 
-					$this->{$name} = (is_callable(array($column, 'set'))) ? $column->set($data[$name]) : $data[$name];
+					if(!empty($data[$name]['tmp_name']) or !is_a($column, '\\Column\\File')) {
+
+						$this->{$name} = (is_callable(array($column, 'set'))) ? $column->set($data[$name]) : $data[$name];
+
+					}
 
 				}
 
