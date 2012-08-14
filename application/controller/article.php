@@ -23,6 +23,7 @@ class Article extends \Core\Controller\Base {
 
 		$article = \Model\Article::id($id) or $this->error(404);
 		$this->data('article', $article);
+		$this->data('comments', $article->comments()->select()->fetch());
 
 	}
 

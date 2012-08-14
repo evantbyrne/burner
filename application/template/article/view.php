@@ -12,4 +12,6 @@
 
 	<p><?php e($article->content); ?></p>
 	
+	<p>Comments: <?php echo count($comments); ?></p>
+	
 <?php $this->end_extend(); ?>

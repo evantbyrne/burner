@@ -8,16 +8,7 @@ namespace Column;
  */
 class HasMany extends Base {
 	
-	private $model;
-	private $column;
-	
 	public function __construct($column_name, $options = array()) {
-		
-		parent::__construct($column_name, array_merge(array('list' => false), $options));
-		
-		// Model
-		$model_class = (isset($options['model'])) ? $options['model'] : $column_name;
-		$this->model = $model_class;
 		
 		// Column
 		if(!isset($options['column'])) {
@@ -26,13 +17,14 @@ class HasMany extends Base {
 		
 		}
 		
-		$model_class_column = $options['column'];
-		$this->column = $model_class_column;
+		parent::__construct($column_name, array_merge(array('model' => $column_name, 'list' => false), $options));
 		
 		// Selections on remote table
-		$this->set_method($column_name, function($model) use ($column_name, $model_class, $model_class_column) {
+		$model_class = $options['model'];
+		$column = $options['column'];
+		$this->set_method($column_name, function($model) use ($column_name, $model_class, $column) {
 		
-			return new HasManyQuery($model_class, $model_class_column, $model->id);
+			return new HasManyQuery($model_class, $column, $model->id);
 		
 		});
 	
@@ -63,63 +55,45 @@ class HasManyQuery {
 	
 	/**
 	 * Select
-	 * @return \Mysql\Select object
+	 * @return \Mysql\Select
 	 */
 	public function select() {
 		
-		$query = \Dingo\DB::connection()->select(call_user_func("{$this->model_class}::table"), $this->model_class);
-		$query->where($this->column, '=', $this->id);
-		return $query;
+		$m = $this->model_class;
+		return $m::select()->where($this->column, '=', $this->id);
 		
 	}
 	
 	/**
 	 * Delete
-	 * @return \Mysql\Delete object
+	 * @return \Mysql\Delete
 	 */
 	public function delete() {
 		
-		$query = \Dingo\DB::connection()->delete(call_user_func("{$this->model_class}::table"));
-		$query->where($this->column, '=', $this->id);
-		return $query;
+		$m = $this->model_class;
+		return $m::delete()->where($this->column, '=', $this->id);
 		
 	}
 	
 	/**
 	 * Update
-	 * @param Model instance to insert values from
-	 * @return Result of database query
+	 * @return \Mysql\Update
 	 */
-	public function update($instance) {
+	public function update() {
 		
-		$query = \Dingo\DB::connection()->update(call_user_func("{$this->model_class}::table"));
-		$query->where($this->column, '=', $this->id);
-		
-		$columns = call_user_func("{$this->model_class}::columns");
-		foreach($columns as $column) {
-		
-			$col = $column->column_name();
-			if($col !== 'id' and isset($instance->$col)) {
-				
-				$query->value($col, $instance->$col);
-			
-			}
-		
-		}
-		
-		return $query;
+		$m = $this->model_class;
+		return $m::update()->where($this->column, '=', $this->id);
 		
 	}
 	
 	/**
 	 * Insert
-	 * @param Model instance to be inserted
-	 * @return Result of database query
+	 * @return \Mysql\Insert
 	 */
-	public function insert($insertion) {
+	public function insert() {
 		
-		$insertion->{$this->column} = $this->id;
-		return $insertion->insert();
+		$m = $this->model_class;
+		return $m::insert()->value($this->column, $this->id);
 		
 	}
 
