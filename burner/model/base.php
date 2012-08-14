@@ -394,19 +394,34 @@ class Base {
 			$name = $column->column_name();
 			if(isset($vars[$name])) {
 
-				if(is_callable(array($column, 'finalize'))) {
-
-					$vars[$name] = $column->finalize($vars[$name]);
-
-				}
-
 				$query->value($name, $vars[$name]);
 
 			}
 		
 		}
 		
-		return $query->execute();
+		// Execute query
+		$res = $query->execute();
+		
+		// Set ID
+		if(!isset($this->id)) {
+			
+			$this->id = $res;
+			
+		}
+		
+		// Finalize
+		foreach($schema as $column) {
+			
+			if(is_callable(array($column, 'finalize'))) {
+
+				$column->finalize($this);
+
+			}
+			
+		}
+		
+		return $res;
 	
 	}
 	
@@ -448,9 +463,9 @@ class Base {
 	 * @param mixed Whitelist array or null
 	 * @return $this
 	 */
-	public function merge_post($whitelist = null) {
+	public function merge_post($whitelist = null, $include_files = false) {
 	
-		return $this->merge_array($_POST, $whitelist);
+		return $this->merge_array(($include_files) ? array_merge($_POST, $_FILES) : $_POST, $whitelist);
 	
 	}
 	

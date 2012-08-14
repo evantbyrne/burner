@@ -51,7 +51,7 @@
 <!-- Content -->
 <?php $this->extend('content') ?>
 
-	<form method="post" class="form-horizontal">
+	<form method="post"<?php if($is_multipart): ?> enctype="multipart/form-data"<?php endif; ?> class="form-horizontal">
 
 		<?php foreach($columns as $name => $c): ?>
 

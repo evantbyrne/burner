@@ -7,7 +7,7 @@ use Library\Input;
  * File Column
  * @author Evan Byrne
  */
-class File extends Varchar {
+class File extends Char {
 	
 	/**
 	 * @inheritdoc
@@ -23,8 +23,8 @@ class File extends Varchar {
 		
 		parent::__construct($column_name, array_merge(array(
 			
+			'length'   => 5,
 			'blank'    => true,
-			'length'   => 255,
 			'template' => 'file',
 			'list'     => false
 		
@@ -35,23 +35,34 @@ class File extends Varchar {
 	/**
 	 * @inheritdoc
 	 */
-	public function finalize($value) {
+	public function set($value) {
 		
-		if(empty($value['tmp_name'])) {
+		if(!empty($value['tmp_name'])) {
 			
-			return null;
+			$e = explode('.', $value['name']);
+			return end($e);
 			
 		}
+		
+		return null;
+		
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function finalize($model) {
+		
+		$name = $this->column_name();
+		if(!empty($_FILES[$name]['tmp_name'])) {
 			
-		//mkdir($this->get_option('dir'), 0777, true);
-
-		$e = explode('.', $value['name']);
-		$end = array_pop($e);
-		$name = random() . '.' . implode('.', $e) . '.' . $end;
-		//die($name);
-		move_uploaded_file($value['tmp_name'], $this->get_option('dir') . "/$name");
-
-		return $name;
+			$value = $_FILES[$name];
+			$e = explode('.', $value['name']);
+			$end = array_pop($e);
+			$file = $this->get_option('dir') . '/' . "{$model->id}.$end";
+			move_uploaded_file($value['tmp_name'], $file);
+			
+		}
 		
 	}
 
