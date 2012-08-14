@@ -81,7 +81,11 @@
 			
 			<?php $this->section('footer'); ?>
 
-				<!-- Default Footer -->
+				<?php if(DEBUG): ?>
+					
+					<p><small>Executed queries: <?php echo count(\Core\DB::connection()->queries()); ?></small></p>
+				
+				<?php endif; ?>
 
 			<?php $this->end_section(); ?>
 		</div>

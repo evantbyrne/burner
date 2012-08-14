@@ -26,6 +26,7 @@ class Connection {
 	private $pass;
 	private $db;
 	private $last_result;
+	private $queries;
 	
 	/**
 	 * Construct
@@ -40,6 +41,7 @@ class Connection {
 		$this->db = $db;
 		$this->user = $user;
 		$this->pass = $pass;
+		$this->queries = array();
 		
 		$this->last_result = null;
 		
@@ -134,6 +136,12 @@ class Connection {
 		
 		}
 		
+		if(DEBUG) {
+			
+			$this->queries[] = $query;
+			
+		}
+		
 		return $this->last_result;
 	
 	}
@@ -166,6 +174,12 @@ class Connection {
 			
 			$this->last_result = $res->execute();
 		
+		}
+		
+		if(DEBUG) {
+			
+			$this->queries[] = $query;
+			
 		}
 		
 		return $this->last_result;
@@ -206,6 +220,16 @@ class Connection {
 	public function last_insert_id() {
 		
 		return $this->connection->lastInsertId();
+		
+	}
+	
+	/**
+	 * Queries
+	 * @return array
+	 */
+	public function queries() {
+		
+		return $this->queries;
 		
 	}
 	
