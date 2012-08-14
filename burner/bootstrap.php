@@ -140,7 +140,8 @@ class Bootstrap {
 		
 		// Load route configuration
 		require_once(APPLICATION.'/config/route.php');
-
+		
+		global $argv;
 		if(isset($argv)) {
 
 			// Command line
