@@ -131,6 +131,7 @@ class Bootstrap {
 		require_once(APPLICATION . '/config/' . CONFIGURATION . '/config.php');
 		require_once(APPLICATION . '/config/' . CONFIGURATION . '/db.php');
 		require_once(APPLICATION . '/config/' . CONFIGURATION . '/hash.php');
+		require_once(BURNER . '/functions.php');
 		require_once(BURNER . '/mysql.php');
 		require_once(BURNER . '/response.php');
 		
@@ -139,6 +140,19 @@ class Bootstrap {
 		
 		// Load route configuration
 		require_once(APPLICATION.'/config/route.php');
+
+		if(isset($argv)) {
+
+			// Command line
+			require_once(BURNER . '/cli.php');
+			\Core\CLI::run();
+
+		} else {
+
+			// Web server
+			\Core\Bootstrap::run();
+
+		}
 		
 	}
 	
