@@ -220,7 +220,7 @@ class Template {
 	 * @param string Field
 	 * @param string Template
 	 */
-	public function field($label, $field, $template, $value = null, $options = null) {
+	public function field($label, $field, $template, $value = null, $options = null, $model = null) {
 
 		echo self::render("field/$template", array(
 			
@@ -228,7 +228,8 @@ class Template {
 			'field'   => $field,
 			'options' => $options,
 			'value'   => isset($this->data[$field]) ? $this->data[$field] : $value,
-			'errors'  => isset($this->data['errors']) ? $this->data['errors'] : null
+			'errors'  => isset($this->data['errors']) ? $this->data['errors'] : null,
+			'model'   => $model
 
 		));
 
