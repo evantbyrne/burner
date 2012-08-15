@@ -3,14 +3,9 @@
 
 <?php if(!empty($value) and $model !== null): ?>
 
-	<?php
+	<?php $location = $model->{$field . '_path'}(); ?>
 
-	$column = $model->get_schema_column($field);
-	$location = $column->get_option('dir') . "/{$model->id}.$value";
-
-	?>
-
-	<p><small>Choose new file to replace uploaded one: <a href="<?php echo url($location); ?>"><?php e($location); ?></a></small></p>
+	<p><small>Choose new file to replace uploaded one: <a href="<?php e(url($location)); ?>"><?php e($location); ?></a></small></p>
 
 <?php endif; ?>
 

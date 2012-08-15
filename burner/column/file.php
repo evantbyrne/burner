@@ -14,7 +14,7 @@ class File extends Char {
 	 */
 	public function __construct($column_name, $options = array()) {
 		
-		// Column
+		// Directory
 		if(!isset($options['dir'])) {
 		
 			throw new \Exception("Option 'dir' must be set for $column_name column.");
@@ -29,6 +29,19 @@ class File extends Char {
 			'list'     => false
 		
 		), $options));
+		
+		// Path
+		$this->set_method($column_name . '_path', function($model) use ($column_name) {
+		
+			if(empty($model->{$column_name})) {
+				
+				return null;
+				
+			}
+			
+			return $model->get_schema_column($column_name)->get_option('dir') . '/' . "{$model->id}." . $model->{$column_name};
+		
+		});
 	
 	}
 	
