@@ -21,14 +21,38 @@ class File extends Char {
 		
 		}
 		
-		parent::__construct($column_name, array_merge(array(
+		$options = array_merge(array(
 			
-			'length'   => 5,
-			'blank'    => true,
-			'template' => 'file',
-			'list'     => false
+			'length'    => 5,
+			'blank'     => true,
+			'template'  => 'file',
+			'list'      => false,
+			'mimetypes' => null
 		
-		), $options));
+		), $options);
+		
+		// Valid
+		if(!isset($options['valid']) and is_array($options['mimetypes'])) {
+			
+			$options['valid'] = function($value) use ($options, $column_name) {
+				
+				if(empty($_FILES[$column_name]['tmp_name'])) {
+					
+					return true;
+					
+				}
+				
+				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+				$mime = finfo_file($finfo, $_FILES[$column_name]['tmp_name']);
+				
+				return (in_array($mime, $options['mimetypes'])) ? true : 'Invalid file type.';
+				
+			};
+			
+		}
+		
+		// Construct
+		parent::__construct($column_name, $options);
 		
 		// Path
 		$this->set_method($column_name . '_path', function($model) use ($column_name) {
