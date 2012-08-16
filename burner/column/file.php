@@ -21,6 +21,13 @@ class File extends Char {
 		
 		}
 		
+		// Mime types
+		if(!isset($options['mimetypes'])) {
+		
+			throw new \Exception("Option 'mimetypes' must be set for $column_name column.");
+		
+		}
+		
 		$options = array_merge(array(
 			
 			'length'    => 5,
@@ -32,20 +39,11 @@ class File extends Char {
 		), $options);
 		
 		// Valid
-		if(!isset($options['valid']) and is_array($options['mimetypes'])) {
+		if(!isset($options['valid'])) {
 			
-			$options['valid'] = function($value) use ($options, $column_name) {
+			$options['valid'] = function($value) {
 				
-				if(empty($_FILES[$column_name]['tmp_name'])) {
-					
-					return true;
-					
-				}
-				
-				$finfo = finfo_open(FILEINFO_MIME_TYPE);
-				$mime = finfo_file($finfo, $_FILES[$column_name]['tmp_name']);
-				
-				return (in_array($mime, $options['mimetypes'])) ? true : 'Invalid file type.';
+				return ($value === null) ? 'Invalid file type.' : true;
 				
 			};
 			
@@ -76,8 +74,15 @@ class File extends Char {
 		
 		if(!empty($value['tmp_name'])) {
 			
-			$e = explode('.', $value['name']);
-			return end($e);
+			$finfo = finfo_open(FILEINFO_MIME_TYPE);
+			$mime = finfo_file($finfo, $value['tmp_name']);
+			$mimetypes = $this->get_option('mimetypes');
+			
+			if(!empty($mimetypes[$mime])) {
+				
+				return $mimetypes[$mime];
+				
+			}
 			
 		}
 		
@@ -93,11 +98,19 @@ class File extends Char {
 		$name = $this->column_name();
 		if(!empty($_FILES[$name]['tmp_name'])) {
 			
-			$value = $_FILES[$name];
-			$e = explode('.', $value['name']);
-			$end = array_pop($e);
-			$file = $this->get_option('dir') . '/' . "{$model->id}.$end";
-			move_uploaded_file($value['tmp_name'], $file);
+			$file = $this->get_option('dir') . '/' . "{$model->id}";
+			
+			foreach(array_unique(array_values($this->get_option('mimetypes'))) as $ext) {
+				
+				if(file_exists("$file.$ext")) {
+					
+					unlink("$file.$ext");
+					
+				}
+				
+			}
+			
+			move_uploaded_file($_FILES[$name]['tmp_name'], "$file.{$model->{$name}}");
 			
 		}
 		
