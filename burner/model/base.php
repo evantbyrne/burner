@@ -128,11 +128,16 @@ class Base {
 		foreach($schema as $column) {
 		
 			$name = $column->column_name();
+			$default = $column->get_option('default');
+			
 			if(($whitelist === null or in_array($name, $whitelist)) and isset($data[$name])) {
 
-				//$instance->{$name} = $data[$name];
 				$instance->{$name} = (is_callable(array($column, 'set'))) ? $column->set($data[$name]) : $data[$name];
 
+			} elseif(is_callable($default)) {
+				
+				$instance->{$name} = $default();
+				
 			}
 		
 		}

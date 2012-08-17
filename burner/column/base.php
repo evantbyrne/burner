@@ -18,10 +18,17 @@ abstract class Base {
 	 */
 	public function __construct($column_name, $options = array(), $column = null) {
 	
-		// TODO: Validate column name
 		$this->_column_name = $column_name;
 		$this->_methods = array();
-		$this->_options = array_merge(array('blank' => false, 'choices' => null, 'template' => 'text', 'list_template' => null), $options);
+		$this->_options = array_merge(array(
+			
+			'blank' => false,
+			'choices' => null,
+			'template' => 'text',
+			'list_template' => null,
+			'default' => null
+		
+		), $options);
 		
 		if($column !== null) {
 		
@@ -48,7 +55,6 @@ abstract class Base {
 	 */
 	public function set_column($column) {
 	
-		// TODO: Validate that $column inherits \Mysql\TableColumn
 		$this->_column = $column;
 		return $this;
 	

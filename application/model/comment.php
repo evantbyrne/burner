@@ -13,7 +13,12 @@ class Comment extends \Core\Model\Base {
 	public function __construct() {
 
 		$this->schema(
-			new \Column\BelongsTo('user'),
+			new \Column\BelongsTo('user', array('default' => function() {
+				
+				return \Controller\Auth::user()->id;
+				
+			})),
+			
 			new \Column\BelongsTo('article'),
 			new \Column\Text('content', array('required' => 'Content field is required.'))
 		);
