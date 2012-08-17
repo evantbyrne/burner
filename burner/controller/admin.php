@@ -162,6 +162,12 @@ class Admin extends Base {
 		$this->data('rows', $rows);
 		$this->data('model', $name);
 		$this->data('model_name', $model_class::get_verbose());
+
+		if(file_exists(APPLICATION . "/template/admin/$name/model.php")) {
+
+			$this->template("admin/$name/model");
+
+		}
 		
 	}
 	
@@ -188,6 +194,20 @@ class Admin extends Base {
 			'child_model'  => $child_model
 			
 		));
+
+		if(file_exists(APPLICATION . "/template/admin/$parent_model/children-$child_model.php")) {
+
+			$this->template("admin/$parent_model/children-$child_model");
+
+		} elseif(file_exists(APPLICATION . "/template/admin/$parent_model/children.php")) {
+
+			$this->template("admin/$parent_model/children");
+
+		} else {
+
+			$this->template('admin/children');
+
+		}
 		
 	}
 
@@ -286,6 +306,12 @@ class Admin extends Base {
 		$this->data('children', $children);
 		$this->data('is_multipart', $is_multipart);
 
+		if(file_exists(APPLICATION . "/template/admin/$model/edit.php")) {
+
+			$this->template("admin/$model/edit");
+
+		}
+
 	}
 	
 	/**
@@ -311,6 +337,20 @@ class Admin extends Base {
 			'parent_id'    => $parent_id
 		
 		));
+
+		if(file_exists(APPLICATION . "/template/admin/$parent_model/edit_child-$child_model.php")) {
+
+			$this->template("admin/$parent_model/edit_child-$child_model");
+
+		} elseif(file_exists(APPLICATION . "/template/admin/$parent_model/edit_child.php")) {
+
+			$this->template("admin/$parent_model/edit_child");
+
+		} else {
+
+			$this->template('admin/edit_child');
+
+		}
 		
 	}
 
@@ -341,6 +381,12 @@ class Admin extends Base {
 			$this->data('model', $model);
 			$this->data('model_name', $model_class::get_verbose());
 			$this->data('id', $id);
+
+		}
+
+		if(file_exists(APPLICATION . "/template/admin/$model/delete.php")) {
+
+			$this->template("admin/$model/delete");
 
 		}
 
@@ -443,6 +489,12 @@ class Admin extends Base {
 		$this->data('children', $children);
 		$this->data('is_multipart', $is_multipart);
 
+		if(file_exists(APPLICATION . "/template/admin/$model/add.php")) {
+
+			$this->template("admin/$model/add");
+
+		}
+
 	}
 	
 	/**
@@ -467,6 +519,20 @@ class Admin extends Base {
 			'parent_id'    => $parent_id
 		
 		));
+
+		if(file_exists(APPLICATION . "/template/admin/$parent_model/add_child-$child_model.php")) {
+
+			$this->template("admin/$parent_model/add_child-$child_model");
+
+		} elseif(file_exists(APPLICATION . "/template/admin/$parent_model/add_child.php")) {
+
+			$this->template("admin/$parent_model/add_child");
+
+		} else {
+
+			$this->template('admin/add_child');
+
+		}
 		
 	}
 
