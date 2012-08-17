@@ -21,7 +21,7 @@ abstract class Base {
 		// TODO: Validate column name
 		$this->_column_name = $column_name;
 		$this->_methods = array();
-		$this->_options = array_merge(array('blank' => false, 'choices' => null, 'template' => 'text'), $options);
+		$this->_options = array_merge(array('blank' => false, 'choices' => null, 'template' => 'text', 'list_template' => null), $options);
 		
 		if($column !== null) {
 		

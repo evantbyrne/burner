@@ -60,15 +60,28 @@
 					<tr>
 						<?php foreach($columns as $column => $options): ?>
 
-							<?php if($this->first()): ?>
-								
-								<td><a href="<?php echo route_url('get', 'admin', 'edit_child', array($parent_model, $parent_id, $model, $row->id)); ?>"><?php e($row->{$column}); ?></a></td>
+							<?php $first = $this->first(); ?>
 							
-							<?php else: ?>
+							<td>
+								<?php if($first): ?><a href="<?php echo route_url('get', 'admin', 'edit_child', array($parent_model, $parent_id, $model, $row->id)); ?>"><?php endif; ?>
 								
-								<td><?php echo e($row->{$column}); ?></td>
-							
-							<?php endif; ?>
+								<?php if($this->exists("field/list/{$options['list_template']}")): ?>
+									
+									<?php $this->load("field/list/{$options['list_template']}", array(
+										'field'   => $column,
+										'options' => $options,
+										'model'   => $row
+									)); ?>
+								
+								<?php else: ?>
+								
+									<?php echo e($row->{$column}); ?>
+
+								<?php endif; ?>
+								
+								<?php if($first): ?></a><?php endif; ?>
+								
+							</td>
 						
 						<?php endforeach; ?>
 						<?php $this->reset_first(); ?>

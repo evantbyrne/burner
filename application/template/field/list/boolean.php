@@ -1,0 +1,1 @@
+<i class="icon-<?php echo ($model->{$field} == 'True') ? 'ok-sign' : 'remove-circle' ; ?>"></i>

@@ -43,7 +43,7 @@ class File extends Char {
 			
 			$options['valid'] = function($value) {
 				
-				return ($value === null) ? 'Invalid file type.' : true;
+				return ($value === false) ? 'Invalid file type.' : true;
 				
 			};
 			
@@ -78,11 +78,7 @@ class File extends Char {
 			$mime = finfo_file($finfo, $value['tmp_name']);
 			$mimetypes = $this->get_option('mimetypes');
 			
-			if(!empty($mimetypes[$mime])) {
-				
-				return $mimetypes[$mime];
-				
-			}
+			return (!empty($mimetypes[$mime])) ? $mimetypes[$mime] : false;
 			
 		}
 		

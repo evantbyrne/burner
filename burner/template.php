@@ -64,6 +64,17 @@ class Template {
 	}
 	
 	/**
+	 * Exists
+	 * @param string Template
+	 * @return boolean
+	 */
+	public function exists($template) {
+		
+		return file_exists(APPLICATION . "/template/$template.php");
+		
+	}
+	
+	/**
 	 * Load
 	 * @param string Template
 	 * @param array Data
@@ -71,7 +82,7 @@ class Template {
 	public function load($template, $data = NULL) {
 		
 		// If view does not exist display error
-		if(!file_exists(APPLICATION."/template/$template.php")) {
+		if(!file_exists(APPLICATION . "/template/$template.php")) {
 			
 			throw new \Exception('The requested template ('. APPLICATION. "/template/$template.php) could not be found.");
 			
