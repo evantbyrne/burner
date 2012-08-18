@@ -76,12 +76,8 @@ class User extends Base {
 			new \Column\Email('email', array('length' => 100, 'required' => 'Email field required.')),
 			new \Column\Password('password', array('required' => 'Password field required.')),
 			new \Column\TinyInt('type', array('template' => 'select', 'choices' => array_flip(static::$levels))),
-			new \Column\Varchar('verify_code', array('length' => 30, 'null' => true))
+			new \Column\Varchar('verify_code', array('length' => 30, 'null' => true, 'admin' => false))
 		);
-
-		$this->admin('email');
-		$this->admin('type');
-		$this->admin('password');
 		
 	}
 

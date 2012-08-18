@@ -26,7 +26,8 @@ abstract class Base {
 			'choices' => null,
 			'template' => 'text',
 			'list_template' => null,
-			'default' => null
+			'default' => null,
+			'admin' => true
 		
 		), $options);
 		

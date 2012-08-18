@@ -30,8 +30,6 @@ class User extends \Core\Model\User {
 			}
 
 		)));
-
-		$this->admin('avatar');
 		
 	}
 	

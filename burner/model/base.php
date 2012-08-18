@@ -188,6 +188,12 @@ class Base {
 
 			$this->_schema[] = $addition;
 
+			if($addition->get_option('admin') === true) {
+
+				$this->_admin[$addition->column_name()] = array_merge(array('list' => true), $addition->options());
+
+			}
+
 		}
 
 		return $this;
