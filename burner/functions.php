@@ -2,23 +2,24 @@
 
 /**
  * Root URL
- * @param Whether to include index.php/ in URL
- * @return The base URL
+ * @param boolean HTTPS
+ * @return string The base URL
  */
-function root_url() {
+function root_url($https = false) {
 
-	return (!MOD_REWRITE) ? BASE_URL . 'index.php/' : BASE_URL;
+	return (($https) ? 'https://' : 'http://' ) . ((!MOD_REWRITE) ? BASE_URL . 'index.php/' : BASE_URL);
 
 }
 
 /**
  * URL
  * @param string Relative path to page
+ * @param boolean HTTPS
  * @return string Full path to page
  */
-function url($path = '') {
+function url($path = '', $https = false) {
 
-	return root_url() . $path;
+	return root_url($https) . $path;
 
 }
 
@@ -28,9 +29,10 @@ function url($path = '') {
  * @param string Controller
  * @param string Method
  * @param mixed Array of arguments, or null
+ * @param boolean HTTPS
  * @return mixed Full path to page, or null
  */
-function route_url($type, $controller, $method, $args = null) {
+function route_url($type, $controller, $method, $args = null, $https = false) {
 
 	$routes = \Core\Route::all();
 	foreach($routes as $path => $route) {
@@ -60,7 +62,7 @@ function route_url($type, $controller, $method, $args = null) {
 				
 			}
 			
-			return url($path);
+			return url($path, $https);
 			
 		}
 		
@@ -73,10 +75,11 @@ function route_url($type, $controller, $method, $args = null) {
 /**
  * Redirect
  * @param string URL to redirect to
+ * @param boolean HTTPS
  */
-function redirect($path = '') {
+function redirect($path = '', $https = false) {
 	
-	header('Location: ' . root_url(true) . $path);
+	header('Location: ' . root_url($https) . $path);
 	exit;
 	
 }
@@ -84,10 +87,11 @@ function redirect($path = '') {
 /**
  * Login Redirect
  * @param string URL to redirect to after logging in
+ * @param boolean HTTPS
  */
-function login_redirect($path = '') {
+function login_redirect($path = '', $https = false) {
 	
-	redirect('auth/login/' . base64_encode($path));
+	redirect('auth/login/' . base64_encode($path), $https);
 	
 }
 

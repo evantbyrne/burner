@@ -9,8 +9,8 @@ ini_set('display_errors', 'On');
 // Error reporting level
 error_reporting(E_STRICT|E_ALL);
 
-// Application's Base URL
-define('BASE_URL','http://localhost:8888/beaker-burner/');
+// Application's Base URL (including trailing slash)
+define('BASE_URL', 'localhost:8888/beaker-burner/');
 
 // Does Application Use Mod_Rewrite URLs?
 define('MOD_REWRITE', true);
