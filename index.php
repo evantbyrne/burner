@@ -4,16 +4,6 @@
 //----------------------------------------------------------------------------------------------
 
 
-
-// You might want to comment this out...
-ini_set('display_errors', 'On');
-
-// Error reporting level
-error_reporting(E_STRICT|E_ALL);
-
-// Static location
-define('STATIC', 'static');
-
 // Configuration
 define('CONFIGURATION', 'development');
 

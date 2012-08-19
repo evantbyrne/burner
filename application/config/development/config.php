@@ -3,6 +3,12 @@
 namespace Core;
 
 
+// You might want to comment this out...
+ini_set('display_errors', 'On');
+
+// Error reporting level
+error_reporting(E_STRICT|E_ALL);
+
 // Application's Base URL
 define('BASE_URL','http://localhost:8888/beaker-burner/');
 
@@ -16,8 +22,16 @@ define('DEBUG', true);
 define('ERROR_LOGGING', false);
 
 // Error Log File Location
-define('ERROR_LOG_FILE','log.txt');
+define('ERROR_LOG_FILE', 'log.txt');
 
+// Default language
+Config::set('language', 'english');
+
+// Sessions
+Config::set('session', array(
+	'path'   => '/',
+	'expire' => '+1 months'
+));
 
 /**
  * Your Application's Default Timezone
@@ -25,17 +39,3 @@ define('ERROR_LOG_FILE','log.txt');
  * http://www.php.net/timezones
  */
 date_default_timezone_set('America/New_York');
-
-
-// Default language
-Config::set('language', 'english');
-
-/* Sessions */
-Config::set('session',array(
-	'connection'=>'default',
-	'table'=>'sessions',
-	'cookie'=>array('path'=>'/','expire'=>'+1 months')
-));
-
-/* Notes */
-Config::set('notes',array('path'=>'/','expire'=>'+5 minutes'));
