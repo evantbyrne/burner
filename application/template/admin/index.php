@@ -22,7 +22,6 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th width="80">Count</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -31,7 +30,6 @@
 			
 					<tr>
 						<td><a href="<?php echo route_url('get', 'admin', 'model', array($model_class)); ?>"><?php echo $model['name']; ?></a></td>
-						<td><span class="badge"><?php echo $model['count']; ?></span></td>
 					</tr>
 				
 				<?php endforeach; ?>

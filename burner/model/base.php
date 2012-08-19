@@ -10,17 +10,17 @@ namespace Core\Model;
 class Base {
 	
 	/**
-	 * MySQL storage engine to use
+	 * string MySQL storage engine to use
 	 */
 	public static $engine = 'MyISAM';
 
 	/**
-	 * Verbose name
+	 * mixed Verbose name
 	 */
 	public static $verbose = null;
 
 	/**
-	 * Verbose plural name
+	 * mixed Verbose plural name
 	 */
 	public static $verbose_plural = null;
 	

@@ -29,7 +29,6 @@ class Admin extends Base {
 			
 			$model_class = "\\Model\\$model";
 			$models[$model] = array(
-				'count'       => $model_class::select()->count_column('id', 'total')->single()->total,
 				'name'        => $model_class::get_verbose(),
 				'name_plural' => $model_class::get_verbose_plural()
 			);
