@@ -15,8 +15,7 @@ class User extends \Core\Model\User {
 		parent::__construct();
 		
 		$this->schema(new \Column\Image('avatar', array(
-				
-			'required' => 'Banner field is required.',
+			
 			'path' => function($model) {
 
 				if(!is_dir('static/user')) {

@@ -14,6 +14,11 @@ class Admin extends Base {
 	public static $models = array('user');
 
 	/**
+	 * boolean Use HTTPS
+	 */
+	public static $https = false;
+
+	/**
 	 * Construct
 	 */
 	public function __construct() {
@@ -287,7 +292,7 @@ class Admin extends Base {
 			if($this->valid($row)) {
 
 				$row->save();
-				redirect("admin/$model");
+				redirect("admin/$model", static::$https);
 
 			} else {
 
@@ -376,7 +381,7 @@ class Admin extends Base {
 		if(is_post()) {
 
 			$model_class::delete()->where('id', '=', $id)->limit(1)->execute();
-			redirect("admin/$model");
+			redirect("admin/$model", static::$https);
 
 		} else {
 
@@ -470,7 +475,7 @@ class Admin extends Base {
 			if($this->valid($row)) {
 
 				$id = $row->save();
-				redirect("admin/$model");
+				redirect("admin/$model", static::$https);
 
 			} else {
 
