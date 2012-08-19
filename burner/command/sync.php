@@ -1,12 +1,12 @@
 <?php
 
-namespace Command;
+namespace Core\Command;
 
 /**
- * Create Command
+ * Sync Command
  * @author Evan Byrne
  */
-class Create {
+class Sync {
 	
 	/**
 	 * Run
@@ -16,9 +16,12 @@ class Create {
 		$models = func_get_args();
 		foreach($models as $model) {
 			
-			echo "Creating: $model\n";
+			echo "Dropping: $model\n";
 			$model_class = "\\Model\\$model";
 			$model_instance = new $model_class();
+			$model_instance->drop_table(true);
+			
+			echo "Creating: $model\n";
 			$model_instance->create_table(true);
 			
 		}

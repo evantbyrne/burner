@@ -1,6 +1,6 @@
 <?php
 
-namespace Command;
+namespace Core\Command;
 
 /**
  * SQL Command
