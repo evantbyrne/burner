@@ -1,7 +1,6 @@
 <?php
 
 namespace Core\Controller;
-use Core\Config;
 
 /**
  * Admin Controller
@@ -10,12 +9,16 @@ use Core\Config;
 class Admin extends Base {
 	
 	/**
+	 * array Which models are editable via admin
+	 */
+	public static $models = array('user');
+
+	/**
 	 * Construct
 	 */
 	public function __construct() {
 		
 		Auth::enforce('admin');
-		require_once(APPLICATION . '/config/admin.php');
 		
 	}
 	
@@ -25,7 +28,7 @@ class Admin extends Base {
 	public function index() {
 		
 		$models = array();
-		foreach(Config::get('admin') as $model) {
+		foreach(static::$models as $model) {
 			
 			$model_class = "\\Model\\$model";
 			$models[$model] = array(
@@ -46,7 +49,7 @@ class Admin extends Base {
 	public function model($name, $select = false) {
 		
 		// 404 on unconfigured model
-		if(!in_array($name, Config::get('admin'))) {
+		if(!in_array($name, static::$models)) {
 
 			$this->error(404);
 
@@ -218,7 +221,7 @@ class Admin extends Base {
 	public function edit($model, $id) {
 
 		// 404 on unconfigured model
-		if(!in_array($model, Config::get('admin'))) {
+		if(!in_array($model, static::$models)) {
 
 			$this->error(404);
 
@@ -361,7 +364,7 @@ class Admin extends Base {
 	public function delete($model, $id) {
 
 		// 404 on unconfigured model
-		if(!in_array($model, Config::get('admin'))) {
+		if(!in_array($model, static::$models)) {
 
 			$this->error(404);
 
@@ -398,7 +401,7 @@ class Admin extends Base {
 	public function add($model) {
 
 		// 404 on unconfigured model
-		if(!in_array($model, Config::get('admin'))) {
+		if(!in_array($model, static::$models)) {
 
 			$this->error(404);
 

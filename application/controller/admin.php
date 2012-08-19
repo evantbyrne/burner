@@ -8,4 +8,9 @@ namespace Controller;
  */
 class Admin extends \Core\Controller\Admin {
 
+	/**
+	 * @inheritdoc
+	 */
+	public static $models = array('user', 'article', 'comment', 'ticket');
+
 }
