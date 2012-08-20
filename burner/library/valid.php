@@ -85,7 +85,7 @@ class Valid {
 	 */
 	public static function email($email) {
 		
-		return preg_match('/^([_\.a-z0-9]{3,})@([\-_\.a-z0-9]{3,})\.([a-z]{2,})$/is',$email);
+		return (filter_var($email, FILTER_VALIDATE_EMAIL)) ? true : false;
 	
 	}
 	
