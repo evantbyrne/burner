@@ -9,6 +9,18 @@ namespace Core\Command;
 class Create {
 	
 	/**
+	 * Help
+	 */
+	public function help() {
+
+		echo "\ncreate <model> [, <model>, ... ]\n\n";
+		echo "Description:\n";
+		echo "\tGenerates SQL for and creates MySQL tables for given model(s).\n";
+		echo "\tWill not drop or update existing tables.\n\n";
+
+	}
+
+	/**
 	 * Run
 	 */
 	public function run() {

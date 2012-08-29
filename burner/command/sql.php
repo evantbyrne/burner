@@ -9,6 +9,17 @@ namespace Core\Command;
 class Sql {
 	
 	/**
+	 * Help
+	 */
+	public function help() {
+
+		echo "\nsql <model> [, <model>, ... ]\n\n";
+		echo "Description:\n";
+		echo "\tGenerates SQL for a given model(s). Requires database connection.\n\n";
+
+	}
+
+	/**
 	 * Run
 	 */
 	public function run() {

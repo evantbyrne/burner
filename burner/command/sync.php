@@ -9,6 +9,18 @@ namespace Core\Command;
 class Sync {
 	
 	/**
+	 * Help
+	 */
+	public function help() {
+
+		echo "\nsync <model> [, <model>, ... ]\n\n";
+		echo "Description:\n";
+		echo "\tDrops, and then recreates MySQL tables for given model(s).\n";
+		echo "\tWarning: All table data will be lost.\n\n";
+
+	}
+
+	/**
 	 * Run
 	 */
 	public function run() {

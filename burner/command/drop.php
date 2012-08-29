@@ -9,6 +9,18 @@ namespace Core\Command;
 class Drop {
 	
 	/**
+	 * Help
+	 */
+	public function help() {
+
+		echo "\ndrop <model> [, <model>, ... ]\n\n";
+		echo "Description:\n";
+		echo "\tDrops MySQL tables for given model(s).\n";
+		echo "\tWarning: All table data will be lost.\n\n";
+
+	}
+
+	/**
 	 * Run
 	 */
 	public function run() {
