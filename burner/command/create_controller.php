@@ -7,6 +7,19 @@ namespace Core\Command;
  * @author Evan Byrne
  */
 class Create_Controller {
+
+	/**
+	 * Help
+	 */
+	public function help() {
+
+		echo "\ncreate_controller <controller> [, <controller>, ... ]\n\n";
+		echo "Description:\n";
+		echo "\tCreates bare-bones controller class files.\n";
+		echo "\tNote: use the desired controller class name(s). ";
+		echo "(e.g., 'FooBar' not 'foobar')\n\n";
+
+	}
 	
 	/**
 	 * Run

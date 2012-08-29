@@ -9,6 +9,19 @@ namespace Core\Command;
 class Create_Model {
 	
 	/**
+	 * Help
+	 */
+	public function help() {
+
+		echo "\ncreate_model <model> [, <model>, ... ]\n\n";
+		echo "Description:\n";
+		echo "\tCreates bare-bones model class files.\n";
+		echo "\tNote: use the desired model class name(s). ";
+		echo "(e.g., 'FooBar' not 'foobar')\n\n";
+
+	}
+
+	/**
 	 * Run
 	 */
 	public function run() {

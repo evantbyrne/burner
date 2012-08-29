@@ -9,6 +9,17 @@ namespace Core\Command;
 class Create_Admin {
 	
 	/**
+	 * Help
+	 */
+	public function help() {
+
+		echo "\ncreate_admin\n\n";
+		echo "Description:\n";
+		echo "\tPrompts you to create an admin user.\n\n";
+
+	}
+
+	/**
 	 * Run
 	 */
 	public function run() {

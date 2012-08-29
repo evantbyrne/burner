@@ -9,6 +9,18 @@ namespace Core\Command;
 class Setup {
 	
 	/**
+	 * Help
+	 */
+	public function help() {
+
+		echo "\nsetup\n\n";
+		echo "Description:\n";
+		echo "\tSyncs User, UserSession, and PasswordReset models.\n";
+		echo "\tThen prompts you to create an admin user.\n\n";
+
+	}
+
+	/**
 	 * Run
 	 */
 	public function run() {
