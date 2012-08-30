@@ -9,6 +9,17 @@ namespace Core\Command;
 class Alter_Add {
 	
 	/**
+	 * Help
+	 */
+	public function help() {
+
+		echo "\nalter_add <model> <column>\n\n";
+		echo "Description:\n";
+		echo "\tAdds a column to the existing MySQL table for a model.\n\n";
+
+	}
+
+	/**
 	 * Run
 	 * @param string Model
 	 * @param string Field
