@@ -857,13 +857,13 @@ class Select extends WhereBase {
 	 * @param string Table
 	 * @param Connection
 	 */
-	public function __construct($table, $result_class = '\Mysql\Result', $connection = null) {
+	public function __construct($table, $result_class = null, $connection = null) {
 	
 		parent::__construct($table, $connection);
 		$this->columns = array();
 		$this->joins = array();
 		$this->offset = null;
-		$this->result_class = $result_class;
+		$this->result_class = ($result_class === null) ? '\\Mysql\\Result' : $result_class;
 	
 	}
 	
