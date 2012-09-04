@@ -22,7 +22,7 @@ class Export_Json {
 	/**
 	 * Run
 	 * @param string Model
-	 * @param string Field
+	 * @param string File
 	 */
 	public function run($model, $filename) {
 			
@@ -30,7 +30,7 @@ class Export_Json {
 		$model_class = "\\Model\\$model";
 		$table = $model_class::table();
 		
-		$res = \Core\DB::connection()->select($table)->order_desc('id')->fetch();
+		$res = \Core\DB::connection()->select($table)->order_asc('id')->fetch();
 		
 		$fh = fopen($filename, 'w');
 		fwrite($fh, json_encode($res));
