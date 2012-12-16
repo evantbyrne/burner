@@ -8,6 +8,11 @@ namespace Core\Model;
  * @author Evan Byrne
  */
 class Base {
+
+	/**
+	 * MySQL schema
+	 */
+	private static $schema = array();
 	
 	/**
 	 * string MySQL storage engine to use
@@ -156,49 +161,44 @@ class Base {
 		return self::from_array(($include_files) ? array_merge($_POST, $_FILES) : $_POST, $whitelist);
 		
 	}
+
+	/**
+	 * ReflectionClass
+	 */
+	private $klass;
+
+	/**
+	 * string Class Name
+	 */
+	private $klass_name;
+
+	/**
+	 * array Admin column settings
+	 */
+	private $_admin;
+
+	/**
+	 * boolean Whether methods array has been populated
+	 */
+	private $_methods_set;
 	
 	/**
-	 * MySQL schema
+	 * array Methods dynamically set by columns
 	 */
-	private $_schema = array();
-
-	/**
-	 * Admin column settings
-	 */
-	private $_admin = array();
-
-	/**
-	 * Whether methods array has been populated
-	 */
-	private $_methods_set = false;
+	private $_methods;
 	
 	/**
-	 * Array of methods dynamically set by columns
+	 * Construct
 	 */
-	private $_methods = array();
-	
-	/**
-	 * Schema
-	 * @param \Column\Base...
-	 * @return $this
-	 */
-	/*public function schema() {
+	public function __construct() {
 
-		foreach(func_get_args() as $addition) {
+		$this->klass = new \ReflectionClass($this);
+		$this->klass_name = $this->klass->getName();
+		$this->_admin = array();
+		$this->_methods_set = false;
+		$this->_methods = array();
 
-			$this->_schema[] = $addition;
-
-			if($addition->get_option('admin') === true) {
-
-				$this->_admin[$addition->column_name()] = array_merge(array('list' => true), $addition->options());
-
-			}
-
-		}
-
-		return $this;
-
-	}*/
+	}
 
 	/**
 	 * Get Schema
@@ -206,15 +206,14 @@ class Base {
 	 * @return array
 	 */
 	public function get_schema() {
+		
+		if(!empty(self::$schema[$this->klass_name])) {
 
-		if(!empty($this->_schema)) {
-
-			return $this->_schema;
+			return self::$schema[$this->klass_name];
 
 		}
-
-		$klass = new \ReflectionClass($this);
-		$properties = $klass->getProperties();
+		
+		$properties = $this->klass->getProperties();
 		foreach($properties as $property) {
 
 			// Loop doc comment lines
@@ -237,10 +236,10 @@ class Base {
 
 				$name = $property->getName();
 				$column_class = "\\Column\\{$options['type']}";
-				$this->_schema[$name] = new $column_class($name, $options);
+				self::$schema[$this->klass_name][$name] = new $column_class($name, $options);
 
 				// Add to admin
-				if($this->_schema[$name]->get_option('admin')) {
+				if(self::$schema[$this->klass_name][$name]->get_option('admin')) {
 
 					$this->admin($name, $options);
 
@@ -250,7 +249,7 @@ class Base {
 
 		}
 
-		return $this->_schema;
+		return self::$schema[$this->klass_name];
 
 	}
 	
@@ -261,7 +260,7 @@ class Base {
 	 */
 	public function get_schema_column($name) {
 		
-		return (isset($this->_schema[$name])) ? $this->_schema[$name] : null;
+		return (isset(self::$schema[$this->klass_name][$name])) ? self::$schema[$this->klass_name][$name] : null;
 		
 	}
 
