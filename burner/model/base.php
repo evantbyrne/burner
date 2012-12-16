@@ -10,7 +10,7 @@ namespace Core\Model;
 class Base {
 
 	/**
-	 * MySQL schema
+	 * array MySQL schema
 	 */
 	private static $schema = array();
 	
@@ -198,57 +198,55 @@ class Base {
 		$this->_methods_set = false;
 		$this->_methods = array();
 
+		// Generate schema
+		if(empty(self::$schema[$this->klass_name])) {
+		
+			$properties = $this->klass->getProperties();
+			foreach($properties as $property) {
+
+				// Loop doc comment lines
+				$options = array();
+				$doc_lines = explode("\n", $property->getDocComment());
+				foreach($doc_lines as $line) {
+					
+					$line = trim(preg_replace('/^\*/', '', trim($line)));
+					if(substr($line, 0, 7) === '@option') {
+
+						$line_halves = explode('=', substr($line, 7));
+						$options[trim($line_halves[0])] = (isset($line_halves[1])) ? trim($line_halves[1]) : null;
+					
+					}
+
+				}
+
+				// Add column
+				if(!empty($options) and !empty($options['type'])) {
+
+					$name = $property->getName();
+					$column_class = "\\Column\\{$options['type']}";
+					self::$schema[$this->klass_name][$name] = new $column_class($name, $options);
+
+					// Add to admin
+					if(self::$schema[$this->klass_name][$name]->get_option('admin')) {
+
+						$this->admin($name, $options);
+
+					}
+
+				}
+
+			}
+
+		}
+
 	}
 
 	/**
 	 * Get Schema
-	 * TODO: Recursion
 	 * @return array
 	 */
 	public function get_schema() {
 		
-		if(!empty(self::$schema[$this->klass_name])) {
-
-			return self::$schema[$this->klass_name];
-
-		}
-		
-		$properties = $this->klass->getProperties();
-		foreach($properties as $property) {
-
-			// Loop doc comment lines
-			$options = array();
-			$doc_lines = explode("\n", $property->getDocComment());
-			foreach($doc_lines as $line) {
-				
-				$line = trim(preg_replace('/^\*/', '', trim($line)));
-				if(substr($line, 0, 7) === '@option') {
-
-					$line_halves = explode('=', substr($line, 7));
-					$options[trim($line_halves[0])] = (isset($line_halves[1])) ? trim($line_halves[1]) : null;
-				
-				}
-
-			}
-
-			// Add column
-			if(!empty($options) and !empty($options['type'])) {
-
-				$name = $property->getName();
-				$column_class = "\\Column\\{$options['type']}";
-				self::$schema[$this->klass_name][$name] = new $column_class($name, $options);
-
-				// Add to admin
-				if(self::$schema[$this->klass_name][$name]->get_option('admin')) {
-
-					$this->admin($name, $options);
-
-				}
-
-			}
-
-		}
-
 		return self::$schema[$this->klass_name];
 
 	}
