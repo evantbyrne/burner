@@ -9,8 +9,9 @@ class Main extends \Core\Controller\Base {
 	 */
 	public function index() {
 	
-		$this->data(array('title' => (Auth::logged_in()) ? 'Welcome, ' . Auth::user()->email : 'Super awesome!'));
-		$this->template('main/awesome');
+		$m = new \Model\Project();
+		print_r($m->get_schema());
+		exit;
 	
 	}
 	

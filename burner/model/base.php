@@ -182,7 +182,7 @@ class Base {
 	 * @param \Column\Base...
 	 * @return $this
 	 */
-	public function schema() {
+	/*public function schema() {
 
 		foreach(func_get_args() as $addition) {
 
@@ -198,13 +198,57 @@ class Base {
 
 		return $this;
 
-	}
+	}*/
 
 	/**
 	 * Get Schema
+	 * TODO: Recursion
 	 * @return array
 	 */
 	public function get_schema() {
+
+		if(!empty($this->_schema)) {
+
+			return $this->_schema;
+
+		}
+
+		$klass = new \ReflectionClass($this);
+		$properties = $klass->getProperties();
+		foreach($properties as $property) {
+
+			// Loop doc comment lines
+			$options = array();
+			$doc_lines = explode("\n", $property->getDocComment());
+			foreach($doc_lines as $line) {
+				
+				$line = trim(preg_replace('/^\*/', '', trim($line)));
+				if(substr($line, 0, 7) === '@option') {
+
+					$line_halves = explode('=', substr($line, 7));
+					$options[trim($line_halves[0])] = (isset($line_halves[1])) ? trim($line_halves[1]) : null;
+				
+				}
+
+			}
+
+			// Add column
+			if(!empty($options) and !empty($options['type'])) {
+
+				$name = $property->getName();
+				$column_class = "\\Column\\{$options['type']}";
+				$this->_schema[$name] = new $column_class($name, $options);
+
+				// Add to admin
+				if($this->_schema[$name]->get_option('admin')) {
+
+					$this->admin($name, $options);
+
+				}
+
+			}
+
+		}
 
 		return $this->_schema;
 
@@ -217,17 +261,7 @@ class Base {
 	 */
 	public function get_schema_column($name) {
 		
-		foreach($this->_schema as $column) {
-			
-			if($column->column_name() == $name) {
-				
-				return $column;
-				
-			}
-			
-		}
-		
-		return null;
+		return (isset($this->_schema[$name])) ? $this->_schema[$name] : null;
 		
 	}
 
@@ -431,6 +465,65 @@ class Base {
 			}
 			
 		}
+		
+		return $res;
+	
+	}
+
+	/**
+	 * Erase
+	 * @return mixed Result of database query
+	 */
+	public function erase() {
+	
+		$query = self::delete()->limit(1);
+		$vars = get_object_vars($this);
+		$schema = $this->get_schema();
+		$first = true;
+
+		if(!empty($this->id)) {
+
+			// Use only ID if it is set
+			$query->where('id', '=', $this->id);
+
+		} else {
+
+			// Otherwise, use every set column
+			foreach($schema as $column) {
+			
+				$name = $column->column_name();
+				if(isset($vars[$name])) {
+
+					if($first) {
+
+						$query->where($name, '=', $vars[$name]);
+						$first = false;
+
+					} else {
+
+						$query->and_where($name, '=', $vars[$name]);
+
+					}
+
+				}
+			
+			}
+
+		}
+		
+		// Execute query
+		$res = $query->execute();
+		
+		// Finalize
+		/*foreach($schema as $column) {
+			
+			if(is_callable(array($column, 'finalize'))) {
+
+				$column->finalize($this);
+
+			}
+			
+		}*/
 		
 		return $res;
 	

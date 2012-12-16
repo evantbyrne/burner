@@ -23,7 +23,7 @@ class Admin extends Base {
 	 */
 	public function __construct() {
 		
-		Auth::enforce('admin');
+		//Auth::enforce('admin');
 		
 	}
 	
