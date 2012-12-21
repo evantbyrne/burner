@@ -214,6 +214,16 @@ class Base {
 
 						$line_halves = explode('=', substr($line, 7));
 						$options[trim($line_halves[0])] = (isset($line_halves[1])) ? trim($line_halves[1]) : null;
+						
+						if($options[trim($line_halves[0])] === 'true') {
+						
+							$options[trim($line_halves[0])] = true;
+						
+						} elseif($options[trim($line_halves[0])] === 'false') {
+
+							$options[trim($line_halves[0])] = false;
+
+						}
 					
 					}
 

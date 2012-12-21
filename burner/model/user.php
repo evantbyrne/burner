@@ -66,20 +66,37 @@ class User extends Base {
 		return hash_hmac('sha512', $value, ($secret === null) ? Config::get('hash_secret') : $secret);
 		
 	}
-	
+
 	/**
-	 * Construct
+	 * Email
+	 * @option type = Email
+	 * @option length = 100
+	 * @option required = Email field is required.
 	 */
-	public function __construct() {
-		
-		$this->schema(
-			new \Column\Email('email', array('length' => 100, 'required' => 'Email field required.')),
-			new \Column\Password('password', array('required' => 'Password field required.')),
-			new \Column\TinyInt('type', array('template' => 'select', 'choices' => array_flip(static::$levels))),
-			new \Column\Varchar('verify_code', array('length' => 30, 'null' => true, 'admin' => false))
-		);
-		
-	}
+	public $email;
+
+	/**
+	 * Password
+	 * @option type = Password
+	 * @option required = Password field is required.
+	 */
+	public $password;
+
+	/**
+	 * Type
+	 * @option type = TinyInt
+	 * @option template = select
+	 */
+	public $type;
+
+	/**
+	 * Verify Code
+	 * @option type = Varchar
+	 * @option length = 30
+	 * @option null = true
+	 * @option admin = false
+	 */
+	public $verify_code;
 
 	/**
 	 * To String
@@ -90,5 +107,16 @@ class User extends Base {
 		return $this->email;
 
 	}
+
+	/*public function __construct() {
+		
+		$this->schema(
+			new \Column\Email('email', array('length' => 100, 'required' => 'Email field required.')),
+			new \Column\Password('password', array('required' => 'Password field required.')),
+			new \Column\TinyInt('type', array('template' => 'select', 'choices' => array_flip(static::$levels))),
+			new \Column\Varchar('verify_code', array('length' => 30, 'null' => true, 'admin' => false))
+		);
+		
+	}*/
 
 }

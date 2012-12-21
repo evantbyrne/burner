@@ -13,13 +13,9 @@ class UserSession extends Session {
 	public static $verbose = 'User Session';
 
 	/**
-	 * Construct
+	 * User
+	 * @option type = BelongsTo
 	 */
-	public function __construct() {
-	
-		parent::__construct();
-		$this->schema(new \Column\BelongsTo('user'));
-	
-	}
+	public $user;
 	
 }

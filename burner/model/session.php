@@ -8,13 +8,16 @@ namespace Core\Model;
  */
 abstract class Session extends Base {
 
+	/**
+	 * string Possible characters for secret
+	 */
 	protected static $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789=_';
 	
 	/**
 	 * Secret
-	 * @param Minimum length of random range
-	 * @param Maximum length of random range
-	 * @return A mixture of random characters
+	 * @param int Minimum length of random range
+	 * @param int Maximum length of random range
+	 * @return string A mixture of random characters
 	 */
 	public static function secret($min=10, $max=30) {
 		
@@ -42,15 +45,17 @@ abstract class Session extends Base {
 	}
 
 	/**
-	 * Construct
+	 * Secret
+	 * @option type = Text
+	 * @option unique = true
 	 */
-	public function __construct() {
-	
-		$this->schema(
-			new \Column\Text('secret', array('unique' => true)),
-			new \Column\Timestamp('expire', array('null' => true))
-		);
-	
-	}
+	public $secret;
+
+	/**
+	 * Expire
+	 * @option type = Timestamp
+	 * @option null = true
+	 */
+	public $expire;
 
 }

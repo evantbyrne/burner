@@ -9,8 +9,8 @@ class Main extends \Core\Controller\Base {
 	 */
 	public function index() {
 	
-		$m = new \Model\Project();
-		print_r($m->get_schema());
+		$m = new \Model\User();
+		var_dump($m->get_schema());
 		exit;
 	
 	}
