@@ -11,6 +11,7 @@
 			<link rel="stylesheet" href="<?php echo url('static/admin/css/bootstrap.css'); ?>" />
 			<link rel="stylesheet" href="<?php echo url('static/admin/css/bootstrap-responsive.css'); ?>" />
 			<link rel="stylesheet" href="<?php echo url('static/admin/css/rewrite.css'); ?>" />
+			<link rel="stylesheet" href="<?php echo url('static/admin/css/datepicker.css'); ?>" />
 		<?php $this->end_section(); ?>
 
 	</head>
@@ -93,6 +94,14 @@
 		<?php $this->section('scripts'); ?>
 			<script src="<?php echo url('static/admin/js/jquery.min.js'); ?>"></script>
 			<script src="<?php echo url('static/admin/js/bootstrap.min.js'); ?>"></script>
+			<script src="<?php echo url('static/admin/js/bootstrap-datepicker.js'); ?>"></script>
+			<script>
+				$(document).ready(function() {
+
+					$('.datepicker').datepicker({ format:'yyyy-mm-dd' });
+
+				});
+			</script>
 		<?php $this->end_section(); ?>
 
 	</body>
