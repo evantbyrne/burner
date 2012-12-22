@@ -10,7 +10,8 @@ class Cookie {
 	
 	/**
 	 * Set
-	 * @param Associated array of settings
+	 * @param array Associated array of settings
+	 * @return boolean Result from setcookie()
 	 */
 	public static function set($settings) {
 
@@ -48,7 +49,8 @@ class Cookie {
 	
 	/**
 	 * Delete
-	 * @param Associated array of settings
+	 * @param array Associated array of settings
+	 * @return boolean Result from setcookie()
 	 */
 	public static function delete($settings) {
 		
