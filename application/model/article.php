@@ -22,6 +22,12 @@ class Article extends \Core\Model\Base {
 	public $post_date;
 
 	/**
+	 * Post time
+	 * @option type = Time
+	 */
+	public $post_time;
+
+	/**
 	 * Content
 	 * @option type = Text
 	 * @option required = Content field is required.
