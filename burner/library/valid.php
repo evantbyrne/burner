@@ -10,8 +10,8 @@ class Valid {
 	
 	/**
 	 * Username
-	 * @param Value to validate
-	 * @return Boolean
+	 * @param string Value to validate
+	 * @return boolean
 	 */
 	public static function username($username) {
 		
@@ -21,8 +21,8 @@ class Valid {
 	
 	/**
 	 * Name
-	 * @param Value to validate
-	 * @return Boolean
+	 * @param string Value to validate
+	 * @return boolean
 	 */
 	public static function name($name) {
 		
@@ -32,8 +32,8 @@ class Valid {
 	
 	/**
 	 * Number
-	 * @param Value to validate
-	 * @return Boolean
+	 * @param string Value to validate
+	 * @return boolean
 	 */
 	public static function number($number) {
 		
@@ -43,8 +43,8 @@ class Valid {
 	
 	/**
 	 * Int
-	 * @param Value to validate
-	 * @return Boolean
+	 * @param string Value to validate
+	 * @return boolean
 	 */
 	public static function int($int) {
 		
@@ -54,10 +54,10 @@ class Valid {
 	
 	/**
 	 * Range
-	 * @param Low end of range
-	 * @param High end of range
-	 * @param Value to validate
-	 * @return Boolean
+	 * @param mixed Low end of range
+	 * @param mixed High end of range
+	 * @param mixed Value to validate
+	 * @return boolean
 	 */
 	public static function range($low, $high, $number) {
 		
@@ -67,10 +67,10 @@ class Valid {
 	
 	/**
 	 * Length
-	 * @param Low end of range
-	 * @param High end of range
-	 * @param Value to validate
-	 * @return Boolean
+	 * @param int Low end of range
+	 * @param int High end of range
+	 * @param int Value to validate
+	 * @return boolean
 	 */
 	public static function length($low, $high, $number) {
 		
@@ -80,8 +80,8 @@ class Valid {
 	
 	/**
 	 * Email
-	 * @param Value to validate
-	 * @return Boolean
+	 * @param string Value to validate
+	 * @return boolean
 	 */
 	public static function email($email) {
 		
@@ -91,10 +91,10 @@ class Valid {
 	
 	/**
 	 * Phone
-	 * Validates the format of a phone number located in the USA
-	 * @param Value to validate
-	 * @param If true, then must be exactly 10 digits
-	 * @return Boolean
+	 * Validates the format of U.S. phone numbers
+	 * @param string Value to validate
+	 * @param boolean If true, then must be exactly 10 digits
+	 * @return boolean
 	 */
 	public static function phone($phone, $strict=false) {
 		
