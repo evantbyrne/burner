@@ -8,28 +8,26 @@ namespace Model;
 class User extends \Core\Model\User {
 	
 	/**
-	 * @inheritdoc
+	 * Avatar
+	 * @option type = Image
+	 * @option required = Image field is required.
 	 */
-	public function __construct() {
-		
-		parent::__construct();
-		
-		$this->schema(new \Column\Image('avatar', array(
-			
-			'path' => function($model) {
+	public $avatar;
 
-				if(!is_dir('static/user')) {
+	/**
+	 * Avatar Path
+	 * @return string
+	 */
+	public function avatar_path() {
 
-					mkdir('static/user', 0755, true);
+		if(!is_dir('static/user')) {
 
-				}
+			mkdir('static/user', 0755, true);
 
-				return "static/user/{$model->id}";
+		}
 
-			}
+		return "static/user/{$this->id}";
 
-		)));
-		
 	}
 	
 }

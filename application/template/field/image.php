@@ -3,7 +3,7 @@
 
 <?php if(!empty($value) and $model !== null and empty($errors[$field])): ?>
 
-	<?php $location = $model->{$field . '_path'}(); ?>
+	<?php $location = $model->{$field . '_path'}() . '.' . $model->{$field}; ?>
 
 	<p><small>Choose new file to replace uploaded one:</small></p>
 	<ul class="thumbnails">

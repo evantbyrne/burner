@@ -14,13 +14,6 @@ class File extends Char {
 	 */
 	public function __construct($column_name, $options = array()) {
 		
-		// Directory
-		if(!isset($options['path']) or !is_callable($options['path'])) {
-		
-			throw new \Exception("Option 'path' must be set for $column_name column.");
-		
-		}
-		
 		// Mime types
 		if(!isset($options['mimetypes'])) {
 		
@@ -61,8 +54,7 @@ class File extends Char {
 				
 			}
 			
-			$p = $model->get_schema_column($column_name)->get_option('path');
-			return $p($model) . ".{$model->{$column_name}}";
+			return $model->{$column_name . '_path'}() . ".{$model->{$column_name}}";
 		
 		});
 	
@@ -95,10 +87,7 @@ class File extends Char {
 		$name = $this->column_name();
 		if(!empty($_FILES[$name]['tmp_name'])) {
 			
-			//$file = $this->get_option('dir') . '/' . "{$model->id}";
-			$p = $this->get_option('path');
-			$file = $p($model);
-
+			$file = $model->{$name . '_path'}();
 			foreach(array_unique(array_values($this->get_option('mimetypes'))) as $ext) {
 				
 				if(file_exists("$file.$ext")) {
