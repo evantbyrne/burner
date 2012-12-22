@@ -8,19 +8,22 @@ namespace Column;
  */
 abstract class Base {
 
-	private $_column_name;
-	private $_column;
-	private $_methods;
-	private $_options;
+	private $column_name;
+	private $column;
+	private $method;
+	private $options;
 	
 	/**
 	 * Construct
+	 * @param string Column name
+	 * @param array Options
+	 * @param mixed \Mysql\TableColumn or null
 	 */
 	public function __construct($column_name, $options = array(), $column = null) {
 	
-		$this->_column_name = $column_name;
-		$this->_methods = array();
-		$this->_options = array_merge(array(
+		$this->column_name = $column_name;
+		$this->method = array();
+		$this->options = array_merge(array(
 			
 			'blank' => false,
 			'choices' => null,
@@ -33,7 +36,7 @@ abstract class Base {
 		
 		if($column !== null) {
 		
-			$this->set_column($column);
+			$this->setcolumn($column);
 			
 		}
 	
@@ -41,33 +44,33 @@ abstract class Base {
 	
 	/**
 	 * Column
-	 * @return Database column
+	 * @return \Mysql\TableColumn
 	 */
 	public function column() {
 	
-		return $this->_column;
+		return $this->column;
 	
 	}
 	
 	/**
 	 * Set Column
-	 * @param Database column
-	 * @return This
+	 * @param \Mysql\TableColumn
+	 * @return $this
 	 */
-	public function set_column($column) {
+	public function setcolumn($column) {
 	
-		$this->_column = $column;
+		$this->column = $column;
 		return $this;
 	
 	}
 	
 	/**
 	 * Column Name
-	 * @return Column name
+	 * @return string
 	 */
 	public function column_name() {
 	
-		return $this->_column_name;
+		return $this->column_name;
 	
 	}
 
@@ -77,7 +80,7 @@ abstract class Base {
 	 */
 	public function options() {
 	
-		return $this->_options;
+		return $this->options;
 	
 	}
 	
@@ -88,18 +91,18 @@ abstract class Base {
 	 */
 	public function get_option($option) {
 	
-		return isset($this->_options[$option]) ? $this->_options[$option] : null;
+		return isset($this->options[$option]) ? $this->options[$option] : null;
 	
 	}
 	
 	/**
 	 * Set Method
-	 * @param Name of method
-	 * @param Anonymous function
+	 * @param string Name of method
+	 * @param function Anonymous function
 	 */
 	public function set_method($name, $method) {
 	
-		$this->_methods[$name] = $method;
+		$this->method[$name] = $method;
 	
 	}
 
@@ -110,41 +113,42 @@ abstract class Base {
 	 */
 	public function get_method($name) {
 	
-		return isset($this->_methods[$name]) ? $this->_methods[$name] : null;
+		return isset($this->method[$name]) ? $this->method[$name] : null;
 	
 	}
 	
 	/**
 	 * Methods
-	 * @return Associated array of all set methods
+	 * @return array Associated array of all set methods
 	 */
 	public function methods() {
 	
-		return $this->_methods;
+		return $this->method;
 	
 	}
 	
 	/**
 	 * Valid
-	 * @return True if valid or no validation function given, a string on failure
+	 * @param mixed Value to be validated
+	 * @return boolean True if valid or no validation function given, a string on failure
 	 */
 	public function valid($value) {
 	
-		if(isset($this->_options['required']) and empty($value)) {
+		if(isset($this->options['required']) and empty($value)) {
 		
-			return $this->_options['required'];
+			return $this->options['required'];
 		
 		}
 
-		if(!empty($this->_options['choices']) and !in_array($value, array_keys($this->_options['choices']))) {
+		if(!empty($this->options['choices']) and !in_array($value, array_keys($this->options['choices']))) {
 
 			return 'Invalid choice.';
 
 		}
 	
-		if(isset($this->_options['valid']) and is_callable($this->_options['valid'])) {
+		if(isset($this->options['valid']) and is_callable($this->options['valid'])) {
 		
-			return $this->_options['valid']($value);
+			return $this->options['valid']($value);
 		
 		}
 		
