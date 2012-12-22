@@ -12,14 +12,14 @@ class User extends Base {
 	/**
 	 * array User levels, which are primarily used for ACLs
 	 */
-	protected static $levels = array(
-	
-		'owner'     => 40,
-		'admin'     => 30,
-		'moderator' => 20,
-		'user'      => 10,
-		'banned'    => -10
-	
+	protected static $type_choices = array(
+
+		40 => 'owner',
+		30 => 'admin',
+		20 => 'moderator',
+		10 => 'user',
+		-10 => 'banned'
+
 	);
 	
 	/**
@@ -28,7 +28,7 @@ class User extends Base {
 	 */
 	public static function all_levels() {
 	
-		return static::$levels;
+		return array_flip(static::$type_choices);
 	
 	}
 	
@@ -39,7 +39,8 @@ class User extends Base {
 	 */
 	public static function level($level) {
 	
-		return (isset(static::$levels[$level])) ? static::$levels[$level] : 0;
+		$levels = static::all_levels();
+		return (isset($levels[$level])) ? $levels[$level] : 0;
 	
 	}
 	
@@ -50,8 +51,7 @@ class User extends Base {
 	 */
 	public static function type($level) {
 	
-		$types = array_flip(static::$levels);
-		return (isset($types[$level])) ? $types[$level] : '';
+		return (isset(static::$type_choices[$level])) ? $type_choices[$level] : '';
 	
 	}
 	
@@ -85,6 +85,7 @@ class User extends Base {
 	/**
 	 * Type
 	 * @option type = TinyInt
+	 * @option choices = true
 	 * @option template = select
 	 */
 	public $type;
@@ -107,16 +108,5 @@ class User extends Base {
 		return $this->email;
 
 	}
-
-	/*public function __construct() {
-		
-		$this->schema(
-			new \Column\Email('email', array('length' => 100, 'required' => 'Email field required.')),
-			new \Column\Password('password', array('required' => 'Password field required.')),
-			new \Column\TinyInt('type', array('template' => 'select', 'choices' => array_flip(static::$levels))),
-			new \Column\Varchar('verify_code', array('length' => 30, 'null' => true, 'admin' => false))
-		);
-		
-	}*/
 
 }

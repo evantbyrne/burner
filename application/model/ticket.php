@@ -5,26 +5,37 @@ namespace Model;
 class Ticket extends \Core\Model\Base {
 
 	/**
-	 * Construct
+	 * array Type choices
 	 */
-	public function __construct() {
+	protected static $type_choices = array(
 
-		$this->schema(
-			new \Column\Varchar('title', array('length' => 150, 'required' => 'Title field is required.')),
-			new \Column\Text('description', array('required' => 'Description field is required.')),
-			new \Column\Int('type', array('template' => 'select', 'choices' => array(
+		1 => 'Bug',
+		2 => 'Feature Request',
+		3 => 'Optimization'
 
-				1 => 'Bug',
-				2 => 'Feature Request',
-				3 => 'Optimization'
+	);
 
-			)))
-		);
+	/**
+	 * Title
+	 * @option type = Varchar
+	 * @option length = 150
+	 * @option required = Title field is required.
+	 */
+	public $title;
 
-		$this->admin('title');
-		$this->admin('type');
-		$this->admin('description', array('list' => false));
+	/**
+	 * Description
+	 * @option type = Text
+	 * @option required = Description field is required.
+	 */
+	public $description;
 
-	}
+	/**
+	 * Type
+	 * @option type = Int
+	 * @option choices = true
+	 * @option template = select
+	 */
+	public $type;
 
 }

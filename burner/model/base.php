@@ -205,6 +205,7 @@ class Base {
 			foreach($properties as $property) {
 
 				// Loop doc comment lines
+				$name = $property->getName();
 				$options = array();
 				$doc_lines = explode("\n", $property->getDocComment());
 				foreach($doc_lines as $line) {
@@ -213,15 +214,24 @@ class Base {
 					if(substr($line, 0, 7) === '@option') {
 
 						$line_halves = explode('=', substr($line, 7));
-						$options[trim($line_halves[0])] = (isset($line_halves[1])) ? trim($line_halves[1]) : null;
+						$option_name = trim($line_halves[0]);
+						$options[$option_name] = (isset($line_halves[1])) ? trim($line_halves[1]) : null;
 						
-						if($options[trim($line_halves[0])] === 'true') {
+						// Boolean options
+						if($options[$option_name] === 'true') {
 						
-							$options[trim($line_halves[0])] = true;
+							$options[$option_name] = true;
 						
-						} elseif($options[trim($line_halves[0])] === 'false') {
+						} elseif($options[$option_name] === 'false') {
 
-							$options[trim($line_halves[0])] = false;
+							$options[$option_name] = false;
+
+						}
+
+						// Choices option
+						if(isset($options['choices']) and $options['choices'] === true) {
+
+							$options['choices'] = static::${$name . '_choices'};
 
 						}
 					
@@ -232,7 +242,6 @@ class Base {
 				// Add column
 				if(!empty($options) and !empty($options['type'])) {
 
-					$name = $property->getName();
 					$column_class = "\\Column\\{$options['type']}";
 					self::$schema[$this->klass_name][$name] = new $column_class($name, $options);
 
