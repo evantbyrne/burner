@@ -15,6 +15,11 @@ class Base {
 	private static $schema = array();
 	
 	/**
+	 * array Admin columns
+	 */
+	private static $admin = array();
+
+	/**
 	 * string MySQL storage engine to use
 	 */
 	public static $engine = 'MyISAM';
@@ -173,11 +178,6 @@ class Base {
 	private $klass_name;
 
 	/**
-	 * array Admin column settings
-	 */
-	private $_admin;
-
-	/**
 	 * boolean Whether methods array has been populated
 	 */
 	private $_methods_set;
@@ -288,7 +288,7 @@ class Base {
 	 */
 	public function admin($column, $options = array()) {
 
-		$this->_admin[$column] = array_merge(array('list' => true), $this->get_schema_column($column)->options(), $options);
+		self::$admin[$this->klass_name][$column] = array_merge(array('list' => true), $this->get_schema_column($column)->options(), $options);
 
 	}
 
@@ -298,7 +298,7 @@ class Base {
 	 */
 	public function get_admin() {
 
-		return $this->_admin;
+		return self::$admin[$this->klass_name];
 
 	}
 	
