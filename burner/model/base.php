@@ -369,14 +369,13 @@ class Base {
 	}
 
 	/**
-	 * Sync
+	 * Get
 	 *
 	 * Updates the contents of current object, if a matching row is found 
 	 * in database. Will use \Model\Base::id() if the ID is set.
-	 *
 	 * @return boolean True on success, false otherwise
 	 */
-	public function sync() {
+	public function get() {
 	
 		$result = null;
 		$schema = $this->get_schema();
@@ -440,7 +439,6 @@ class Base {
 	 * Save
 	 *
 	 * Executes update query when ID is set, inserts new row otherwise
-	 *
 	 * @return mixed ID on insert, result of update execution otherwise
 	 */
 	public function save() {

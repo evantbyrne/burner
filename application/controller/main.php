@@ -11,8 +11,7 @@ class Main extends \Core\Controller\Base {
 	
 		$u = new \Model\User();
 		$u->email = "evantbyrne@gmail.com";
-		$u->password = "foo";
-		$u->type = 25;
+		$u->get();
 		var_dump($u->valid());
 		exit;
 	
