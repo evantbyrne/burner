@@ -8,33 +8,33 @@ namespace Model;
 class Article extends \Core\Model\Base {
 	
 	/**
-	 * Construct
+	 * Title
+	 * @option type = Varchar
+	 * @option length = 125
+	 * @option required = Title field is required.
 	 */
-	public function __construct() {
+	public $title;
 
-		$this->schema(
-			new \Column\Varchar('title', array('length' => 125, 'required' => 'Title field is required.')),
-			new \Column\Text('content', array('required' => 'Content field is required.')),
-			new \Column\Boolean('awesome', array('admin' => false)),
-			new \Column\Image('banner', array(
-				
-				'path' => function($model) {
+	/**
+	 * Content
+	 * @option type = Text
+	 * @option required = Content field is required.
+	 */
+	public $content;
 
-					if(!is_dir('static/article')) {
+	/**
+	 * Awesome
+	 * @option type = Boolean
+	 */
+	public $awesome;
 
-						mkdir('static/article', 0755, true);
-
-					}
-
-					return "static/article/{$model->id}";
-
-				}
-
-			)),
-			new \Column\HasMany('comments', array('model' => 'Comment', 'column' => 'article'))
-		);
-
-	}
+	/**
+	 * Comments
+	 * @option type = HasMany
+	 * @option model = Comment
+	 * @option column = article
+	 */
+	public $comments;
 
 	/**
 	 * To String

@@ -8,25 +8,22 @@ namespace Model;
 class Comment extends \Core\Model\Base {
 	
 	/**
-	 * Construct
+	 * User
+	 * @option type = BelongsTo
 	 */
-	public function __construct() {
+	public $user;
 
-		$this->schema(
-			new \Column\BelongsTo('user', array('default' => function() {
-				
-				return \Controller\Auth::user()->id;
-				
-			})),
-			
-			new \Column\BelongsTo('article'),
-			new \Column\Text('content', array('required' => 'Content field is required.'))
-		);
-		
-		$this->admin('user');
-		$this->admin('article');
-		$this->admin('content');
-	
-	}
+	/**
+	 * Article
+	 * @option type = BelongsTo
+	 */
+	public $article;
+
+	/**
+	 * Content
+	 * @option type = Text
+	 * @option required = Content field is required.
+	 */
+	public $content;
 
 }
