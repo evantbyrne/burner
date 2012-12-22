@@ -129,11 +129,12 @@ abstract class Base {
 	
 	/**
 	 * Valid
-	 * @param mixed Value to be validated
+	 * @param \Core\Model\Base
 	 * @return boolean True if valid or no validation function given, a string on failure
 	 */
-	public function valid($value) {
+	public function valid($model) {
 	
+		$value = (isset($model->{$this->column_name})) ? $model->{$this->column_name} : null;
 		if(isset($this->options['required']) and empty($value)) {
 		
 			return $this->options['required'];

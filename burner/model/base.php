@@ -351,12 +351,11 @@ class Base {
 	public function valid() {
 	
 		$errors = array();
-		$vars = get_object_vars($this);
 		$schema = $this->get_schema();
 		
 		foreach($schema as $column) {
 		
-			$res = $column->valid((isset($vars[$column->column_name()])) ? $vars[$column->column_name()] : null);
+			$res = $column->valid($this);
 			if($res !== true) {
 			
 				$errors[$column->column_name()] = $res;

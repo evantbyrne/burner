@@ -9,8 +9,11 @@ class Main extends \Core\Controller\Base {
 	 */
 	public function index() {
 	
-		$m = new \Model\User();
-		var_dump($m->get_schema());
+		$u = new \Model\User();
+		$u->email = "evantbyrne@gmail.com";
+		$u->password = "foo";
+		$u->type = 25;
+		var_dump($u->valid());
 		exit;
 	
 	}
