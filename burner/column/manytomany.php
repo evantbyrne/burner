@@ -46,19 +46,31 @@ class ManyToMany extends Base {
 class ManyToManyQuery {
 	
 	private $parent;
-	private $parent_class;
-	private $model_class;
+	private $parent_table;
+	private $child_class;
+	private $child_table;
 	private $middleman_class;
+	private $middleman_table;
 	
 	/**
 	 * Construct
+	 * @param string Child class
+	 * @param string Middleman class
+	 * @param \Core\Model\Base Parent
 	 */
-	public function __construct($model_class, $middleman_class, $parent) {
+	public function __construct($child_class, $middleman_class, $parent) {
 		
 		$this->parent = $parent;
-		$this->parent_class = get_class($parent);
-		$this->model_class = "\\Model\\$model_class";
-		$this->middleman_class = "\\Model\\$middleman_class";
+		$parent_class = get_class($parent);
+		$this->parent_table = $parent_class::table();
+		
+		$child_class = "\\Model\\$child_class";
+		$this->child_class = $child_class;
+		$this->child_table = $child_class::table();
+
+		$middleman_class = "\\Model\\$middleman_class";
+		$this->middleman_class = $middleman_class;
+		$this->middleman_table = $middleman_class::table();
 		
 	}
 	
@@ -68,23 +80,17 @@ class ManyToManyQuery {
 	 */
 	public function select() {
 		
-		$p = $this->parent_class;
-		$p_table = $p::table();
-		$m = $this->model_class;
-		$m_table = $m::table();
-		$middle = $this->middleman_class;
-		$middle_table = $middle::table();
-
+		$m = $this->child_class;
 		$s = $m::select()
-			->inner_join($middle_table, "$middle_table.$m_table", '=', "$m_table.id")
-			->where("$middle_table.$p_table", '=', $this->parent->id);
+			->inner_join($this->middleman_table, "{$this->middleman_table}.{$this->child_table}", '=', "{$this->child_table}.id")
+			->where("{$this->middleman_table}.{$this->parent_table}", '=', $this->parent->id);
 
 		$child = new $m();
 		foreach($child->get_schema() as $name => $column) {
 
 			if($column->column() !== null) {
 			
-				$s->column("$m_table.$name", $name);
+				$s->column("{$this->child_table}.$name", $name);
 
 			}
 
@@ -92,6 +98,36 @@ class ManyToManyQuery {
 
 		return $s;
 		
+	}
+
+	/**
+	 * Add
+	 * @param int Child row ID
+	 * @return int Inserted middleman row ID
+	 */
+	public function add($child_id) {
+
+		$middle = $this->middleman_class;
+		return $middle::insert()
+			->value($this->parent_table, $this->parent->id)
+			->value($this->child_table, $child_id)
+			->execute();
+
+	}
+
+	/**
+	 * Remove
+	 * @param int Child row ID
+	 * @return mixed Result of delete query
+	 */
+	public function remove($child_id) {
+
+		$middle = $this->middleman_class;
+		return $middle::delete()
+			->where($this->parent_table, '=', $this->parent->id)
+			->and_where($this->child_table, '=', $child_id)
+			->execute();
+
 	}
 
 }
