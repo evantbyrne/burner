@@ -252,7 +252,7 @@ class Admin extends Base {
 					$child_model_class = '\\Model\\' . $column->get_option('model');
 					$children[$child_model_class::get_verbose_plural()] = strtolower($column->get_option('model'));
 				
-				} else {
+				} elseif(!is_a($column, '\\Column\\ManyToMany')) {
 				
 					// All other columns
 					$columns[$name] = array('options' => array_merge($column->options(), $admin[$name]));
@@ -431,7 +431,7 @@ class Admin extends Base {
 					// HasMany columns
 					$children[$column->column_name()] = strtolower($column->get_option('model'));
 				
-				} else {
+				} elseif(!is_a($column, '\\Column\\ManyToMany')) {
 				
 					// All other columns
 					$columns[$name] = array(

@@ -41,6 +41,14 @@ class Article extends \Core\Model\Base {
 	public $awesome;
 
 	/**
+	 * Tags
+	 * @option type = ManyToMany
+	 * @option model = Tag
+	 * @option middleman = ArticleTag
+	 */
+	public $tags;
+
+	/**
 	 * Comments
 	 * @option type = HasMany
 	 * @option model = Comment

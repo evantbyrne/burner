@@ -9,10 +9,8 @@ class Main extends \Core\Controller\Base {
 	 */
 	public function index() {
 	
-		$u = new \Model\User();
-		$u->email = "evantbyrne@gmail.com";
-		$u->get();
-		var_dump($u->valid());
+		$a = \Model\Article::id(1) or $this->error(404);
+		print_r($a->tags()->select()->fetch());
 		exit;
 	
 	}
