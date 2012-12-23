@@ -29,7 +29,8 @@
 
 		<?php foreach($columns as $name => $c): ?>
 
-			<?php $this->field(ucfirst($name), $name, $c['options']['template'], $c['value'], $c['options']['choices']); ?>
+			<?php $this->label($name); ?>
+			<?php $this->field($name, $row, $c['options']); ?>
 
 		<?php endforeach; ?>
 

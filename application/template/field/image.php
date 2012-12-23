@@ -1,6 +1,3 @@
-<?php $this->error($field); ?>
-<p><?php e($label); ?></p>
-
 <?php if(!empty($value) and $model !== null and empty($errors[$field])): ?>
 
 	<?php $location = $model->{$field . '_path'}() . '.' . $model->{$field}; ?>

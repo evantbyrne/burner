@@ -227,20 +227,36 @@ class Template {
 
 	/**
 	 * Field
-	 * @param string Label
-	 * @param string Field
-	 * @param string Template
+	 * @param string Field name
+	 * @param \Core\Model\Base Model
+	 * @param array Extra options
 	 */
-	public function field($label, $field, $template, $value = null, $options = null, $model = null) {
+	public function field($name, $model, $extra_options = array()) {
 
-		echo self::render("field/$template", array(
+		$options = array_merge($model->get_schema_column($name)->options(), $extra_options);
+		echo self::render("field/{$options['template']}", array(
 			
-			'label'   => $label,
-			'field'   => $field,
+			'field'   => $name,
 			'options' => $options,
-			'value'   => isset($this->data[$field]) ? $this->data[$field] : $value,
+			'value'   => isset($model->{$name}) ? $model->{$name} : null,
 			'errors'  => isset($this->data['errors']) ? $this->data['errors'] : null,
 			'model'   => $model
+
+		));
+
+	}
+
+	/**
+	 * Label
+	 * @param string Field Name
+	 */
+	public function label($field) {
+
+		echo self::render("field/label", array(
+
+			'field'  => $field,
+			'label'  => str_replace('_', ' ', $field),
+			'errors' => isset($this->data['errors']) ? $this->data['errors'] : null
 
 		));
 

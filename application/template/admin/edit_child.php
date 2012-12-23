@@ -63,7 +63,8 @@
 			
 			<?php else: ?>
 			
-				<?php $this->field(ucfirst($name), $name, $c['options']['template'], $c['value'], $c['options']['choices'], $row); ?>
+				<?php $this->label($name); ?>
+				<?php $this->field($name, $row, $c['options']); ?>
 			
 			<?php endif; ?>
 

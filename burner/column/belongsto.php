@@ -12,9 +12,7 @@ class BelongsTo extends Base {
 	
 	public function __construct($column_name, $options = array()) {
 		
-		$column_options = (isset($options['null'])) ? array('null' => $options['null']) : array();
-		
-		parent::__construct($column_name, $options, new \Mysql\IntColumn($column_name, $column_options));
+		parent::__construct($column_name, $options, new \Mysql\IntColumn($column_name, $options));
 		
 		// Get parent
 		$this->set_method($column_name, function($model) use ($column_name) {
