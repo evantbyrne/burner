@@ -6,8 +6,15 @@
 
 
 <!-- Main Content -->
-<?php $this->extend('content'); ?>
+<?php $this->append('content'); ?>
 
-	<p>Hello, World!</p>
+	<p>In addition to default content!</p>
 	
-<?php $this->end_extend(); ?>
+<?php $this->end_append(); ?>
+
+
+<?php $this->append('content'); ?>
+
+	<p>Third!</p>
+	
+<?php $this->end_append(); ?>

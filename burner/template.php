@@ -10,6 +10,7 @@ class Template {
 	
 	private $extensions = array();
 	private $sections = array();
+	private $appends = array();
 	private $current_section = false;
 	private $current_new_section = false;
 	private $out;
@@ -130,11 +131,39 @@ class Template {
 	
 		$data = ob_get_clean();
 		$this->sections[$this->current_section] = $data;
+		
+		if(isset($this->appends[$this->current_section])) {
+
+			unset($this->appends[$this->current_section]);
+
+		}
+
 		$this->current_section = false;
 		ob_start();
 	
 	}
 
+	/**
+	 * Append
+	 * @param string Section name
+	 */
+	public function append($name) {
+	
+		$this->extend($name);
+	
+	}
+	
+	/**
+	 * End Append
+	 */
+	public function end_append() {
+	
+		$data = ob_get_clean();
+		$this->appends[$this->current_section] = (isset($this->appends[$this->current_section])) ? $this->appends[$this->current_section] . $data : $data;
+		$this->current_section = false;
+		ob_start();
+	
+	}
 
 	/**
 	 * Set
@@ -146,7 +175,6 @@ class Template {
 		$this->sections[$name] = $data;
 
 	}
-	
 	
 	/**
 	 * Section
@@ -179,6 +207,12 @@ class Template {
 			ob_clean();
 			echo $this->sections[$this->current_new_section];
 		
+		}
+
+		if(isset($this->appends[$this->current_new_section])) {
+
+			echo  $this->appends[$this->current_new_section];
+
 		}
 		
 		$this->current_new_section = false;
