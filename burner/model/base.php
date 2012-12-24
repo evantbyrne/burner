@@ -206,36 +206,12 @@ class Base {
 
 				// Loop doc comment lines
 				$name = $property->getName();
-				$options = array();
-				$doc_lines = explode("\n", $property->getDocComment());
-				foreach($doc_lines as $line) {
-					
-					$line = trim(preg_replace('/^\*/', '', trim($line)));
-					if(substr($line, 0, 7) === '@option') {
+				$options = \Library\DocComment::options($property);
 
-						$line_halves = explode('=', substr($line, 7));
-						$option_name = trim($line_halves[0]);
-						$options[$option_name] = (isset($line_halves[1])) ? trim($line_halves[1]) : null;
-						
-						// Boolean options
-						if($options[$option_name] === 'true') {
-						
-							$options[$option_name] = true;
-						
-						} elseif($options[$option_name] === 'false') {
+				// Choices option
+				if(isset($options['choices']) and $options['choices'] === true) {
 
-							$options[$option_name] = false;
-
-						}
-
-						// Choices option
-						if(isset($options['choices']) and $options['choices'] === true) {
-
-							$options['choices'] = static::${$name . '_choices'};
-
-						}
-					
-					}
+					$options['choices'] = static::${$name . '_choices'};
 
 				}
 
