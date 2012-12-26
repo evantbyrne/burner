@@ -37,14 +37,15 @@
 	
 	<form method="post" class="form-horizontal">
 
-		<?php $this->field('Email:', 'email', 'email'); ?>
+		<?php $this->label('email'); ?>
+		<?php $this->field('email', $user); ?>
 
-		<?php $this->field('Password:', 'password', 'password'); ?>
-<p><a href="<?php echo route_url('get', 'auth', 'reset_request'); ?>"><i class="icon-refresh"></i> Reset Password</a></p>
-		<p>
-			<input type="submit" value="Login" class="btn btn-primary" />
-			
-		</p>
+		<?php $this->label('password'); ?>
+		<?php $this->field('password', $user); ?>
+
+		<p><a href="<?php echo route_url('get', 'auth', 'reset_request'); ?>"><i class="icon-refresh"></i> Reset Password</a></p>
+		
+		<p><input type="submit" value="Login" class="btn btn-primary" /></p>
 
 	</form>
 

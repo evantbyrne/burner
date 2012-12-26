@@ -141,8 +141,7 @@ class Auth extends Base {
 		
 				$this->template('auth/register');
 				$this->data('errors', $errors);
-				$this->data($user->to_array());
-				$this->data('password', null);
+				$this->data('user', $user);
 		
 			} else {
 		
@@ -161,6 +160,10 @@ class Auth extends Base {
 		
 			}
 		
+		} else {
+
+			$this->data('user', new \Model\User());
+
 		}
 	
 	}
@@ -184,6 +187,7 @@ class Auth extends Base {
 			if($user === null) {
 				
 				// Doesn't exist
+				$this->data('user', $in);
 				$this->data('errors', array('email' => \Language\Auth::$error_invalid_login));
 				$this->data('email', $in->email);
 				
@@ -218,6 +222,10 @@ class Auth extends Base {
 
 			}
 		
+		} else {
+
+			$this->data('user', new \Model\User());
+
 		}
 		
 	}

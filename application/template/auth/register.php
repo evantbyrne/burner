@@ -25,7 +25,7 @@
 
 	<div class="well">
 		<ul class="nav nav-list">
-			<li><a href="<?php echo route_url('get', 'auth', 'login'); ?>"><i class="icon-lock"></i>Log In</a></li>
+			<li><a href="<?php echo route_url('get', 'auth', 'login'); ?>"><i class="icon-lock"></i> Log In</a></li>
 		</ul>
 	</div>
 
@@ -37,11 +37,15 @@
 	
 	<form method="post" class="form-horizontal">
 
-		<?php $this->field('Email:', 'email', 'email'); ?>
+		<?php $this->label('email'); ?>
+		<?php $this->field('email', $user); ?>
 
-		<?php $this->field('Password:', 'password', 'password'); ?>
+		<?php $this->label('password'); ?>
+		<?php $this->field('password', $user); ?>
 
-		<?php $this->field('Confirm Password:', 'password_confirm', 'password'); ?>
+		<?php $this->error('password_confirm'); ?>
+		<p>Confirm Password</p>
+		<p><input type="password" name="password_confirm" /></p>
 
 		<p><input type="submit" value="Register" class="btn btn-primary" /></p>
 
