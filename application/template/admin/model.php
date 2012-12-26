@@ -45,6 +45,8 @@
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
+					<th>&nbsp;</th>
+					
 					<?php foreach($columns as $column => $options): ?>
 						
 						<th><?php echo $column; ?></th>
@@ -54,15 +56,13 @@
 			</thead>
 			<tbody>
 				<?php foreach($rows as $row): ?>
-					
 					<tr>
-						<?php foreach($columns as $column => $options): ?>
+						<td style="width:45px;">
+							<a class="btn" href="<?php echo route_url('get', 'admin', 'edit', array($model, $row->id)); ?>">Edit</a>
+						</td>
 
-							<?php $first = $this->first(); ?>
-							
+						<?php foreach($columns as $column => $options): ?>
 							<td>
-								<?php if($first): ?><a href="<?php echo route_url('get', 'admin', 'edit', array($model, $row->id)); ?>"><?php endif; ?>
-								
 								<?php if($this->exists("field/list/{$options['list_template']}")): ?>
 									
 									<?php $this->load("field/list/{$options['list_template']}", array(
@@ -76,13 +76,8 @@
 									<?php echo e($row->{$column}); ?>
 
 								<?php endif; ?>
-								
-								<?php if($first): ?></a><?php endif; ?>
-								
 							</td>
-						
 						<?php endforeach; ?>
-						<?php $this->reset_first(); ?>
 					</tr>
 					
 				<?php endforeach; ?>
