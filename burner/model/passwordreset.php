@@ -13,17 +13,16 @@ class PasswordReset extends Base {
 	public static $verbose = 'Password Reset';
 
 	/**
-	 * Construct
+	 * User
+	 * @option type = BelongsTo
 	 */
-	public function __construct() {
-	
-		$this->schema(
+	public $user;
 		
-			new \Column\BelongsTo('user'),
-			new \Column\Varchar('secret', array('length' => 30))
-			
-		);
-	
-	}
+	/**
+	 * Secret
+	 * @option type = Varchar
+	 * @option length = 30
+	 */
+	public $secret;
 	
 }

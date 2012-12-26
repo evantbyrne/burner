@@ -41,6 +41,10 @@ class Generate_Hash_Secret {
 
 		}
 
+		// Set for running script
+		\Core\Config::set('hash_secret', $secret);
+
+		// Write to file
 		$f = fopen(APPLICATION . "/config/$config/hash.php", 'w');
 		fwrite($f, "<?php\n\n" .
 			"namespace Core;\n\n" .
