@@ -30,9 +30,8 @@ class Base {
 		$instance = new static();
 		$schema = $instance->get_schema();
 		
-		foreach($schema as $column) {
+		foreach($schema as $name => $column) {
 		
-			$name = $column->column_name();
 			$default = $column->get_option('default');
 			
 			if(($whitelist === null or in_array($name, $whitelist)) and isset($data[$name])) {
@@ -182,12 +181,12 @@ class Base {
 		$errors = array();
 		$schema = $this->get_schema();
 		
-		foreach($schema as $column) {
+		foreach($schema as $name => $column) {
 		
 			$res = $column->valid($this);
 			if($res !== true) {
 			
-				$errors[$column->column_name()] = $res;
+				$errors[$name] = $res;
 			
 			}
 		
@@ -207,9 +206,8 @@ class Base {
 	
 		$schema = $this->get_schema();
 		
-		foreach($schema as $column) {
+		foreach($schema as $name => $column) {
 		
-			$name = $column->column_name();
 			if(($whitelist === null or in_array($name, $whitelist)) and isset($data[$name])) {
 
 				if(!empty($data[$name]) or !$column->get_option('blank')) {
@@ -252,9 +250,8 @@ class Base {
 		$schema = $this->get_schema();
 		$schema['id'] = new \Column\Int('id');
 		
-		foreach($schema as $column) {
+		foreach($schema as $name => $column) {
 		
-			$name = $column->column_name();
 			if(($whitelist === null or in_array($name, $whitelist))) {
 
 				$data[$name] = (isset($this->$name)) ? $this->$name : null;

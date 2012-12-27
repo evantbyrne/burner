@@ -180,17 +180,17 @@ class Base extends \Core\Form\Base {
 			$vars = get_object_vars($this);
 			$first_where = true;
 
-			foreach($schema as $column) {
+			foreach($schema as $name => $column) {
 			
-				if(isset($vars[$column->column_name()])) {
+				if(isset($vars[$name])) {
 
 					if($first_where) {
 
-						$query->where($column->column_name(), '=', $vars[$column->column_name()]);
+						$query->where($name, '=', $vars[$name]);
 
 					} else {
 
-						$query->and_where($column->column_name(), '=', $vars[$column->column_name()]);
+						$query->and_where($name, '=', $vars[$name]);
 
 					}
 
@@ -235,9 +235,8 @@ class Base extends \Core\Form\Base {
 		$vars = get_object_vars($this);
 		$schema = $this->get_schema();
 		
-		foreach($schema as $column) {
+		foreach($schema as $name => $column) {
 		
-			$name = $column->column_name();
 			if(isset($vars[$name])) {
 
 				$query->value($name, $vars[$name]);
@@ -290,9 +289,8 @@ class Base extends \Core\Form\Base {
 		} else {
 
 			// Otherwise, use every set column
-			foreach($schema as $column) {
+			foreach($schema as $name => $column) {
 			
-				$name = $column->column_name();
 				if(isset($vars[$name])) {
 
 					if($first) {
@@ -313,20 +311,7 @@ class Base extends \Core\Form\Base {
 		}
 		
 		// Execute query
-		$res = $query->execute();
-		
-		// Finalize
-		/*foreach($schema as $column) {
-			
-			if(is_callable(array($column, 'finalize'))) {
-
-				$column->finalize($this);
-
-			}
-			
-		}*/
-		
-		return $res;
+		return $query->execute();
 	
 	}
 
