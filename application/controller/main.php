@@ -10,7 +10,7 @@ class Main extends \Core\Controller\Base {
 	public function index() {
 	
 		$a = new \Form\Article();
-		$a->title = "Cool";
+		$a->title = "An";
 		$a->content = "Very Awesome!";
 		var_dump($a->valid());
 		exit;

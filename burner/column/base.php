@@ -152,6 +152,18 @@ abstract class Base {
 			return $this->options['valid']($value);
 		
 		}
+
+		$method = $this->column_name . '_validator';
+		if(method_exists($model, $method)) {
+
+			$res = $model->{$method}($value);
+			if($res !== true) {
+
+				return $res;
+
+			}
+
+		}
 		
 		return true;
 	
