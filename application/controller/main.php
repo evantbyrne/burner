@@ -9,8 +9,11 @@ class Main extends \Core\Controller\Base {
 	 */
 	public function index() {
 	
-		$a = \Model\Article::id(1) or $this->error(404);
-		$this->data('title', $a->title);
+		$a = new \Form\Article();
+		$a->title = "Cool";
+		$a->content = "Very Awesome!";
+		var_dump($a->valid());
+		exit;
 	
 	}
 	
