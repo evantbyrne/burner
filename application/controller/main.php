@@ -9,10 +9,7 @@ class Main extends \Core\Controller\Base {
 	 */
 	public function index() {
 	
-		$a = new \Form\Article();
-		$a->title = "An";
-		$a->content = "Very Awesome!";
-		var_dump($a->valid());
+		var_dump(\Core\Event::trigger('Foo'));
 		exit;
 	
 	}
