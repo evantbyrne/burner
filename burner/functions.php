@@ -125,29 +125,44 @@ function e($value) {
 }
 
 /**
- * Hook
- * @param string Hook name
- * @param string Static method to call
- * @param mixed Array of arguments, or null
- * @return mixed Result of method call, or null on hook not found
+ * Trigger
+ * @param string Event path
+ * @param array Arguments
+ * @return boolean Whether any event listeners were triggered
  */
-function hook($hook, $method, $arguments = null) {
-	
-	if(file_exists(APPLICATION . '/hook/' . strtolower($hook) . '.php')) {
-		
-		$name = "\\Hook\\$hook::$method";
-		if(is_callable($name)) {
-		
-			return call_user_func_array($name, $arguments);
-		
+function trigger($event, $args = array()) {
+
+	$any = false;
+	$dir = APPLICATION . "/listener/$event";
+
+	if(is_dir($dir)) {
+
+		$listeners = array();
+		foreach(scandir($dir) as $file) {
+			
+			if(substr($file, -4) === '.php' and file_exists("$dir/$file")) {
+
+				$klass = '\\Listener\\' . str_replace('/', '\\', $event) . '\\'. substr($file, 0, -4);
+				$priority = (isset($klass::$priority)) ? $klass::$priority : 0;
+				$listeners[$klass] = $priority;
+				$any = true;
+
+			}
+
 		}
-		
-	} else {
-		
-		return null;
-		
+
+		asort($listeners);
+		foreach($listeners as $klass => $priority) {
+
+			$listener = new $klass();
+			call_user_func_array(array($listener, 'run'), $args);
+
+		}
+
 	}
-	
+
+	return $any;
+
 }
 
 /**
