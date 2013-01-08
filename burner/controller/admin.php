@@ -19,77 +19,65 @@ class Admin extends Base {
 	public static $https = false;
 
 	/**
-	 * Construct
+	 * Get Columns
+	 * @param \Core\Modle\Base
+	 * @param string Name of option to check for value of bool(true)
+	 * @return array Array of columns in this format: array(name => options, ...)
 	 */
-	public function __construct() {
-		
-		Auth::enforce('admin');
-		
-	}
-	
-	/**
-	 * Index
-	 */
-	public function index() {
-		
-		$models = array();
-		foreach(static::$models as $model) {
-			
-			$model_class = "\\Model\\$model";
-			$models[$model] = array(
-				'name'        => $model_class::get_verbose(),
-				'name_plural' => $model_class::get_verbose_plural()
-			);
-			
-		}
-		
-		$this->data('models', $models);
-	
-	}
-	
-	/**
-	 * Model
-	 * @param string Model
-	 */
-	public function model($name, $select = false) {
-		
-		// 404 on unconfigured model
-		if(!in_array($name, static::$models)) {
+	protected function get_columns($model, $option = null) {
 
-			$this->error(404);
-
-		}
-
-		// Remove hidden columns and start building query
-		$model_class = "\\Model\\$name";
-		$model = new $model_class();
-		$all_columns = $model->get_admin();
-		
-		$select = ($select === false) ? $model_class::select()->order_desc('id') : $select;
 		$columns = array();
+		foreach($model->get_admin() as $column_name => $options) {
+
+			if($option !== null) {
+
+				if($options[$option]) {
+
+					$columns[$column_name] = $options;
+
+				}
+
+			} else {
+
+				$columns[$column_name] = $options;
+
+			}
+
+		}
+
+		return $columns;
+
+	}
+
+	/**
+	 * Get Rows
+	 * @param string Model name
+	 * @param array Columns names
+	 * @param \Mysql\Select Custom select query
+	 */
+	protected function get_rows($model_name, $columns, $select = null) {
+
+		$model_class = "\\Model\\$model_name";
+		$model = new $model_class();
+		$select = ($select === null) ? $model_class::select()->order_desc('id') : $select;
 		$belongsto = array();
 		$choices = array();
 
-		foreach($all_columns as $column_name => $options) {
+		foreach($columns as $column_name => $options) {
 
-			if($options['list']) {
+			$column = $model->get_schema_column($column_name);
 
-				$columns[$column_name] = $options;
-				$column = $model->get_schema_column($column_name);
+			// Columns with defined static choices
+			if(is_array($column->get_option('choices'))) {
 
-				// Columns with defined static choices
-				if(is_array($column->get_option('choices'))) {
+				$choices[$column_name] = $column->get_option('choices');
 
-					$choices[$column_name] = $column->get_option('choices');
+			}
 
-				}
+			// BelongsTo columns
+			if(is_a($column, '\\Column\\BelongsTo')) {
 
-				// BelongsTo columns
-				if(is_a($column, '\\Column\\BelongsTo')) {
-
-					$belongsto[$column_name] = $column;
-
-				}
+				$belongsto[$column_name] = $column;
 
 			}
 
@@ -165,8 +153,58 @@ class Admin extends Base {
 
 		}
 
+		return $rows;
+
+	}
+
+	/**
+	 * Construct
+	 */
+	public function __construct() {
+		
+		Auth::enforce('admin');
+		
+	}
+	
+	/**
+	 * Index
+	 */
+	public function index() {
+		
+		$models = array();
+		foreach(static::$models as $model) {
+			
+			$model_class = "\\Model\\$model";
+			$models[$model] = array(
+				'name'        => $model_class::get_verbose(),
+				'name_plural' => $model_class::get_verbose_plural()
+			);
+			
+		}
+		
+		$this->data('models', $models);
+	
+	}
+	
+	/**
+	 * Model
+	 * @param string Model
+	 */
+	public function model($name, $select = false) {
+		
+		// 404 on unconfigured model
+		if(!in_array($name, static::$models)) {
+
+			$this->error(404);
+
+		}
+
+		$model_class = "\\Model\\$name";
+		$model = new $model_class();
+		$columns = $this->get_columns($model, 'list');
+
 		$this->data('columns', $columns);
-		$this->data('rows', $rows);
+		$this->data('rows', $this->get_rows($name, $columns));
 		$this->data('model', $name);
 		$this->data('model_name', $model_class::get_verbose());
 

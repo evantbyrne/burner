@@ -9,8 +9,7 @@ class Main extends \Core\Controller\Base {
 	 */
 	public function index() {
 	
-		var_dump(trigger('Foo', array('quixotic')));
-		exit;
+		exit('Hello');
 	
 	}
 	
