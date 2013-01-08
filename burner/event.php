@@ -20,16 +20,25 @@ class Event {
 
 		if(is_dir($dir)) {
 
+			$listeners = array();
 			foreach(scandir($dir) as $file) {
 				
 				if(substr($file, -4) === '.php' and file_exists("$dir/$file")) {
 
 					$klass = '\\Listener\\' . str_replace('/', '\\', $event) . '\\'. substr($file, 0, -4);
-					$listener = new $klass();
-					$listener->run();
+					$priority = (isset($klass::$priority)) ? $klass::$priority : 0;
+					$listeners[$klass] = $priority;
 					$any = true;
 
 				}
+
+			}
+
+			asort($listeners);
+			foreach($listeners as $klass => $priority) {
+
+				$listener = new $klass();
+				$listener->run();
 
 			}
 
