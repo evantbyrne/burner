@@ -9,7 +9,7 @@ class Main extends \Core\Controller\Base {
 	 */
 	public function index() {
 	
-		var_dump(\Core\Event::trigger('Foo'));
+		var_dump(\Core\Event::trigger('Foo', array('quixotic')));
 		exit;
 	
 	}

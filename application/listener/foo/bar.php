@@ -6,9 +6,9 @@ class Bar {
 	
 	public static $priority = 1;
 
-	public function run() {
+	public function run($msg) {
 
-		echo 'foobar ';
+		echo "$msg ";
 
 	}
 

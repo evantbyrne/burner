@@ -11,9 +11,10 @@ class Event {
 	/**
 	 * Trigger
 	 * @param string Event path
+	 * @param array Arguments
 	 * @return boolean Whether any event listeners were triggered
 	 */
-	public static function trigger($event) {
+	public static function trigger($event, $args = array()) {
 
 		$any = false;
 		$dir = APPLICATION . "/listener/$event";
@@ -38,7 +39,7 @@ class Event {
 			foreach($listeners as $klass => $priority) {
 
 				$listener = new $klass();
-				$listener->run();
+				call_user_func_array(array($listener, 'run'), $args);
 
 			}
 
