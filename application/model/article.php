@@ -12,6 +12,7 @@ class Article extends \Core\Model\Base {
 	 * @option type = Varchar
 	 * @option length = 125
 	 * @option required = Title field is required.
+	 * @option unique = Title must be unique.
 	 */
 	public $title;
 

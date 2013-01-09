@@ -141,6 +141,23 @@ abstract class Base {
 		
 		}
 
+		if(isset($this->options['unique'])) {
+
+			$model_class = get_class($model);
+
+			// row has not been inserted || row is being updated and column value has been changed
+			if(empty($model->id) or ($model_class::id($model->id)->{$this->column_name} != $value)) {
+
+				if($model_class::select()->column($this->column_name)->where($this->column_name, '=', $value)->single() !== null) {
+
+					return $this->options['unique'];
+
+				}
+
+			}
+
+		}
+
 		if(!empty($this->options['choices']) and !in_array($value, array_keys($this->options['choices']))) {
 
 			return 'Invalid choice.';
