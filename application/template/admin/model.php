@@ -49,7 +49,7 @@
 					
 					<?php foreach($columns as $column => $options): ?>
 						
-						<th><?php echo $column; ?></th>
+						<th><?php echo str_replace('_', ' ', $column); ?></th>
 						
 					<?php endforeach; ?>
 				</tr>
