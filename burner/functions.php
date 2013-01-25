@@ -186,3 +186,14 @@ function random($min = 10, $max = 30, $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef
 	return $salt;
 
 }
+
+/**
+ * To PHP Namespace
+ * @param string Class name including full namespace in dot (Java) notation
+ * @return string Full class name in traditional PHP namespace notation
+ */
+function to_php_namespace($class_name) {
+
+	return ('\\' . str_replace('.', '\\', $class_name));
+
+}
