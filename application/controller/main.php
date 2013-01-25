@@ -9,7 +9,14 @@ class Main extends \Core\Controller\Base {
 	 */
 	public function index() {
 	
-		exit('Hello');
+		$res = \Model\Article::select()->order_desc('id')->page(2, 3)->fetch();
+		foreach($res as $article) {
+
+			echo "{$article->title}\n";
+
+		}
+
+		exit;
 	
 	}
 	

@@ -1098,6 +1098,20 @@ class Select extends WhereBase {
 		return $this;
 	
 	}
+
+	/**
+	 * Page
+	 * @param int Current page
+	 * @param int Number of records per page
+	 * @return $this
+	 */
+	public function page($page, $page_record_limit) {
+
+		$this->limit($page_record_limit);
+		$this->offset(($page - 1) * $page_record_limit);
+		return $this;
+
+	}
 	
 	/**
 	 * Build
