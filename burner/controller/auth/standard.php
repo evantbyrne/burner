@@ -1,14 +1,13 @@
 <?php
 
-namespace Core\Controller;
-
+namespace Core\Controller\Auth;
 use Library\Input, Library\Cookie;
 
 /**
- * Auth Controller
+ * Standard Auth Controller
  * @author Evan Byrne
  */
-class Auth extends Base {
+class Standard extends \Core\Controller\Base implements BaseInterface {
 	
 	/**
 	 * Cached logged in result
