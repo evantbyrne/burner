@@ -55,11 +55,11 @@ class Admin extends Base {
 	 * @param array Columns names
 	 * @param \Mysql\Select Custom select query
 	 */
-	protected function get_rows($model_name, $columns, $select = null) {
+	protected function get_rows($model_name, $columns, $select = null, $page = 1) {
 
 		$model_class = "\\Model\\$model_name";
 		$model = new $model_class();
-		$select = ($select === null) ? $model_class::select()->order_desc('id') : $select;
+		$select = ($select === null) ? $model_class::select()->page($page, 10)->order_desc('id') : $select;
 		$belongsto = array();
 		$choices = array();
 
@@ -202,11 +202,18 @@ class Admin extends Base {
 		$model_class = "\\Model\\$name";
 		$model = new $model_class();
 		$columns = $this->get_columns($model, 'list');
+		$total_rows = $model_class::select()->count_column('id', 'total')->single();
+		$page = \Library\Input::get('page', 1);
+		$page_count = ceil(intval($total_rows->total) / 10);
 
 		$this->data('columns', $columns);
-		$this->data('rows', $this->get_rows($name, $columns));
+		$this->data('rows', $this->get_rows($name, $columns, null, $page));
 		$this->data('model', $name);
 		$this->data('model_name', $model_class::get_verbose());
+
+		$url = route_url('get', 'admin', 'model', array($name)) . '&page=';
+		$this->data('next', ($page < $page_count) ?  $url . ($page + 1) : null);
+		$this->data('prev', ($page > 1) ? $url . ($page - 1) : null);
 
 		if(file_exists(APPLICATION . "/template/admin/$name/model.php")) {
 

@@ -86,4 +86,11 @@
 		
 	<?php endif; ?>
 
+	<?php if($next or $prev): ?>
+		<p>
+			<?php if($prev): ?><a href="<?php echo $prev; ?>">Previous</a><?php endif; ?>&nbsp;
+			<?php if($next): ?><a href="<?php echo $next; ?>">Next</a><?php endif; ?>
+		</p>
+	<?php endif; ?>
+
 <?php $this->end_extend(); ?>
