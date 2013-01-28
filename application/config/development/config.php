@@ -33,6 +33,9 @@ Config::set('session', array(
 	'expire' => '+1 months'
 ));
 
+// Admin
+define('ADMIN_PAGE_SIZE', 10);
+
 /**
  * Your Application's Default Timezone
  * Syntax for your local timezone can be found at
