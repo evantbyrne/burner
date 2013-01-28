@@ -190,7 +190,7 @@ class Admin extends Base {
 	 * Model
 	 * @param string Model
 	 */
-	public function model($name, $select = false) {
+	public function model($name, $select = null) {
 		
 		// 404 on unconfigured model
 		if(!in_array($name, static::$models)) {
@@ -207,7 +207,7 @@ class Admin extends Base {
 		$page_count = ceil(intval($total_rows->total) / 10);
 
 		$this->data('columns', $columns);
-		$this->data('rows', $this->get_rows($name, $columns, null, $page));
+		$this->data('rows', $this->get_rows($name, $columns, $select, $page));
 		$this->data('model', $name);
 		$this->data('model_name', $model_class::get_verbose());
 
@@ -233,9 +233,16 @@ class Admin extends Base {
 
 		$model_class = "\\Model\\$child_model";
 		$model = new $model_class();
-		$select = $model_class::select()->where($parent_model, '=', $parent_id)->order_desc('id');
 
+		$total_rows = $model_class::select()->where($parent_model, '=', $parent_id)->count_column('id', 'total')->single();
+		$page = \Library\Input::get('page', 1);
+		$page_count = ceil(intval($total_rows->total) / 10);
+		$select = $model_class::select()->where($parent_model, '=', $parent_id)->page($page, 10)->order_desc('id');
 		$this->model($child_model, $select);
+
+		$url = route_url('get', 'admin', 'children', array($parent_model, $parent_id, $child_model)) . '&page=';
+		$this->data('next', ($page < $page_count) ?  $url . ($page + 1) : null);
+		$this->data('prev', ($page > 1) ? $url . ($page - 1) : null);
 
 		$parent_model_class = '\\Model\\' . $parent_model;
 		$this->data(array(
