@@ -24,6 +24,14 @@ define('ERROR_LOGGING', false);
 // Error Log File Location
 define('ERROR_LOG_FILE', 'log.txt');
 
+// Template engine
+define('TEMPLATE_LIBRARY', 'Library.Template.Standard');
+
+// Admin
+define('ADMIN_PAGE_SIZE', 10);
+
+
+
 // Default language
 Config::set('language', 'english');
 
@@ -33,8 +41,7 @@ Config::set('session', array(
 	'expire' => '+1 months'
 ));
 
-// Admin
-define('ADMIN_PAGE_SIZE', 10);
+
 
 /**
  * Your Application's Default Timezone

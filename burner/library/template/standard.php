@@ -1,12 +1,12 @@
 <?php
 
-namespace Core;
+namespace Library\Template;
 
 /**
- * Template Class
+ * Standard Template Class
  * @author Evan Byrne
  */
-class Template {
+class Standard implements BaseInterface {
 	
 	private $extensions = array();
 	private $sections = array();
@@ -18,14 +18,11 @@ class Template {
 	private $first;
 	
 	/**
-	 * Render
-	 * @param string Template
-	 * @param array Data
-	 * @return string Output
+	 * @inheritdoc
 	 */
 	public static function render($template, $data = array()) {
 	
-		$v = new Template($template, $data);
+		$v = new Standard($template, $data);
 		return $v->output();
 	
 	}
