@@ -205,6 +205,7 @@ class Base extends \Core\Form\Base {
 		if($result !== null) {
 
 			// Update model instance
+			$this->id = $result->id;
 			foreach($schema as $column) {
 
 				if(isset($result->{$column->column_name()})) {
