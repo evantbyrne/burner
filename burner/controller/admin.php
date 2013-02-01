@@ -292,6 +292,7 @@ class Admin extends Base {
 		$columns = array();
 		$children = array();
 		$is_multipart = false;
+		$inlines = array();
 
 		foreach($schema as $column) {
 		
@@ -303,6 +304,23 @@ class Admin extends Base {
 					// HasMany columns
 					$child_model_class = '\\Model\\' . $column->get_option('model');
 					$children[$child_model_class::get_verbose_plural()] = strtolower($column->get_option('model'));
+
+					if($column->get_option('inline')) {
+
+						$parent_column = $column->get_option('column');
+						$child_model = new $child_model_class();
+						$child_select = $child_model_class::select()->where($parent_column, '=', $id)->order_asc('id');
+						$child_columns = $this->get_columns($child_model, 'list');
+						unset($child_columns[$parent_column]);
+
+						$inlines[$child_model->table()] = array(
+							'verbose' => $child_model_class::get_verbose(),
+							'verbose_plural' => $child_model_class::get_verbose_plural(),
+							'rows' => $this->get_rows($column->get_option('model'), $child_columns, $child_select),
+							'columns' => $child_columns
+						);
+
+					}
 				
 				} elseif(!is_a($column, '\\Column\\ManyToMany')) {
 				
@@ -364,6 +382,7 @@ class Admin extends Base {
 		$this->data('columns', $columns);
 		$this->data('children', $children);
 		$this->data('is_multipart', $is_multipart);
+		$this->data('inlines', $inlines);
 
 		if(file_exists(APPLICATION . "/template/admin/$model/edit.php")) {
 

@@ -64,4 +64,70 @@
 
 	</form>
 
+	<?php if(!empty($inlines)): ?>
+
+		<?php foreach($inlines as $name => $child): ?>
+
+			<div class="page-header">
+				<h3><?php echo $child['verbose_plural']; ?></h3>
+			</div>
+
+			<p><a href="<?php echo route_url('get', 'admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $model_name; ?></a></p>
+
+			<?php if(empty($child['rows'])): ?>
+
+				<p>No rows found.</p>
+
+			<?php else: ?>
+	
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>&nbsp;</th>
+							
+							<?php foreach($child['columns'] as $column => $options): ?>
+								
+								<th><?php echo str_replace('_', ' ', $column); ?></th>
+								
+							<?php endforeach; ?>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($child['rows'] as $child_row): ?>
+							<tr>
+								<td style="width:45px;">
+									<a class="btn" href="<?php echo route_url('get', 'admin', 'edit_child', array($model, $row->id, $name, $child_row->id)); ?>">Edit</a>
+								</td>
+
+								<?php foreach($child['columns'] as $column => $options): ?>
+									<td>
+										<?php if($this->exists("field/list/{$options['list_template']}")): ?>
+											
+											<?php $this->load("field/list/{$options['list_template']}", array(
+												'field'   => $column,
+												'options' => $options,
+												'model'   => $child_row
+											)); ?>
+										
+										<?php else: ?>
+										
+											<?php echo e($child_row->{$column}); ?>
+
+										<?php endif; ?>
+									</td>
+								<?php endforeach; ?>
+							</tr>
+							
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+
+				<p><a href="<?php echo route_url('get', 'admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $model_name; ?></a></p>
+
+			<?php endif; ?>
+
+		<?php endforeach; ?>
+		
+	<?php endif; ?>
+
 <?php $this->end_extend(); ?>
