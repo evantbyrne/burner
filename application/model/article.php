@@ -54,7 +54,6 @@ class Article extends \Core\Model\Base {
 	 * @option type = HasMany
 	 * @option model = Comment
 	 * @option column = article
-	 * @option inline = true
 	 */
 	public $comments;
 

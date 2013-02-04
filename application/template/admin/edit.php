@@ -72,7 +72,7 @@
 				<h3><?php echo $child['verbose_plural']; ?></h3>
 			</div>
 
-			<p><a href="<?php echo route_url('get', 'admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $model_name; ?></a></p>
+			<p><a href="<?php echo route_url('get', 'admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $child['verbose']; ?></a></p>
 
 			<?php if(empty($child['rows'])): ?>
 
@@ -122,7 +122,7 @@
 					</tbody>
 				</table>
 
-				<p><a href="<?php echo route_url('get', 'admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $model_name; ?></a></p>
+				<p><a href="<?php echo route_url('get', 'admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $child['verbose']; ?></a></p>
 
 			<?php endif; ?>
 

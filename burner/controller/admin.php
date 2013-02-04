@@ -291,7 +291,6 @@ class Admin extends Base {
 		$schema = $row->get_schema();
 		$admin = $row->get_admin();
 		$columns = array();
-		$children = array();
 		$is_multipart = false;
 		$inlines = array();
 
@@ -302,28 +301,37 @@ class Admin extends Base {
 				
 				if(is_a($column, '\\Column\\HasMany')) {
 				
-					// HasMany columns
 					$child_model_class = '\\Model\\' . $column->get_option('model');
-					$children[$child_model_class::get_verbose_plural()] = strtolower($column->get_option('model'));
+					$parent_column = $column->get_option('column');
+					$child_model = new $child_model_class();
+					$child_select = $child_model_class::select()->where($parent_column, '=', $id)->order_asc('id');
+					$child_columns = $this->get_columns($child_model, 'list');
+					unset($child_columns[$parent_column]);
 
-					if($column->get_option('inline')) {
-
-						$parent_column = $column->get_option('column');
-						$child_model = new $child_model_class();
-						$child_select = $child_model_class::select()->where($parent_column, '=', $id)->order_asc('id');
-						$child_columns = $this->get_columns($child_model, 'list');
-						unset($child_columns[$parent_column]);
-
-						$inlines[$child_model->table()] = array(
-							'verbose' => $child_model_class::get_verbose(),
-							'verbose_plural' => $child_model_class::get_verbose_plural(),
-							'rows' => $this->get_rows($column->get_option('model'), $child_columns, $child_select),
-							'columns' => $child_columns
-						);
-
-					}
+					$inlines[$child_model->table()] = array(
+						'verbose' => $child_model_class::get_verbose(),
+						'verbose_plural' => $child_model_class::get_verbose_plural(),
+						'rows' => $this->get_rows($column->get_option('model'), $child_columns, $child_select),
+						'columns' => $child_columns
+					);
 				
-				} elseif(!is_a($column, '\\Column\\ManyToMany')) {
+				} elseif(is_a($column, '\\Column\\ManyToMany')) {
+
+					$child_model_class = '\\Model\\' . $column->get_option('middleman');
+					$parent_column = $model_class::table();
+					$child_model = new $child_model_class();
+					$child_select = $child_model_class::select()->where($parent_column, '=', $id)->order_asc('id');
+					$child_columns = $this->get_columns($child_model, 'list');
+					unset($child_columns[$parent_column]);
+
+					$inlines[$child_model->table()] = array(
+						'verbose' => $child_model_class::get_verbose(),
+						'verbose_plural' => $child_model_class::get_verbose_plural(),
+						'rows' => $this->get_rows($column->get_option('middleman'), $child_columns, $child_select),
+						'columns' => $child_columns
+					);
+
+				} else {
 				
 					// All other columns
 					$columns[$name] = array('options' => array_merge($column->options(), $admin[$name]));
@@ -381,7 +389,6 @@ class Admin extends Base {
 		$this->data('model_name', $model_class::get_verbose());
 		$this->data('row', $row);
 		$this->data('columns', $columns);
-		$this->data('children', $children);
 		$this->data('is_multipart', $is_multipart);
 		$this->data('inlines', $inlines);
 
