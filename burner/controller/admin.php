@@ -274,8 +274,9 @@ class Admin extends Base {
 	 * Edit
 	 * @param string Model
 	 * @param string Row ID
+	 * @param string Redirect URL
 	 */
-	public function edit($model, $id) {
+	public function edit($model, $id, $redirect = null) {
 
 		// 404 on unconfigured model
 		if(!in_array($model, static::$models)) {
@@ -362,7 +363,7 @@ class Admin extends Base {
 			if($this->valid($row)) {
 
 				$row->save();
-				redirect("admin/$model", static::$https);
+				redirect(($redirect === null) ? "admin/$model" : $redirect, static::$https);
 
 			} else {
 
@@ -404,7 +405,7 @@ class Admin extends Base {
 		$parent_model_class = "\\Model\\$parent_model";
 		$parent = $parent_model_class::id($parent_id) or $this->error(404);
 		
-		$this->edit($child_model, $child_id);
+		$this->edit($child_model, $child_id, "admin/$parent_model/$parent_id");
 
 		$parent_model_class = '\\Model\\' . $parent_model;
 		$this->data(array(
@@ -473,8 +474,9 @@ class Admin extends Base {
 	/**
 	 * Add
 	 * @param string Model
+	 * @param string Redirect URL
 	 */
-	public function add($model) {
+	public function add($model, $redirect = null) {
 
 		// 404 on unconfigured model
 		if(!in_array($model, static::$models)) {
@@ -546,7 +548,7 @@ class Admin extends Base {
 			if($this->valid($row)) {
 
 				$id = $row->save();
-				redirect("admin/$model", static::$https);
+				redirect(($redirect === null) ? "admin/$model" : $redirect, static::$https);
 
 			} else {
 
@@ -586,7 +588,7 @@ class Admin extends Base {
 		$parent_model_class = "\\Model\\$parent_model";
 		$parent = $parent_model_class::id($parent_id) or $this->error(404);
 		
-		$this->add($child_model, $parent_model, $parent_id);
+		$this->add($child_model, "admin/$parent_model/$parent_id");
 
 		$parent_model_class = '\\Model\\' . $parent_model;
 		$this->data(array(
