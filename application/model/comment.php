@@ -23,7 +23,6 @@ class Comment extends \Core\Model\Base {
 	 * Content
 	 * @option type = Text
 	 * @option required = Content field is required.
-	 * @option list = true
 	 */
 	public $content;
 

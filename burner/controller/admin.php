@@ -19,33 +19,34 @@ class Admin extends Base {
 	public static $https = false;
 
 	/**
-	 * Get Columns
+	 * Get List Columns
 	 * @param \Core\Modle\Base
-	 * @param string Name of option to check for value of bool(true)
 	 * @return array Array of columns in this format: array(name => options, ...)
 	 */
-	protected function get_columns($model, $option = null) {
+	protected function get_list_columns($model) {
 
-		$columns = array();
-		foreach($model->get_admin() as $column_name => $options) {
+		$klass_options = \Library\DocComment::options(new \ReflectionClass($model));
+		$list = (isset($klass_options['list'])) ? array_map('trim', explode(',', $klass_options['list'])) : null;
+		$options = $model->get_admin();
+		
+		if(is_array($list)) {
 
-			if($option !== null) {
+			$columns = array();
+			foreach($list as $column_name) {
 
-				if($options[$option]) {
+				if(in_array($column_name, $list)) {
 
-					$columns[$column_name] = $options;
+					$columns[$column_name] = $options[$column_name];
 
 				}
 
-			} else {
-
-				$columns[$column_name] = $options;
-
 			}
+
+			return $columns;
 
 		}
 
-		return $columns;
+		return $options;
 
 	}
 
@@ -201,7 +202,7 @@ class Admin extends Base {
 
 		$model_class = "\\Model\\$name";
 		$model = new $model_class();
-		$columns = $this->get_columns($model, 'list');
+		$columns = $this->get_list_columns($model);
 		$total_rows = $model_class::select()->count_column('id', 'total')->single();
 		$page = \Library\Input::get('page', 1);
 		$page_count = ceil(intval($total_rows->total) / ADMIN_PAGE_SIZE);
@@ -305,7 +306,7 @@ class Admin extends Base {
 					$parent_column = $column->get_option('column');
 					$child_model = new $child_model_class();
 					$child_select = $child_model_class::select()->where($parent_column, '=', $id)->order_asc('id');
-					$child_columns = $this->get_columns($child_model, 'list');
+					$child_columns = $this->get_list_columns($child_model);
 					unset($child_columns[$parent_column]);
 
 					$inlines[$child_model->table()] = array(
@@ -321,7 +322,7 @@ class Admin extends Base {
 					$parent_column = $model_class::table();
 					$child_model = new $child_model_class();
 					$child_select = $child_model_class::select()->where($parent_column, '=', $id)->order_asc('id');
-					$child_columns = $this->get_columns($child_model, 'list');
+					$child_columns = $this->get_list_columns($child_model, 'list');
 					unset($child_columns[$parent_column]);
 
 					$inlines[$child_model->table()] = array(

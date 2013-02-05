@@ -4,6 +4,7 @@ namespace Model;
 
 /**
  * Example Article Model
+ * @option list = awesome, title, post_date
  */
 class Article extends \Core\Model\Base {
 	
