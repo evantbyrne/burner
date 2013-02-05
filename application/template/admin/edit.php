@@ -1,4 +1,4 @@
-<?php $this->base('admin/base'); ?>
+<?php $this->base('admin/base_no_side'); ?>
 
 
 <!-- Title -->
@@ -22,36 +22,15 @@
 <?php $this->end_extend(); ?>
 
 
-<!-- Sidebar -->
-<?php $this->extend('sidebar'); ?>
-
-	<div class="well">
-		<ul class="nav nav-list">
-			
-			<li><a href="<?php echo route_url('get', 'admin', 'delete', array($model, $row->id)); ?>"><i class="icon-minus"></i> Delete</a></li>
-		
-			<?php if(!empty($children)): ?>
-				
-					<li class="divider"></li>
-				
-				<?php foreach($children as $name => $child_model): ?>
-					
-					<li><a href="<?php echo route_url('get', 'admin', 'children', array($model, $row->id, $child_model)); ?>"><i class="icon-pencil"></i> <?php echo $name; ?></a></li>
-					
-				<?php endforeach; ?>
-			
-			<?php endif; ?>
-		
-		</ul>
-	</div>
-
-<?php $this->end_extend(); ?>
-
-
 <!-- Content -->
 <?php $this->extend('content') ?>
 
-	<form method="post"<?php if($is_multipart): ?> enctype="multipart/form-data"<?php endif; ?> class="form-horizontal">
+	<form method="post"<?php if($is_multipart): ?> enctype="multipart/form-data"<?php endif; ?>>
+
+		<div class="form-actions">
+			<input type="submit" value="Save" class="btn btn-primary" />
+			<a class="btn pull-right" href="<?php echo route_url('get', 'admin', 'delete', array($model, $row->id)); ?>">Delete</a>
+		</div>
 
 		<?php foreach($columns as $name => $c): ?>
 
@@ -59,8 +38,6 @@
 			<?php $this->field($name, $row, $c['options']); ?>
 
 		<?php endforeach; ?>
-
-		<p><input type="submit" value="Save" class="btn btn-primary" /></p>
 
 	</form>
 

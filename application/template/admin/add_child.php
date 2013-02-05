@@ -1,4 +1,4 @@
-<?php $this->base('admin/base'); ?>
+<?php $this->base('admin/base_no_side'); ?>
 
 
 <!-- Title -->
@@ -27,7 +27,11 @@
 <!-- Content -->
 <?php $this->extend('content') ?>
 
-	<form method="post"<?php if($is_multipart): ?> enctype="multipart/form-data"<?php endif; ?> class="form-horizontal">
+	<form method="post"<?php if($is_multipart): ?> enctype="multipart/form-data"<?php endif; ?>>
+
+		<div class="form-actions">
+			<input type="submit" value="Save" class="btn btn-primary" />
+		</div>
 
 		<?php foreach($columns as $name => $c): ?>
 
@@ -43,8 +47,6 @@
 			<?php endif; ?>
 
 		<?php endforeach; ?>
-
-		<p><input type="submit" value="Save" class="btn btn-primary" /></p>
 
 	</form>
 
