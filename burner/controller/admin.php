@@ -20,7 +20,7 @@ class Admin extends Base {
 
 	/**
 	 * Get List Columns
-	 * @param \Core\Modle\Base
+	 * @param \Core\Model\Base
 	 * @return array Array of columns in this format: array(name => options, ...)
 	 */
 	protected function get_list_columns($model) {
@@ -51,6 +51,43 @@ class Admin extends Base {
 	}
 
 	/**
+	 * Order
+	 * @param \Core\Model\Base
+	 * @param \Mysql\Select
+	 * @return \Mysql\Select
+	 */
+	protected function order($model, $select) {
+
+		$klass_options = \Library\DocComment::options(new \ReflectionClass($model));
+		$order = (isset($klass_options['order'])) ? array_map('trim', explode(',', $klass_options['order'])) : null;
+
+		if(is_array($order)) {
+
+			foreach($order as $o) {
+
+				if(substr($o, 0, 1) === '-') {
+
+					$select->order_desc(substr($o, 1));
+
+				} else {
+
+					$select->order_asc($o);
+
+				}
+
+			}
+
+		} else {
+
+			$select->order_desc('id');
+
+		}
+
+		return $select;
+
+	}
+
+	/**
 	 * Get Rows
 	 * @param string Model name
 	 * @param array Columns names
@@ -60,7 +97,8 @@ class Admin extends Base {
 
 		$model_class = "\\Model\\$model_name";
 		$model = new $model_class();
-		$select = ($select === null) ? $model_class::select()->page($page, ADMIN_PAGE_SIZE)->order_desc('id') : $select;
+		$select = ($select === null) ? $model_class::select()->page($page, ADMIN_PAGE_SIZE) : $select;
+		$select = $this->order($model, $select);
 		$belongsto = array();
 		$choices = array();
 
