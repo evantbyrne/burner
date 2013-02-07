@@ -11,6 +11,7 @@ class Tag extends \Core\Model\Base {
 	 * Name
 	 * @option type = Varchar
 	 * @option length = 100
+	 * @option required = Name field is required.
 	 */
 	public $name;
 

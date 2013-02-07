@@ -30,6 +30,8 @@ Route::add(array(
 	'BOTH:admin/:any/:int/children/:any/edit/:int' => array('admin', 'edit_child'),
 	'BOTH:admin/:any/add' => array('admin', 'add'),
 	'BOTH:admin/:any/:int/children/:any/add' => array('admin', 'add_child'),
-	'BOTH:admin/:any/delete/:int' => array('admin', 'delete')
+	'BOTH:admin/:any/delete/:int' => array('admin', 'delete'),
+	'BOTH:admin/ajax/:any/add_modal' => array('admin', 'ajax_add_modal'),
+	'GET:admin/ajax/:any/add_modal/:int' => array('admin', 'ajax_add_modal_refresh')
 	
 ));

@@ -80,6 +80,9 @@
 			<?php $this->end_section(); ?>
 		</div>
 
+		<!-- Modal -->
+		<div id="modal"></div>
+
 		<?php $this->section('scripts'); ?>
 			<script src="<?php echo url('static/admin/js/jquery.min.js'); ?>"></script>
 			<script src="<?php echo url('static/admin/js/bootstrap.min.js'); ?>"></script>
@@ -87,7 +90,53 @@
 			<script>
 				$(document).ready(function() {
 
+					// Date picker
 					$('.datepicker').datepicker({ format:'yyyy-mm-dd' });
+
+					// Modal
+					$('.ajax-add-modal').click(function() {
+
+						$.get($(this).attr('data-url'), function(data) {
+
+							$('#modal').html(data).show().modal({ keyboard:true, backdrop:false, show: true }).modal('show');
+
+						});
+
+					});
+
+					$('.ajax-add-modal-form').live('submit', function(e) {
+
+						e.preventDefault();
+
+					});
+
+					$('.ajax-add-modal-save').live('click', function() {
+
+						var model = $(this).attr('data-model');
+						var url = $(this).attr('data-url');
+
+						$.post(url, $('.ajax-add-modal-form').serialize(), function(data) {
+
+							var id = parseInt(data);
+							if(!isNaN(id)) {
+
+								$('#modal').modal('hide').html('');
+								$.getJSON(url + '/' + id, function(data) {
+
+									var option = $('<option/>').attr('value', data.id).prop('selected', true).text(data.name);
+									$('select[name="' + model + '"]').val('').append(option);
+
+								});
+
+							} else {
+
+								$('#modal').html(data);
+
+							}
+
+						});
+
+					});
 
 				});
 			</script>

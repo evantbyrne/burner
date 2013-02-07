@@ -389,7 +389,7 @@ class Admin extends Base {
 						}
 						
 						$columns[$name]['options']['choices'] = $choices;
-						$columns[$name]['options']['template'] = 'select';
+						$columns[$name]['options']['template'] = 'belongsto';
 						
 					} elseif(is_a($column, '\\Column\\File')) {
 
@@ -521,8 +521,9 @@ class Admin extends Base {
 	 * Add
 	 * @param string Model
 	 * @param string Redirect URL
+	 * @param boolean Return ID
 	 */
-	public function add($model, $redirect = null) {
+	public function add($model, $redirect = null, $return_id = false) {
 
 		// 404 on unconfigured model
 		if(!in_array($model, static::$models)) {
@@ -573,7 +574,7 @@ class Admin extends Base {
 						}
 						
 						$columns[$name]['options']['choices'] = $choices;
-						$columns[$name]['options']['template'] = 'select';
+						$columns[$name]['options']['template'] = 'belongsto';
 						
 					} elseif(is_a($column, '\\Column\\File')) {
 						
@@ -594,7 +595,13 @@ class Admin extends Base {
 			if($this->valid($row)) {
 
 				$id = $row->save();
-				redirect(($redirect === null) ? "admin/$model" : $redirect, static::$https);
+				if($return_id === false) {
+				
+					redirect(($redirect === null) ? "admin/$model" : $redirect, static::$https);
+
+				}
+
+				return $id;
 
 			} else {
 
@@ -660,6 +667,46 @@ class Admin extends Base {
 
 		}
 		
+	}
+
+	/**
+	 * Ajax Add Modal
+	 * @param string Model
+	 */
+	public function ajax_add_modal($model) {
+
+		if($id = $this->add($model, null, true)) {
+
+			die($id);
+
+		} else {
+
+			if(file_exists(APPLICATION . "/template/admin/$model/add_modal.php")) {
+
+				$this->template("admin/$model/add_modal");
+
+			} else {
+
+				$this->template('admin/add_modal');
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * Ajax Add Modal Refresh
+	 * @param string Model
+	 * @param string ID
+	 */
+	public function ajax_add_modal_refresh($model, $id) {
+
+		$model_class = "\\Model\\$model";
+		$res = $model_class::id($id);
+
+		return($res === null) ? 'fail' : die(json_encode(array('id' => $res->id, 'name' => (string) $res)));
+
 	}
 
 }
