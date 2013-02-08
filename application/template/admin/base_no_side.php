@@ -98,7 +98,10 @@
 
 						$.get($(this).attr('data-url'), function(data) {
 
-							$('#modal').html(data).show().modal({ keyboard:true, backdrop:false, show: true }).modal('show');
+							var modal = $('#modal');
+							modal.html(data).show().modal({ keyboard:true, backdrop:false, show: true });
+							modal.find('.datepicker').datepicker({ format:'yyyy-mm-dd' });
+							modal.modal('show');
 
 						});
 
@@ -130,7 +133,7 @@
 
 							} else {
 
-								$('#modal').html(data);
+								$('#modal').html(data).find('.datepicker').datepicker({ format:'yyyy-mm-dd' });
 
 							}
 

@@ -10,6 +10,12 @@ namespace Model;
 class Article extends \Core\Model\Base {
 	
 	/**
+	 * User
+	 * @option type = BelongsTo
+	 */
+	public $user;
+
+	/**
 	 * Title
 	 * @option type = Varchar
 	 * @option length = 125
