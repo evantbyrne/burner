@@ -28,10 +28,10 @@ class Admin extends Base {
 		$klass_options = \Library\DocComment::options(new \ReflectionClass($model));
 		$list = (isset($klass_options['list'])) ? array_map('trim', explode(',', $klass_options['list'])) : null;
 		$options = $model->get_admin();
-		
+		$columns = array();
+
 		if(is_array($list)) {
 
-			$columns = array();
 			foreach($list as $column_name) {
 
 				if(in_array($column_name, $list)) {
@@ -42,11 +42,23 @@ class Admin extends Base {
 
 			}
 
-			return $columns;
+		} else {
+
+			$columns = $options;
 
 		}
 
-		return $options;
+		foreach($columns as $column_name => $o) {
+
+			if(isset($o['list']) and !$o['list']) {
+
+				unset($columns[$column_name]);
+
+			} 
+
+		}
+
+		return $columns;
 
 	}
 
