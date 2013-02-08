@@ -100,6 +100,7 @@
 
 							var modal = $('#modal');
 							modal.html(data).show().modal({ keyboard:true, backdrop:false, show: true });
+							modal.find('.ajax-add-modal').hide().parent().removeClass('controls-row');
 							modal.find('.datepicker').datepicker({ format:'yyyy-mm-dd' });
 							modal.modal('show');
 
@@ -133,7 +134,10 @@
 
 							} else {
 
-								$('#modal').html(data).find('.datepicker').datepicker({ format:'yyyy-mm-dd' });
+								var modal = $('#modal');
+								modal.html(data);
+								modal.find('.ajax-add-modal').hide().parent().removeClass('controls-row');
+								modal.find('.datepicker').datepicker({ format:'yyyy-mm-dd' });
 
 							}
 
