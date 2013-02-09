@@ -64,13 +64,13 @@ class Admin extends Base {
 
 	/**
 	 * Order
-	 * @param \Core\Model\Base
+	 * @param mixed Anything with a getDocComment() method, such as ReflectionClass
 	 * @param \Mysql\Select
 	 * @return \Mysql\Select
 	 */
-	protected function order($model, $select) {
+	protected function order($klass, $select) {
 
-		$klass_options = \Library\DocComment::options(new \ReflectionClass($model));
+		$klass_options = \Library\DocComment::options($klass);
 		$order = (isset($klass_options['order'])) ? array_map('trim', explode(',', $klass_options['order'])) : null;
 
 		if(is_array($order)) {
@@ -110,7 +110,7 @@ class Admin extends Base {
 		$model_class = "\\Model\\$model_name";
 		$model = new $model_class();
 		$select = ($select === null) ? $model_class::select()->page($page, ADMIN_PAGE_SIZE) : $select;
-		$select = $this->order($model, $select);
+		$select = $this->order(new \ReflectionClass($model), $select);
 		$belongsto = array();
 		$choices = array();
 
@@ -337,6 +337,7 @@ class Admin extends Base {
 		}
 
 		$model_class = "\\Model\\$model";
+		$klass = new \ReflectionClass($model_class);
 		$row = $model_class::id($id) or $this->error(404);
 		
 		$schema = $row->get_schema();
@@ -394,7 +395,7 @@ class Admin extends Base {
 						$column_model_class = "\\Model\\$name";
 						$choices = array();
 						
-						foreach($column_model_class::select()->order_desc('id')->fetch() as $r) {
+						foreach($this->order($klass->getProperty($name), $column_model_class::select())->fetch() as $r) {
 							
 							$choices[$r->id] = $r;
 							
@@ -545,6 +546,7 @@ class Admin extends Base {
 		}
 
 		$model_class = "\\Model\\$model";
+		$klass = new \ReflectionClass($model_class);
 		$row = new $model_class();
 		
 		$schema = $row->get_schema();
@@ -579,7 +581,7 @@ class Admin extends Base {
 						$column_model_class = "\\Model\\$name";
 						$choices = array();
 						
-						foreach($column_model_class::select()->order_desc('id')->fetch() as $r) {
+						foreach($this->order($klass->getProperty($name), $column_model_class::select())->fetch() as $r) {
 							
 							$choices[$r->id] = $r;
 							

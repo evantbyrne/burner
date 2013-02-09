@@ -10,7 +10,7 @@ class DocComment {
 	
 	/**
 	 * Options
-	 * @param mixed Anything with a getDocComment() method, such as RefletionClass
+	 * @param mixed Anything with a getDocComment() method, such as ReflectionClass
 	 * @return array
 	 */
 	public static function options($object) {
