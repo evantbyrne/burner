@@ -1,3 +1,7 @@
 .navbar-inner {
 	border-radius:0;
 }
+
+.modal {
+	position: absolute; /* Needed for select2 dropdowns */
+}

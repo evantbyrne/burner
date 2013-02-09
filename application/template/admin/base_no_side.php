@@ -12,6 +12,7 @@
 			<link rel="stylesheet" href="<?php echo url('static/admin/css/bootstrap-responsive.css'); ?>" />
 			<link rel="stylesheet" href="<?php echo url('static/admin/css/rewrite.css'); ?>" />
 			<link rel="stylesheet" href="<?php echo url('static/admin/css/datepicker.css'); ?>" />
+			<link rel="stylesheet" href="<?php echo url('static/admin/css/select2.css'); ?>" />
 		<?php $this->end_section(); ?>
 
 	</head>
@@ -87,11 +88,15 @@
 			<script src="<?php echo url('static/admin/js/jquery.min.js'); ?>"></script>
 			<script src="<?php echo url('static/admin/js/bootstrap.min.js'); ?>"></script>
 			<script src="<?php echo url('static/admin/js/bootstrap-datepicker.js'); ?>"></script>
+			<script src="<?php echo url('static/admin/js/select2.min.js'); ?>"></script>
 			<script>
 				$(document).ready(function() {
 
 					// Date picker
 					$('.datepicker').datepicker({ format:'yyyy-mm-dd' });
+
+					// Fancy select boxes
+					$('select').select2({width:'element'});
 
 					// Modal
 					$('.ajax-add-modal').click(function() {
@@ -102,7 +107,10 @@
 							modal.html(data).show().modal({ keyboard:true, backdrop:false, show: true });
 							modal.find('.ajax-add-modal').hide().parent().removeClass('controls-row');
 							modal.find('.datepicker').datepicker({ format:'yyyy-mm-dd' });
+							modal.find('select').select2({width:'element'});
 							modal.modal('show');
+
+							$('html, body').animate({ scrollTop: 0 });
 
 						});
 
@@ -138,6 +146,7 @@
 								modal.html(data);
 								modal.find('.ajax-add-modal').hide().parent().removeClass('controls-row');
 								modal.find('.datepicker').datepicker({ format:'yyyy-mm-dd' });
+								modal.find('select').select2({width:'element'});
 
 							}
 

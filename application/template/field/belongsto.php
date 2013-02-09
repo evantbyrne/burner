@@ -1,6 +1,6 @@
 <p>
 	<span class="controls controls-row">
-		<select name="<?php echo $field; ?>" class="span2">
+		<select name="<?php echo $field; ?>">
 
 		<?php foreach($options['choices'] as $key => $name): ?>
 
