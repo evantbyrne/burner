@@ -19,7 +19,7 @@ class Simple extends \Library\Test\Base {
 
 	public function test_should_fail() {
 
-		$this->assert_not(321, $this->not_a_test());
+		$this->assert_type('string', $this->not_a_test());
 
 	}
 

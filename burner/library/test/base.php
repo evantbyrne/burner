@@ -113,4 +113,22 @@ class Base {
 
 	}
 
+	/**
+	 * Assert Type
+	 * @param string Expected type
+	 * @param mixed Variable
+	 * @throws \Library\Test\Exception
+	 */
+	public function assert_type($expected, $variable) {
+
+		$type = $this->get_type($variable);
+		if($expected !== $type) {
+
+			$message = "Expected type: $expected\nActual: $type = " . json_encode($variable);
+			throw \Library\Test\Exception::given($message, $this->get_backtrace());
+
+		}
+
+	}
+
 }
