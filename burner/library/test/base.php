@@ -42,12 +42,12 @@ class Base {
 	public function fail($message) {
 
 		throw \Library\Test\Exception::given($message, $this->get_backtrace());
-		
+
 	}
 
 	/**
 	 * Assert
-	 * @param mixed Epected
+	 * @param mixed Expected
 	 * @param mixed Actual
 	 * @throws \Library\Test\Exception
 	 */
@@ -73,6 +73,40 @@ class Base {
 			$e_type = $this->get_type($expected);
 			$a_type = $this->get_type($actual);
 			$message = "Expected: $e_type = " . json_encode($expected) . "\nActual: $a_type = " . json_encode($actual);
+			throw \Library\Test\Exception::given($message, $this->get_backtrace());
+
+		}
+
+	}
+
+	/**
+	 * Assert Not
+	 * @param mixed Unexpected
+	 * @param mixed Actual
+	 * @throws \Library\Test\Exception
+	 */
+	public function assert_not($unexpected, $actual) {
+
+		$fail = false;
+		if(is_object($unexpected)) {
+
+			if($unexpected == $actual) {
+
+				$fail = true;
+
+			}
+
+		} elseif($unexpected === $actual) {
+
+			$fail = true;
+
+		}
+
+		if($fail) {
+
+			$e_type = $this->get_type($unexpected);
+			$a_type = $this->get_type($actual);
+			$message = "Unexpected: $e_type = " . json_encode($unexpected) . "\nActual: $a_type = " . json_encode($actual);
 			throw \Library\Test\Exception::given($message, $this->get_backtrace());
 
 		}
