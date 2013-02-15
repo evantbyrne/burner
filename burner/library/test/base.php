@@ -9,6 +9,17 @@ namespace Library\Test;
 class Base {
 
 	/**
+	 * Get Type
+	 * @param mixed
+	 * @return string
+	 */
+	protected function get_type($variable) {
+
+		return (is_object($variable)) ? get_class($variable) : gettype($variable);
+
+	}
+
+	/**
 	 * Get Backtrace
 	 * @return array Returns debug_backtrace()[1], or ['file' => 'unknown', 'line' => 'unknown']
 	 */
@@ -22,6 +33,18 @@ class Base {
 		}  return array('file' => 'unknown', 'line' => 'unknown');
 
 	}
+
+	/**
+	 * Fail
+	 * @param string Message
+	 * @throws \Library\Test\Exception
+	 */
+	public function fail($message) {
+
+		throw \Library\Test\Exception::given($message, $this->get_backtrace());
+		
+	}
+
 	/**
 	 * Assert
 	 * @param mixed Epected
@@ -47,7 +70,10 @@ class Base {
 
 		if($fail) {
 
-			throw \Library\Test\Exception::given($expected, $actual, $this->get_backtrace());
+			$e_type = $this->get_type($expected);
+			$a_type = $this->get_type($actual);
+			$message = "Expected: $e_type = " . json_encode($expected) . "\nActual: $a_type = " . json_encode($actual);
+			throw \Library\Test\Exception::given($message, $this->get_backtrace());
 
 		}
 

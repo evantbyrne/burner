@@ -23,4 +23,10 @@ class Simple extends \Library\Test\Base {
 
 	}
 
+	public function test_should_also_fail() {
+
+		$this->fail('This test was designed to fail');
+
+	}
+
 }
