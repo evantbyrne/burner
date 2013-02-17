@@ -13,7 +13,7 @@ class Test {
 	 */
 	public function help() {
 
-		echo "\ntest <class>\n\n";
+		echo "\ntest\n\n";
 		echo "Description:\n";
 		echo "\tRuns PHPUnit tests for your application.\n\n";
 
@@ -22,30 +22,35 @@ class Test {
 	/**
 	 * Run
 	 */
-	public function run($class) {
-		
-		$class_name = "\\Test\\$class";
-		$klass = new \ReflectionClass($class_name);
-		$methods = $klass->getMethods(\ReflectionMethod::IS_PUBLIC);
-		$test = new $class_name;
+	public function run() {
 		
 		$total = 0;
 		$fail = 0;
 
-		foreach($methods as $method) {
+		foreach(glob(APPLICATION . '/test/*.php') as $class) {
 
-			$name = $method->getName();
-			if(substr($name, 0, 5) === 'test_') {
+			$class = explode('/', $class);
+			$class_name = '\\Test\\' . substr(end($class), 0, -4);
+			$klass = new \ReflectionClass($class_name);
+			$methods = $klass->getMethods(\ReflectionMethod::IS_PUBLIC);
+			$test = new $class_name;
 
-				$total++;
-				try {
-				
-					$test->{$name}();
+			foreach($methods as $method) {
 
-				} catch(\Exception $e) {
+				$name = $method->getName();
+				if(substr($name, 0, 5) === 'test_') {
 
-					echo "FAIL $class::$name()\n\t" . str_replace("\n", "\n\t", $e->getMessage()) . "\n\n";
-					$fail++;
+					$total++;
+					try {
+					
+						$test->{$name}();
+
+					} catch(\Exception $e) {
+
+						echo "FAIL $class_name::$name()\n\t" . str_replace("\n", "\n\t", $e->getMessage()) . "\n\n";
+						$fail++;
+
+					}
 
 				}
 
