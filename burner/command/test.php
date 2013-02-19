@@ -13,24 +13,28 @@ class Test {
 	 */
 	public function help() {
 
-		echo "\ntest\n\n";
+		echo "\ntest [<path> <namespace>]\n\n";
 		echo "Description:\n";
-		echo "\tRuns PHPUnit tests for your application.\n\n";
+		echo "\tRuns PHPUnit tests for your application.\n";
+		echo "\tBy default tests all files located in application/test/.\n\n";
 
 	}
 
 	/**
 	 * Run
+	 * @param string Path
+	 * @param string Namespace
 	 */
-	public function run() {
+	public function run($path = null, $namespace = 'Test') {
 		
+		$path = ($path === null) ? APPLICATION . '/test/*.php' : $path;
 		$total = 0;
 		$fail = 0;
 
-		foreach(glob(APPLICATION . '/test/*.php') as $class) {
+		foreach(glob($path) as $class) {
 
 			$class = explode('/', $class);
-			$class_name = '\\Test\\' . substr(end($class), 0, -4);
+			$class_name = "\\$namespace\\" . substr(end($class), 0, -4);
 			$klass = new \ReflectionClass($class_name);
 			$methods = $klass->getMethods(\ReflectionMethod::IS_PUBLIC);
 			$test = new $class_name;
