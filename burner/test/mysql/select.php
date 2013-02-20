@@ -282,6 +282,26 @@ class Select extends \Library\Test\Base {
 
 	}
 
+	public function test_where_null() {
+
+		$s = new S('foo');
+		$s->where_null('bar');
+		$q = $s->build();
+		$this->assert("SELECT * FROM `foo` WHERE `bar` IS NULL", $q->sql());
+		$this->assert(array(), $q->params());
+
+	}
+
+	public function test_where_not_null() {
+
+		$s = new S('foo');
+		$s->where_not_null('bar');
+		$q = $s->build();
+		$this->assert("SELECT * FROM `foo` WHERE `bar` IS NOT NULL", $q->sql());
+		$this->assert(array(), $q->params());
+
+	}
+
 	public function test_where_order() {
 
 		$s = new S('foo');
