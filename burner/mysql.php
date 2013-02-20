@@ -630,7 +630,7 @@ abstract class WhereBase extends Base {
 	 */
 	public function and_clause() {
 	
-		$this->where[] = array('type'=>'clause', 'clause'=>'and');
+		$this->where[] = array('type'=>'clause', 'clause'=>'AND');
 		return $this;
 	
 	}
@@ -641,7 +641,7 @@ abstract class WhereBase extends Base {
 	 */
 	public function or_clause() {
 	
-		$this->where[] = array('type'=>'clause', 'clause'=>'or');
+		$this->where[] = array('type'=>'clause', 'clause'=>'OR');
 		return $this;
 	
 	}
@@ -679,7 +679,7 @@ abstract class WhereBase extends Base {
 	 */
 	public function and_where($col, $operator, $val) {
 	
-		$this->where[] = array('type'=>'clause', 'clause'=>'and');
+		$this->where[] = array('type'=>'clause', 'clause'=>'AND');
 		return $this->where($col, $operator, $val);
 	
 	}
@@ -693,7 +693,7 @@ abstract class WhereBase extends Base {
 	 */
 	public function or_where($col, $operator, $val) {
 	
-		$this->where[] = array('type'=>'clause', 'clause'=>'or');
+		$this->where[] = array('type'=>'clause', 'clause'=>'OR');
 		return $this->where($col, $operator, $val);
 	
 	}
@@ -705,7 +705,7 @@ abstract class WhereBase extends Base {
 	 */
 	public function and_where_null($col) {
 	
-		$this->where[] = array('type'=>'clause', 'clause'=>'and');
+		$this->where[] = array('type'=>'clause', 'clause'=>'AND');
 		return $this->where_null($col);
 	
 	}
@@ -717,7 +717,7 @@ abstract class WhereBase extends Base {
 	 */
 	public function or_where_null($col) {
 	
-		$this->where[] = array('type'=>'clause', 'clause'=>'or');
+		$this->where[] = array('type'=>'clause', 'clause'=>'OR');
 		return $this->where_null($col);
 	
 	}
@@ -729,7 +729,7 @@ abstract class WhereBase extends Base {
 	 */
 	public function and_where_not_null($col) {
 	
-		$this->where[] = array('type'=>'clause', 'clause'=>'and');
+		$this->where[] = array('type'=>'clause', 'clause'=>'AND');
 		return $this->where_not_null($col);
 	
 	}
@@ -741,7 +741,7 @@ abstract class WhereBase extends Base {
 	 */
 	public function or_where_not_null($col) {
 	
-		$this->where[] = array('type'=>'clause', 'clause'=>'or');
+		$this->where[] = array('type'=>'clause', 'clause'=>'OR');
 		return $this->where_not_null($col);
 	
 	}
