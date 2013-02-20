@@ -72,7 +72,7 @@ class Base {
 
 			$e_type = $this->get_type($expected);
 			$a_type = $this->get_type($actual);
-			$message = "Expected: $e_type = " . json_encode($expected) . "\nActual: $a_type = " . json_encode($actual);
+			$message = "Expected: $e_type = " . json_encode($expected) . "\nActual:   $a_type = " . json_encode($actual);
 			throw \Library\Test\Exception::given($message, $this->get_backtrace());
 
 		}
