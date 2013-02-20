@@ -328,14 +328,14 @@ class Select extends \Library\Test\Base {
 
 	}
 
-	public function test_order_limit() {
+	public function test_order_asc_limit() {
 
 		$s = new S('foo');
 		$s->order_asc('bar');
 		$s->limit(5);
 		$q = $s->build();
-		$this->assert("SELECT * FROM `foo` ORDER BY `bar` LIMIT ?", $q->sql());
-		$this->assert(array(5), $q->params());
+		$this->assert("SELECT * FROM `foo` ORDER BY `bar` ASC LIMIT 5", $q->sql());
+		$this->assert(array(), $q->params());
 
 	}
 
@@ -348,8 +348,8 @@ class Select extends \Library\Test\Base {
 		$s = new S('foo');
 		$s->limit(5);
 		$q = $s->build();
-		$this->assert("SELECT * FROM `foo` LIMIT ?", $q->sql());
-		$this->assert(array(5), $q->params());
+		$this->assert("SELECT * FROM `foo` LIMIT 5", $q->sql());
+		$this->assert(array(), $q->params());
 
 	}
 
@@ -359,8 +359,8 @@ class Select extends \Library\Test\Base {
 		$s->limit(5);
 		$s->offset(10);
 		$q = $s->build();
-		$this->assert("SELECT * FROM `foo` LIMIT ? OFFSET ?", $q->sql());
-		$this->assert(array(5, 10), $q->params());
+		$this->assert("SELECT * FROM `foo` LIMIT 5 OFFSET 10", $q->sql());
+		$this->assert(array(), $q->params());
 
 	}
 
@@ -369,8 +369,8 @@ class Select extends \Library\Test\Base {
 		$s = new S('foo');
 		$s->page(2, 15);
 		$q = $s->build();
-		$this->assert("SELECT * FROM `foo` LIMIT ? OFFSET ?", $q->sql());
-		$this->assert(array(15, 15), $q->params());
+		$this->assert("SELECT * FROM `foo` LIMIT 15 OFFSET 15", $q->sql());
+		$this->assert(array(), $q->params());
 
 	}
 
