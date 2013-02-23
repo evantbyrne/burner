@@ -1,10 +1,5 @@
 <?php
 
-/**
- * MySQL Query Builder Library
- * @author Beaker Studio http://codecanyon.net/user/Beaker_Studio
- */
-
 namespace Mysql;
 
 
