@@ -131,4 +131,47 @@ class Base {
 
 	}
 
+	/**
+	 * Assert Throws
+	 * @param string Expected exception class
+	 * @param mixed Anything callable
+	 * @throws \Library\Test\Exception
+	 */
+	public function assert_throws($expected, $func) {
+
+		$fail = true;
+		$throwed = null;
+		try {
+
+			$func();
+
+		} catch(\Exception $e) {
+
+			if(is_a($e, $expected)) {
+
+				$fail = false;
+
+			} else {
+
+				$throwed = get_class($e);
+
+			}
+
+		}
+
+		if($fail) {
+
+			$message = "Expected '$expected' to be thrown";
+			if($throwed !== null) {
+
+				$message .= "\nActually thrown: '$throwed'";
+
+			}
+
+			throw \Library\Test\Exception::given($message, $this->get_backtrace());
+
+		}
+
+	}
+
 }
