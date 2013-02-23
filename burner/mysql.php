@@ -1889,7 +1889,7 @@ class IntColumn extends TableColumn {
 	 */
 	public function build() {
 	
-		return "`{$this->name}` INT {$this->build_null()}";
+		return "`{$this->name}` INT{$this->build_null()}";
 	
 	}
 	
@@ -1908,7 +1908,7 @@ class TinyIntColumn extends TableColumn {
 	 */
 	public function build() {
 	
-		return "`{$this->name}` TINYINT {$this->build_null()}";
+		return "`{$this->name}` TINYINT{$this->build_null()}";
 	
 	}
 	
@@ -2031,7 +2031,7 @@ class DecimalColumn extends TableColumn {
 		
 		}
 		
-		return "`{$this->name}` Decimal({$this->options['max']}, {$this->options['digits']}){$this->build_null()}";
+		return "`{$this->name}` DECIMAL({$this->options['max']}, {$this->options['digits']}){$this->build_null()}";
 	
 	}
 	
