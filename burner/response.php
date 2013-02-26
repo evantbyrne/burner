@@ -17,7 +17,7 @@ class Response {
 	 */
 	public static function template($template, $data = null, $code = null) {
 
-		$template_class = to_php_namespace(TEMPLATE_LIBRARY);
+		$template_class = to_php_namespace(\Core\Config::get('template_library'));
 		return new Response($template_class::render($template, $data), $code);
 
 	}

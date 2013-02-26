@@ -82,7 +82,7 @@
 			
 			<?php $this->section('footer'); ?>
 
-				<?php if(DEBUG): ?>
+				<?php if(\Core\Config::get('debug')): ?>
 					
 					<p><small>Executed queries: <?php echo count(\Core\DB::connection()->queries()); ?></small></p>
 				

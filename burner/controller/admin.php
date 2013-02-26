@@ -109,7 +109,7 @@ class Admin extends Base {
 
 		$model_class = "\\Model\\$model_name";
 		$model = new $model_class();
-		$select = ($select === null) ? $model_class::select()->page($page, ADMIN_PAGE_SIZE) : $select;
+		$select = ($select === null) ? $model_class::select()->page($page, \Core\Config::get('admin_page_size')) : $select;
 		$select = $this->order(new \ReflectionClass($model), $select);
 		$belongsto = array();
 		$choices = array();
@@ -255,7 +255,7 @@ class Admin extends Base {
 		$columns = $this->get_list_columns($model);
 		$total_rows = $model_class::select()->count_column('id', 'total')->single();
 		$page = \Library\Input::get('page', 1);
-		$page_count = ceil(intval($total_rows->total) / ADMIN_PAGE_SIZE);
+		$page_count = ceil(intval($total_rows->total) / \Core\Config::get('admin_page_size'));
 
 		$this->data('columns', $columns);
 		$this->data('rows', $this->get_rows($name, $columns, $select, $page));
@@ -287,8 +287,8 @@ class Admin extends Base {
 
 		$total_rows = $model_class::select()->where($parent_model, '=', $parent_id)->count_column('id', 'total')->single();
 		$page = \Library\Input::get('page', 1);
-		$page_count = ceil(intval($total_rows->total) / ADMIN_PAGE_SIZE);
-		$select = $model_class::select()->where($parent_model, '=', $parent_id)->page($page, ADMIN_PAGE_SIZE)->order_desc('id');
+		$page_count = ceil(intval($total_rows->total) / \Core\Config::get('admin_page_size'));
+		$select = $model_class::select()->where($parent_model, '=', $parent_id)->page($page, \Core\Config::get('admin_page_size'))->order_desc('id');
 		$this->model($child_model, $select);
 
 		$url = route_url('get', 'admin', 'children', array($parent_model, $parent_id, $child_model)) . '&page=';

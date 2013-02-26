@@ -131,7 +131,7 @@ class Connection {
 		
 		}
 		
-		if(DEBUG) {
+		if(\Core\Config::get('debug')) {
 			
 			$this->queries[] = $query;
 			
@@ -171,7 +171,7 @@ class Connection {
 		
 		}
 		
-		if(DEBUG) {
+		if(\Core\Config::get('debug')) {
 			
 			$this->queries[] = $query;
 			

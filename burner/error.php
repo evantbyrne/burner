@@ -58,7 +58,7 @@ function burner_error($level, $message, $file = 'current file', $line='(unknown)
 		'line'    => $line
 	);
 	
-	if($fatal or $exception or DEBUG) {
+	if($fatal or $exception or \Core\Config::get('debug')) {
 	
 		ob_clean();
 		echo "<p>{$error['prefix']}: <strong>{$error['message']}</strong> In {$error['file']} At Line {$error['line']}</p>";
@@ -67,10 +67,10 @@ function burner_error($level, $message, $file = 'current file', $line='(unknown)
 	
 	}
 	
-	if(ERROR_LOGGING) {
+	if(\Core\Config::get('error_logging')) {
 		
 		$date = date('g:i A M d Y');
-		$fh = fopen(ERROR_LOG_FILE, 'a');
+		$fh = fopen(\Core\Config::get('error_logging_file'), 'a');
 		flock($fh, LOCK_EX);
 		fwrite($fh, "[$date] {$error['prefix']}: {$error['message']} IN {$error['file']} ON LINE {$error['line']}\n");
 		flock($fh, LOCK_UN);

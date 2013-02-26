@@ -7,7 +7,7 @@
  */
 function root_url($https = false) {
 
-	return (($https) ? 'https://' : 'http://' ) . ((!MOD_REWRITE) ? BASE_URL . 'index.php/' : BASE_URL);
+	return (($https) ? 'https://' : 'http://' ) . ((!\Core\Config::get('mod_rewrite')) ? \Core\Config::get('base_url') . 'index.php/' : \Core\Config::get('base_url'));
 
 }
 
