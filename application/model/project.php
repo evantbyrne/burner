@@ -18,4 +18,21 @@ class Project extends \Core\Model\Base {
 	 */
 	public $description;
 
+	/**
+	 * Preview
+	 * @option type = Image
+	 * @option required = Image field is required.
+	 */
+	public $preview;
+
+	/**
+	 * Preview Path
+	 * @return string
+	 */
+	public function preview_path() {
+
+		return "static/project/{$this->id}";
+
+	}
+
 }

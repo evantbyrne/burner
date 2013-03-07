@@ -1,4 +1,4 @@
-<?php if(!empty($value) and $model !== null and empty($errors[$field])): ?>
+<?php if(!empty($value) and $model !== null and empty($errors[$field]) and isset($model->id)): ?>
 
 	<?php $location = $model->{$field . '_path'}() . '.' . $model->{$field}; ?>
 

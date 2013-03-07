@@ -46,7 +46,7 @@ class File extends Char {
 		parent::__construct($column_name, $options);
 		
 		// Path
-		$this->set_method($column_name . '_path', function($model) use ($column_name) {
+		/*$this->set_method($column_name . '_path', function($model) use ($column_name) {
 		
 			if(empty($model->{$column_name})) {
 				
@@ -56,7 +56,7 @@ class File extends Char {
 			
 			return $model->{$column_name . '_path'}() . ".{$model->{$column_name}}";
 		
-		});
+		});*/
 	
 	}
 	

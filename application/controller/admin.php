@@ -11,6 +11,6 @@ class Admin extends \Core\Controller\Admin {
 	/**
 	 * @inheritdoc
 	 */
-	public static $models = array('user', 'article', 'tag', 'articletag', 'comment', 'ticket');
+	public static $models = array('user', 'article', 'tag', 'articletag', 'comment', 'ticket', 'project');
 
 }
