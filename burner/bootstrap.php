@@ -17,6 +17,8 @@ class Bootstrap {
 	public static function autoload($class) {
 		
 		$segments = explode('/', ltrim(str_replace('\\', '/', strtolower($class)), '/'));
+		$last = count($segments) - 1;
+		$segments[$last] = str_replace('_', '/', $segments[$last]);
 
 		switch($segments[0]) {
 
