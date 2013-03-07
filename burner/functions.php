@@ -142,7 +142,7 @@ function trigger($event, $args = array()) {
 			
 			if(substr($file, -4) === '.php' and file_exists("$dir/$file")) {
 
-				$klass = '\\Listener\\' . str_replace('/', '\\', $event) . '\\'. substr($file, 0, -4);
+				$klass = '\\App\\Listener\\' . str_replace('/', '\\', $event) . '\\'. substr($file, 0, -4);
 				$priority = (isset($klass::$priority)) ? $klass::$priority : 0;
 				$listeners[$klass] = $priority;
 				$any = true;

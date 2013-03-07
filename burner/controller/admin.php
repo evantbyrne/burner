@@ -107,7 +107,7 @@ class Admin extends Base {
 	 */
 	protected function get_rows($model_name, $columns, $select = null, $page = 1) {
 
-		$model_class = "\\Model\\$model_name";
+		$model_class = "\\App\\Model\\$model_name";
 		$model = new $model_class();
 		$select = ($select === null) ? $model_class::select()->page($page, \Core\Config::get('admin_page_size')) : $select;
 		$select = $this->order(new \ReflectionClass($model), $select);
@@ -158,7 +158,7 @@ class Admin extends Base {
 
 			foreach($belongsto as $column_name => $column) {
 
-				$belongsto_class = '\\Model\\' . $column_name;
+				$belongsto_class = '\\App\\Model\\' . $column_name;
 				$belongsto_select = $belongsto_class::select();
 				$values = array();
 
@@ -225,7 +225,7 @@ class Admin extends Base {
 		$models = array();
 		foreach(static::$models as $model) {
 			
-			$model_class = "\\Model\\$model";
+			$model_class = "\\App\\Model\\$model";
 			$models[$model] = array(
 				'name'        => $model_class::get_verbose(),
 				'name_plural' => $model_class::get_verbose_plural()
@@ -250,7 +250,7 @@ class Admin extends Base {
 
 		}
 
-		$model_class = "\\Model\\$name";
+		$model_class = "\\App\\Model\\$name";
 		$model = new $model_class();
 		$columns = $this->get_list_columns($model);
 		$total_rows = $model_class::select()->count_column('id', 'total')->single();
@@ -282,7 +282,7 @@ class Admin extends Base {
 	 */
 	public function children($parent_model, $parent_id, $child_model) {
 
-		$model_class = "\\Model\\$child_model";
+		$model_class = "\\App\\Model\\$child_model";
 		$model = new $model_class();
 
 		$total_rows = $model_class::select()->where($parent_model, '=', $parent_id)->count_column('id', 'total')->single();
@@ -295,7 +295,7 @@ class Admin extends Base {
 		$this->data('next', ($page < $page_count) ?  $url . ($page + 1) : null);
 		$this->data('prev', ($page > 1) ? $url . ($page - 1) : null);
 
-		$parent_model_class = '\\Model\\' . $parent_model;
+		$parent_model_class = '\\App\\Model\\' . $parent_model;
 		$this->data(array(
 			
 			'parent_model' => $parent_model,
@@ -336,7 +336,7 @@ class Admin extends Base {
 
 		}
 
-		$model_class = "\\Model\\$model";
+		$model_class = "\\App\\Model\\$model";
 		$klass = new \ReflectionClass($model_class);
 		$row = $model_class::id($id) or $this->error(404);
 		
@@ -353,7 +353,7 @@ class Admin extends Base {
 				
 				if(is_a($column, '\\Column\\HasMany')) {
 				
-					$child_model_class = '\\Model\\' . $column->get_option('model');
+					$child_model_class = '\\App\\Model\\' . $column->get_option('model');
 					$parent_column = $column->get_option('column');
 					$child_model = new $child_model_class();
 					$child_select = $child_model_class::select()->where($parent_column, '=', $id)->order_asc('id');
@@ -369,7 +369,7 @@ class Admin extends Base {
 				
 				} elseif(is_a($column, '\\Column\\ManyToMany')) {
 
-					$child_model_class = '\\Model\\' . $column->get_option('middleman');
+					$child_model_class = '\\App\\Model\\' . $column->get_option('middleman');
 					$parent_column = $model_class::table();
 					$child_model = new $child_model_class();
 					$child_select = $child_model_class::select()->where($parent_column, '=', $id)->order_asc('id');
@@ -392,7 +392,7 @@ class Admin extends Base {
 					// BelongsTo columns
 					if(is_a($column, '\\Column\\BelongsTo')) {
 						
-						$column_model_class = "\\Model\\$name";
+						$column_model_class = "\\App\\Model\\$name";
 						$choices = array();
 						
 						foreach($this->order($klass->getProperty($name), $column_model_class::select())->fetch() as $r) {
@@ -461,12 +461,12 @@ class Admin extends Base {
 	 */
 	public function edit_child($parent_model, $parent_id, $child_model, $child_id) {
 		
-		$parent_model_class = "\\Model\\$parent_model";
+		$parent_model_class = "\\App\\Model\\$parent_model";
 		$parent = $parent_model_class::id($parent_id) or $this->error(404);
 		
 		$this->edit($child_model, $child_id, "admin/$parent_model/$parent_id");
 
-		$parent_model_class = '\\Model\\' . $parent_model;
+		$parent_model_class = '\\App\\Model\\' . $parent_model;
 		$this->data(array(
 			
 			'parent'       => $parent,
@@ -506,7 +506,7 @@ class Admin extends Base {
 
 		}
 
-		$model_class = "\\Model\\$model";
+		$model_class = "\\App\\Model\\$model";
 		$row = $model_class::id($id) or $this->error(404);
 
 		if(is_post()) {
@@ -545,7 +545,7 @@ class Admin extends Base {
 
 		}
 
-		$model_class = "\\Model\\$model";
+		$model_class = "\\App\\Model\\$model";
 		$klass = new \ReflectionClass($model_class);
 		$row = new $model_class();
 		
@@ -578,7 +578,7 @@ class Admin extends Base {
 					if(is_a($column, '\\Column\\BelongsTo')) {
 						
 						// BelongsTo columns
-						$column_model_class = "\\Model\\$name";
+						$column_model_class = "\\App\\Model\\$name";
 						$choices = array();
 						
 						foreach($this->order($klass->getProperty($name), $column_model_class::select())->fetch() as $r) {
@@ -652,12 +652,12 @@ class Admin extends Base {
 	 */
 	public function add_child($parent_model, $parent_id, $child_model) {
 		
-		$parent_model_class = "\\Model\\$parent_model";
+		$parent_model_class = "\\App\\Model\\$parent_model";
 		$parent = $parent_model_class::id($parent_id) or $this->error(404);
 		
 		$this->add($child_model, "admin/$parent_model/$parent_id");
 
-		$parent_model_class = '\\Model\\' . $parent_model;
+		$parent_model_class = '\\App\\Model\\' . $parent_model;
 		$this->data(array(
 			
 			'parent'       => $parent,
@@ -716,7 +716,7 @@ class Admin extends Base {
 	 */
 	public function ajax_add_modal_refresh($model, $id) {
 
-		$model_class = "\\Model\\$model";
+		$model_class = "\\App\\Model\\$model";
 		$res = $model_class::id($id);
 
 		return($res === null) ? 'fail' : die(json_encode(array('id' => $res->id, 'name' => (string) $res)));

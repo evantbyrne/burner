@@ -1,6 +1,6 @@
 <?php
 
-namespace Test;
+namespace App\Test;
 
 class Another extends \Library\Test\Base {
 

@@ -7,7 +7,7 @@ namespace Core;
  * @author Evan Byrne
  */
 class Bootstrap {
-	
+
 	/**
 	 * Autoload
 	 * @throws \Exception
@@ -16,44 +16,43 @@ class Bootstrap {
 	 */
 	public static function autoload($class) {
 		
-		// Split into segments
-		$segments = explode('\\', strtolower($class));
-		
-		if(empty($segments)) {
-		
-			throw new \Exception("Nothing to autoload!");
-			return false;
-		
+		$segments = explode('/', ltrim(str_replace('\\', '/', strtolower($class)), '/'));
+
+		switch($segments[0]) {
+
+			case 'core':
+				$segments[0] = BURNER;
+				break;
+
+			case 'column':
+				$segments[0] = BURNER . '/column';
+				break;
+
+			case 'library':
+				$segments[0] = BURNER . '/library';
+				break;
+
 		}
-		
-		// Compensate for some classes not starting with backslash
-		$first = preg_match('/^\\\/', $class) ? 1 : 0;
-		
-		switch($segments[$first]) {
-		
-			case 'core':     $start = BURNER; break;
-			case 'column':   $start = BURNER . '/column'; break;
-			case 'library':  $start = BURNER . '/library'; break;
-			case 'language': $start = APPLICATION . '/language/' . Config::get('language'); break;
-			case true:       $start = APPLICATION . "/{$segments[$first]}"; break;
-			default:         $start = APPLICATION; break;
-		
+
+		if(isset($segments[1])) {
+
+			switch($segments[1]) {
+
+				case 'language':
+					$segments[1] = 'language/' . Config::get('language');
+
+			}
+
 		}
-		
-		// Combine into usuable path
-		$path = "$start/" . implode('/', array_slice($segments, $first+1)) . '.php';
-		
-		if(file_exists($path)) {
-		
-			include_once($path);
-			return true;
-		
-		} else {
-		
-			throw new \Exception("File at <strong>$path</strong> could not be autoloaded");
-			return false;
-		
+
+		$path = implode('/', $segments) . '.php';
+		if(!file_exists($path)) {
+
+			throw new \Exception("Autoloaded file not found at '$path'");
+
 		}
+
+		require($path);
 	
 	}
 	
@@ -166,7 +165,7 @@ class Bootstrap {
 	 */
 	public static function controller($controller_name, $method, $args = array()) {
 		
-		$tmp = '\\Controller\\' . ucfirst($controller_name);
+		$tmp = '\\App\\Controller\\' . ucfirst($controller_name);
 		$controller = new $tmp();
 		
 		// Check to see if method is callable

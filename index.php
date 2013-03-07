@@ -8,7 +8,7 @@
 define('CONFIGURATION', 'development');
 
 // Application location
-define('APPLICATION', 'application');
+define('APPLICATION', 'app');
 
 // Location of Burner core
 define('BURNER', 'burner');

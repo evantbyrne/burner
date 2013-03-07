@@ -33,7 +33,7 @@ class Import_Json {
 		$json = json_decode($data, true);
 
 		// Insert data into table
-		$model_class = "\\Model\\$model";
+		$model_class = "\\App\\Model\\$model";
 		$table = $model_class::table();
 		$n = 0;
 

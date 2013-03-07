@@ -38,10 +38,10 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 		$secret = Input::cookie('auth');
 		if($secret !== null) {
 			
-			$session = \Model\UserSession::select()->where('secret', '=', $secret)->single();
+			$session = \App\Model\UserSession::select()->where('secret', '=', $secret)->single();
 			if($session !== null) {
 				
-				$user = \Model\User::select()->where('id', '=', $session->user)->single();
+				$user = \App\Model\User::select()->where('id', '=', $session->user)->single();
 				if($user !== null) {
 				
 					self::$user = $user;
@@ -82,7 +82,7 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 		if($level !== false) {
 
 			$user = self::user();
-			if($user->type < \Model\User::level($level)) {
+			if($user->type < \App\Model\User::level($level)) {
 
 				\Core\Bootstrap::controller('error', '_403');
 				exit;
@@ -102,11 +102,11 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 		
 			$errors = array();
 			
-			$user = \Model\User::from_post(array('email', 'password'));
+			$user = \App\Model\User::from_post(array('email', 'password'));
 
-			$user->type = \Model\User::level('user');
+			$user->type = \App\Model\User::level('user');
 			$password_confirm = Input::post('password_confirm');
-			$password_confirm = empty($password_confirm) ? null : \Model\User::hash($password_confirm);
+			$password_confirm = empty($password_confirm) ? null : \App\Model\User::hash($password_confirm);
 			
 			// Validate model fields
 			$valid = $user->valid();
@@ -119,17 +119,17 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 			// Check confirmation password
 			if($user->password !== null and $user->password !== $password_confirm) {
 		
-				$errors['password'] = \Language\Auth::$error_confirmation_password;
+				$errors['password'] = \App\Language\Auth::$error_confirmation_password;
 		
 			}
 		
 			// Check if email already taken
 			if($user->email !== null) {
 		
-				$res = \Model\User::select()->where('email', '=', $user->email)->single();
+				$res = \App\Model\User::select()->where('email', '=', $user->email)->single();
 				if($res !== null) {
 			
-					$errors['email'] = \Language\Auth::$error_taken_email;
+					$errors['email'] = \App\Language\Auth::$error_taken_email;
 			
 				}
 		
@@ -145,15 +145,15 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 			} else {
 		
 				// Create user
-				$user->verify_code = \Model\UserSession::secret();
+				$user->verify_code = \App\Model\UserSession::secret();
 				$user->save();
 		
 				// Send verification email
 				$v_url = url("auth/verify/{$user->verify_code}");
 				mail($user->email,
-					\Language\Auth::$email_success_title,
-					\Language\Auth::email_success_message($v_url),
-					'From: ' + \Language\Auth::$email_success_from);
+					\App\Language\Auth::$email_success_title,
+					\App\Language\Auth::email_success_message($v_url),
+					'From: ' + \App\Language\Auth::$email_success_from);
 		
 				$this->template('auth/register_success');
 		
@@ -161,7 +161,7 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 		
 		} else {
 
-			$this->data('user', new \Model\User());
+			$this->data('user', new \App\Model\User());
 
 		}
 	
@@ -174,10 +174,10 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 		
 		if(is_post()) {
 			
-			$in = \Model\User::from_post(array('email', 'password'));
+			$in = \App\Model\User::from_post(array('email', 'password'));
 		
 			
-			$user = \Model\User::select()
+			$user = \App\Model\User::select()
 				->where('email', '=', $in->email)
 				->and_where('password', '=', $in->password)
 				->and_where_null('verify_code')
@@ -187,14 +187,14 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 				
 				// Doesn't exist
 				$this->data('user', $in);
-				$this->data('errors', array('email' => \Language\Auth::$error_invalid_login));
+				$this->data('errors', array('email' => \App\Language\Auth::$error_invalid_login));
 				$this->data('email', $in->email);
 				
 			} else {
 
 				// Create Session
-				$table = \Model\UserSession::table();
-				$secret = \Model\UserSession::secret();
+				$table = \App\Model\UserSession::table();
+				$secret = \App\Model\UserSession::secret();
 				$expire = new \DateTime();
 				$expire->modify('+30 days');
 
@@ -223,7 +223,7 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 		
 		} else {
 
-			$this->data('user', new \Model\User());
+			$this->data('user', new \App\Model\User());
 
 		}
 		
@@ -238,7 +238,7 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 		
 		if($secret !== null) {
 		
-			\Model\UserSession::delete()->where('secret', '=', $secret)->limit(1)->execute();
+			\App\Model\UserSession::delete()->where('secret', '=', $secret)->limit(1)->execute();
 			Cookie::delete(array(
 				'path' => '/',
 				'name' => 'auth'
@@ -255,11 +255,11 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 	 */
 	public function verify($code) {
 	
-		$user = \Model\User::select()->where('verify_code', '=', $code)->single();
+		$user = \App\Model\User::select()->where('verify_code', '=', $code)->single();
 		
 		if($user !== null) {
 		
-			\Model\User::update()
+			\App\Model\User::update()
 				->where('id', '=', $user->id)
 				->value('verify_code', null)
 				->limit(1)
@@ -278,7 +278,7 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 		
 		if(is_post()) {
 			
-			$user = \Model\User::select()->where('email', '=', Input::post('email'))->single();
+			$user = \App\Model\User::select()->where('email', '=', Input::post('email'))->single();
 			if($user === null) {
 				
 				// User doesn't exist
@@ -287,14 +287,14 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 			} else {
 			
 				// Delete existing password reset
-				\Model\PasswordReset::delete()
+				\App\Model\PasswordReset::delete()
 					->where('user', '=', $user->id)
 					->limit(1)
 					->execute();
 				
 				// Create password reset
-				$secret = \Model\UserSession::secret();
-				\Model\PasswordReset::insert()
+				$secret = \App\Model\UserSession::secret();
+				\App\Model\PasswordReset::insert()
 					->value('user', $user->id)
 					->value('secret', $secret)
 					->execute();
@@ -320,22 +320,22 @@ class Standard extends \Core\Controller\Base implements BaseInterface {
 		if(is_post()) {
 		
 			$password = Input::post('password');
-			$reset = \Model\PasswordReset::select()->where('secret', '=', $secret)->single();
+			$reset = \App\Model\PasswordReset::select()->where('secret', '=', $secret)->single();
 			
 			if($reset !== null and !empty($password)) {
 				
-				$user = \Model\User::id($reset->user) or die('Error: User not found');
+				$user = \App\Model\User::id($reset->user) or die('Error: User not found');
 				$user->merge_post(array('password'));
 
 				// Update password
-				\Model\User::update()
+				\App\Model\User::update()
 					->value('password', $user->password)
 					->where('id', '=', $reset->user)
 					->limit(1)
 					->execute();
 				
 				// Delete password reset
-				\Model\PasswordReset::delete()->where('id', '=', $reset->id)->limit(1)->execute();
+				\App\Model\PasswordReset::delete()->where('id', '=', $reset->id)->limit(1)->execute();
 				
 				$this->template('auth/reset_success');
 				

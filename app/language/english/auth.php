@@ -1,6 +1,6 @@
 <?php
 
-namespace Language;
+namespace App\Language;
 
 class Auth {
 

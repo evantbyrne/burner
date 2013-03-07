@@ -1,6 +1,6 @@
 <?php
 
-namespace Test;
+namespace App\Test;
 
 class Simple extends \Library\Test\Base {
 

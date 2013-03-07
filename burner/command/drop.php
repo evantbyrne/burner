@@ -29,7 +29,7 @@ class Drop {
 		foreach($models as $model) {
 			
 			echo "Dropping: $model\n";
-			$model_class = "\\Model\\$model";
+			$model_class = "\\App\\Model\\$model";
 			$model_instance = new $model_class();
 			$model_instance->drop_table(true);
 			

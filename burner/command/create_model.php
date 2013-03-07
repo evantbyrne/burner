@@ -39,7 +39,7 @@ class Create_Model {
 			} else {
 				
 				$f = fopen($path, 'w');
-				fwrite($f, "<?php\n\nnamespace Model;\n\nclass $model extends \\Core\\Model\\Base {\n\n}");
+				fwrite($f, "<?php\n\nnamespace App\\Model;\n\nclass $model extends \\Core\\Model\\Base {\n\n}");
 				fclose($f);
 				
 			}

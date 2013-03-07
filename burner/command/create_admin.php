@@ -32,10 +32,10 @@ class Create_Admin {
 		ob_flush();
 		$password = trim(fgets(STDIN));
 		
-		$user = \Model\User::from_array(array(
+		$user = \App\Model\User::from_array(array(
 			'email'    => $email,
 			'password' => $password,
-			'type'     => \Model\User::level('admin')
+			'type'     => \App\Model\User::level('admin')
 		));
 		
 		if(is_array($user->valid())) {

@@ -27,7 +27,7 @@ class Alter_Add {
 	public function run($model, $field) {
 			
 		echo "Altering table to add: $model.$field\n";
-		$model_class = "\\Model\\$model";
+		$model_class = "\\App\\Model\\$model";
 		$table = $model_class::table();
 		
 		$instance = new $model_class();

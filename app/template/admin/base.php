@@ -30,9 +30,9 @@
 					<div class="nav-collapse">
 						<ul class="nav pull-right">
 							
-							<?php if(\Controller\Auth::logged_in()): ?>
+							<?php if(\App\Controller\Auth::logged_in()): ?>
 								
-								<li class="active"><a href="javascript:;"><?php echo 'Welcome, ' . \Controller\Auth::user()->email; ?></a></li>
+								<li class="active"><a href="javascript:;"><?php echo 'Welcome, ' . \App\Controller\Auth::user()->email; ?></a></li>
 								<li><a href="<?php echo route_url('get', 'auth', 'logout'); ?>">Log Out</a></li>
 							
 							<?php endif; ?>

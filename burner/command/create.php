@@ -29,7 +29,7 @@ class Create {
 		foreach($models as $model) {
 			
 			echo "Creating: $model\n";
-			$model_class = "\\Model\\$model";
+			$model_class = "\\App\\Model\\$model";
 			$model_instance = new $model_class();
 			$model_instance->create_table(true);
 			

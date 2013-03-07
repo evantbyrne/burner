@@ -1,6 +1,6 @@
 <?php
 
-namespace Controller;
+namespace App\Controller;
 
 /**
  * Example Article Controller
@@ -12,7 +12,7 @@ class Article extends \Core\Controller\Base {
 	 */
 	public function index() {
 
-		$this->data('articles', \Model\Article::select()->order_desc('id')->fetch());
+		$this->data('articles', \App\Model\Article::select()->order_desc('id')->fetch());
 
 	}
 
@@ -21,7 +21,7 @@ class Article extends \Core\Controller\Base {
 	 */
 	public function view($id) {
 
-		$article = \Model\Article::id($id) or $this->error(404);
+		$article = \App\Model\Article::id($id) or $this->error(404);
 		$this->data('article', $article);
 		$this->data('comments', $article->comments()->select()->fetch());
 
@@ -34,7 +34,7 @@ class Article extends \Core\Controller\Base {
 
 		if(is_post()) {
 
-			$article = \Model\Article::from_post(array('title', 'content'));
+			$article = \App\Model\Article::from_post(array('title', 'content'));
 			
 			if($this->valid($article)) {
 
@@ -52,7 +52,7 @@ class Article extends \Core\Controller\Base {
 	 */
 	public function edit($id) {
 
-		$article = \Model\Article::id($id) or $this->error(404);
+		$article = \App\Model\Article::id($id) or $this->error(404);
 
 		if(is_post()) {
 

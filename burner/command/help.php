@@ -21,7 +21,7 @@ class Help {
 
 		} else {
 		
-			$command_class = (file_exists(APPLICATION . "/command/$command.php")) ? "\\Command\\$command" : "\\Core\\Command\\$command";
+			$command_class = (file_exists(APPLICATION . "/command/$command.php")) ? "\\App\\Command\\$command" : "\\Core\\Command\\$command";
 			
 			try {
 

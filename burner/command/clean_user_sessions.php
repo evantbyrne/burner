@@ -25,7 +25,7 @@ class Clean_User_Sessions {
 	public function run() {
 		
 		echo "Removing expired sessions...\n";
-		\Model\UserSession::clean();
+		\App\Model\UserSession::clean();
 		
 	}
 	

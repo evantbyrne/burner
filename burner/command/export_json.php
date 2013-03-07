@@ -27,7 +27,7 @@ class Export_Json {
 	public function run($model, $filename) {
 			
 		echo "Exporting contents of '$model' to $filename...\n\n";
-		$model_class = "\\Model\\$model";
+		$model_class = "\\App\\Model\\$model";
 		$table = $model_class::table();
 		
 		$res = \Core\DB::connection()->select($table)->order_asc('id')->fetch();
