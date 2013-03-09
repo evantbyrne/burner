@@ -95,7 +95,7 @@ class Base {
 	 */
 	public function error($code, $args = array()) {
 		
-		\Core\Bootstrap::controller('error', "_$code", $args);
+		\Core\Bootstrap::controller('App.Controller.Error', "_$code", $args);
 		exit;
 		
 	}
