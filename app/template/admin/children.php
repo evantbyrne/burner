@@ -14,9 +14,9 @@
 
 	<ul class="breadcrumb">
 		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'model', array($parent_model)); ?>"><?php echo $parent_name; ?></a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'edit', array($parent_model, $parent_id)); ?>">Edit</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($parent_model)); ?>"><?php echo $parent_name; ?></a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit', array($parent_model, $parent_id)); ?>">Edit</a> <span class="divider">/</span></li>
 		<li class="active"><?php echo $model_name; ?></li>
 	</ul>
 
@@ -28,7 +28,7 @@
 
 	<div class="well">
 		<ul class="nav nav-list">
-			<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'add_child', array($parent_model, $parent_id, $child_model)); ?>"><i class="icon-plus"></i> Add <?php echo $model_name; ?></a></li>
+			<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'add_child', array($parent_model, $parent_id, $child_model)); ?>"><i class="icon-plus"></i> Add <?php echo $model_name; ?></a></li>
 		</ul>
 	</div>
 
@@ -60,7 +60,7 @@
 				<?php foreach($rows as $row): ?>
 					<tr>
 						<td style="width:45px;">
-							<a class="btn" href="<?php echo route_url('get', 'App.Controller.Admin', 'edit_child', array($parent_model, $parent_id, $model, $row->id)); ?>">Edit</a>
+							<a class="btn" href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit_child', array($parent_model, $parent_id, $model, $row->id)); ?>">Edit</a>
 						</td>
 
 						<?php foreach($columns as $column => $options): ?>

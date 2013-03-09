@@ -14,8 +14,8 @@
 
 	<ul class="breadcrumb">
 		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'model', array($model)); ?>"><?php echo $model_name; ?></a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($model)); ?>"><?php echo $model_name; ?></a> <span class="divider">/</span></li>
 		<li class="active">Edit</li>
 	</ul>
 
@@ -29,7 +29,7 @@
 
 		<div class="form-actions">
 			<input type="submit" value="Save" class="btn btn-primary" />
-			<a class="btn pull-right" href="<?php echo route_url('get', 'App.Controller.Admin', 'delete', array($model, $row->id)); ?>">Delete</a>
+			<a class="btn pull-right" href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'delete', array($model, $row->id)); ?>">Delete</a>
 		</div>
 
 		<?php foreach($columns as $name => $c): ?>
@@ -49,7 +49,7 @@
 				<h3><?php echo $child['verbose_plural']; ?></h3>
 			</div>
 
-			<p><a href="<?php echo route_url('get', 'App.Controller.Admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $child['verbose']; ?></a></p>
+			<p><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $child['verbose']; ?></a></p>
 
 			<?php if(empty($child['rows'])): ?>
 
@@ -73,7 +73,7 @@
 						<?php foreach($child['rows'] as $child_row): ?>
 							<tr>
 								<td style="width:45px;">
-									<a class="btn" href="<?php echo route_url('get', 'admin', 'edit_child', array($model, $row->id, $name, $child_row->id)); ?>">Edit</a>
+									<a class="btn" href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit_child', array($model, $row->id, $name, $child_row->id)); ?>">Edit</a>
 								</td>
 
 								<?php foreach($child['columns'] as $column => $options): ?>
@@ -99,7 +99,7 @@
 					</tbody>
 				</table>
 
-				<p><a href="<?php echo route_url('get', 'admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $child['verbose']; ?></a></p>
+				<p><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $child['verbose']; ?></a></p>
 
 			<?php endif; ?>
 

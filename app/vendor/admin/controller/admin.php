@@ -1,22 +1,22 @@
 <?php
 
-namespace Core\Controller;
+namespace App\Vendor\Admin\Controller;
 
 /**
  * Admin Controller
  * @author Evan Byrne
  */
-class Admin extends Base {
+class Admin extends \Core\Controller\Base {
 	
 	/**
 	 * array Which models are editable via admin
 	 */
-	public static $models = array('user');
+	public static $models;
 
 	/**
 	 * boolean Use HTTPS
 	 */
-	public static $https = false;
+	public static $https;
 
 	/**
 	 * Get List Columns
@@ -213,7 +213,9 @@ class Admin extends Base {
 	 */
 	public function __construct() {
 		
-		Auth\Standard::enforce('admin');
+		\Core\Controller\Auth\Standard::enforce('admin');
+		self::$models = \Core\Config::get('admin_models');
+		self::$https = \Core\Config::get('admin_https_urls');
 		
 	}
 	

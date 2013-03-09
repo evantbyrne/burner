@@ -31,7 +31,9 @@ Config::set('error_logging_file', 'errors.txt');
 Config::set('template_library', 'Library.Template.Standard');
 
 // Admin
+Config::set('admin_models', array('project'));
 Config::set('admin_page_size', 10);
+Config::set('admin_https_urls', true);
 
 // Default language
 Config::set('language', 'english');

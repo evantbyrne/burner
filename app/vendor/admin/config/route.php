@@ -2,7 +2,7 @@
 
 namespace Core;
 
-Route::add('App.Controller.Admin', array(
+Route::add('App.Vendor.Admin.Controller.Admin', array(
 
 	'GET:admin' => 'index',
 	'GET:admin/:any' => 'model',
