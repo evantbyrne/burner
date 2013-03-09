@@ -64,6 +64,24 @@ class Route {
 		self::$pattern[$name] = $regex;
 	
 	}
+
+	/**
+	 * Vendor
+	 * @param string Vendor sub-app name
+	 */
+	public static function vendor($vendor) {
+
+		$path = APPLICATION . "/vendor/$vendor/config/route.php";
+		
+		if(!file_exists($path)) {
+
+			throw new \Exception("Route file not found at '$path'");
+
+		}
+
+		require($path);
+
+	}
 	
 	/**
 	 * Add
