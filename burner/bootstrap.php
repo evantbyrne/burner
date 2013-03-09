@@ -160,14 +160,14 @@ class Bootstrap {
 	
 	/**
 	 * Controller
-	 * @param string Controller name
+	 * @param string Namespace of Controller (in dot notation)
 	 * @param string Method
 	 * @param array Arguments
 	 * @return \Core\Controller\Base Controller instance
 	 */
-	public static function controller($controller_name, $method, $args = array()) {
+	public static function controller($controller_ns, $method, $args = array()) {
 		
-		$tmp = '\\App\\Controller\\' . ucfirst($controller_name);
+		$tmp = to_php_namespace($controller_ns);
 		$controller = new $tmp();
 		
 		// Check to see if method is callable
@@ -179,6 +179,9 @@ class Bootstrap {
 		
 		call_user_func_array(array($controller, $method), $args);
 		
+		$controller_segments = explode('.', $controller_ns);
+		$controller_name = end($controller_segments);
+
 		$template = $controller->get_template();
 		$response = Response::template(
 			($template === null) ? "$controller_name/$method" : $template,
@@ -203,7 +206,7 @@ class Bootstrap {
 		
 		if($uri === false) {
 			
-			self::controller('error', '_404');
+			self::controller('App.Controller.Error', '_404');
 			exit;
 			
 		}

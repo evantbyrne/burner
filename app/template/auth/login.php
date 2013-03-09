@@ -25,7 +25,7 @@
 
 	<div class="well">
 		<ul class="nav nav-list">
-			<li><a href="<?php echo route_url('get', 'auth', 'register'); ?>"><i class="icon-plus"></i>Register</a></li>
+			<li><a href="<?php echo route_url('get', 'App.Controller.Auth', 'register'); ?>"><i class="icon-plus"></i>Register</a></li>
 		</ul>
 	</div>
 
@@ -43,7 +43,7 @@
 		<?php $this->label('password'); ?>
 		<?php $this->field('password', $user); ?>
 
-		<p><a href="<?php echo route_url('get', 'auth', 'reset_request'); ?>"><i class="icon-refresh"></i> Reset Password</a></p>
+		<p><a href="<?php echo route_url('get', 'App.Controller.Auth', 'reset_request'); ?>"><i class="icon-refresh"></i> Reset Password</a></p>
 		
 		<p><input type="submit" value="Login" class="btn btn-primary" /></p>
 

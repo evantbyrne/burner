@@ -67,13 +67,14 @@ class Route {
 	
 	/**
 	 * Add
-	 * @param array Routes
+	 * @param string Namespace of Controller (in dot notation)
+	 * @param array Routes in array('url' => 'method', ...) format
 	 */
-	public static function add($routes) {
+	public static function add($ns, $routes) {
 		
-		foreach($routes as $key=>$val) {
+		foreach($routes as $url => $method) {
 		
-			self::$route[$key] = $val;
+			self::$route[$url] = array($ns, $method);
 		
 		}
 		
@@ -92,7 +93,7 @@ class Route {
 	/**
 	 * Get
 	 * @param string URL
-	 * @return array Route
+	 * @return array Route in array('controller', 'method', array()) format
 	 */
 	public static function get($url) {
 	

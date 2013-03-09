@@ -26,7 +26,7 @@ function url($path = '', $https = false) {
 /**
  * Route URL
  * @param string GET or POST
- * @param string Controller
+ * @param string Namespace of Controller (in dot notation)
  * @param string Method
  * @param mixed Array of arguments, or null
  * @param boolean HTTPS

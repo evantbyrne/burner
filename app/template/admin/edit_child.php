@@ -14,10 +14,10 @@
 
 	<ul class="breadcrumb">
 		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'admin', 'model', array($parent_model)); ?>"><?php echo $parent_name; ?></a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'admin', 'edit', array($parent_model, $parent_id)); ?>">Edit</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'admin', 'children', array($parent_model, $parent_id, $model)); ?>"><?php echo $model_name; ?></a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'model', array($parent_model)); ?>"><?php echo $parent_name; ?></a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'edit', array($parent_model, $parent_id)); ?>">Edit</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'children', array($parent_model, $parent_id, $model)); ?>"><?php echo $model_name; ?></a> <span class="divider">/</span></li>
 		<li class="active">Edit</li>
 	</ul>
 
@@ -31,7 +31,7 @@
 
 		<div class="form-actions">
 			<input type="submit" value="Save" class="btn btn-primary" />
-			<a class="btn pull-right" href="<?php echo route_url('get', 'admin', 'delete', array($model, $row->id)); ?>">Delete</a>
+			<a class="btn pull-right" href="<?php echo route_url('get', 'App.Controller.Admin', 'delete', array($model, $row->id)); ?>">Delete</a>
 		</div>
 
 		<?php foreach($columns as $name => $c): ?>

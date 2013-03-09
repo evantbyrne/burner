@@ -14,9 +14,9 @@
 
 	<ul class="breadcrumb">
 		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'admin', 'model', array($model)); ?>"><?php echo $model_name; ?></a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'admin', 'edit', array($model, $id)); ?>">Edit</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'model', array($model)); ?>"><?php echo $model_name; ?></a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'edit', array($model, $id)); ?>">Edit</a> <span class="divider">/</span></li>
 		<li class="active">Delete</li>
 	</ul>
 

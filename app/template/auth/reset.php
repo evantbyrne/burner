@@ -14,7 +14,7 @@
 
 	<ul class="breadcrumb">
 		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'auth', 'login'); ?>">Log In</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Controller.Auth', 'login'); ?>">Log In</a> <span class="divider">/</span></li>
 		<li class="active">Password Reset</li>
 	</ul>
 
@@ -28,7 +28,7 @@
 	
 		<?php if(isset($error)): ?>
 		
-			<p>Error: Password reset not found. Request a password reset <a href="<?php echo route_url('get', 'auth', 'reset_request'); ?>">here</a>.</p>
+			<p>Error: Password reset not found. Request a password reset <a href="<?php echo route_url('get', 'App.Controller.Auth', 'reset_request'); ?>">here</a>.</p>
 		
 		<?php endif; ?>
 		

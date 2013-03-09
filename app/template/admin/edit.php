@@ -14,8 +14,8 @@
 
 	<ul class="breadcrumb">
 		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'admin', 'model', array($model)); ?>"><?php echo $model_name; ?></a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?php echo route_url('get', 'App.Controller.Admin', 'model', array($model)); ?>"><?php echo $model_name; ?></a> <span class="divider">/</span></li>
 		<li class="active">Edit</li>
 	</ul>
 
@@ -29,7 +29,7 @@
 
 		<div class="form-actions">
 			<input type="submit" value="Save" class="btn btn-primary" />
-			<a class="btn pull-right" href="<?php echo route_url('get', 'admin', 'delete', array($model, $row->id)); ?>">Delete</a>
+			<a class="btn pull-right" href="<?php echo route_url('get', 'App.Controller.Admin', 'delete', array($model, $row->id)); ?>">Delete</a>
 		</div>
 
 		<?php foreach($columns as $name => $c): ?>
@@ -49,7 +49,7 @@
 				<h3><?php echo $child['verbose_plural']; ?></h3>
 			</div>
 
-			<p><a href="<?php echo route_url('get', 'admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $child['verbose']; ?></a></p>
+			<p><a href="<?php echo route_url('get', 'App.Controller.Admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $child['verbose']; ?></a></p>
 
 			<?php if(empty($child['rows'])): ?>
 

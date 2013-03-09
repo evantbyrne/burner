@@ -25,6 +25,6 @@
 <!-- Controls -->
 <?php $this->append('controls'); ?>
 
-	<button class="btn btn-primary ajax-add-modal-save" data-model="<?php echo $model; ?>" data-url="<?php echo route_url('get', 'admin', 'ajax_add_modal', array($model)); ?>">Save</button>
+	<button class="btn btn-primary ajax-add-modal-save" data-model="<?php echo $model; ?>" data-url="<?php echo route_url('get', 'App.Controller.Admin', 'ajax_add_modal', array($model)); ?>">Save</button>
 
 <?php $this->end_append(); ?>

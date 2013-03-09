@@ -29,7 +29,7 @@
 				<?php foreach($models as $model_class => $model): ?>
 			
 					<tr>
-						<td><a href="<?php echo route_url('get', 'admin', 'model', array($model_class)); ?>"><?php echo $model['name']; ?></a></td>
+						<td><a href="<?php echo route_url('get', 'App.Controller.Admin', 'model', array($model_class)); ?>"><?php echo $model['name']; ?></a></td>
 					</tr>
 				
 				<?php endforeach; ?>
