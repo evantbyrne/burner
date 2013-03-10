@@ -187,6 +187,7 @@ class Base extends \Core\Form\Base {
 					if($first_where) {
 
 						$query->where($name, '=', $vars[$name]);
+						$first_where = false;
 
 					} else {
 
