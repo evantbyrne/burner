@@ -1,4 +1,4 @@
-<?php $this->base('admin/base'); ?>
+<?php $this->base('admin/base_no_side'); ?>
 
 
 <!-- Title -->
@@ -20,30 +20,19 @@
 <?php $this->end_extend(); ?>
 
 
-<!-- Sidebar -->
-<?php $this->extend('sidebar'); ?>
-
-	<div class="well">
-		<ul class="nav nav-list">
-			<li><a href="<?php echo route_url('get', 'App.Controller.Auth', 'register'); ?>"><i class="icon-plus"></i>Register</a></li>
-		</ul>
-	</div>
-
-<?php $this->end_extend(); ?>
-
-
 <!-- Content -->
 <?php $this->extend('content'); ?>
 	
 	<form method="post" class="form-horizontal">
 
-		<?php $this->label('email'); ?>
-		<?php $this->field('email', $user); ?>
+		<?php if($invalid): ?><p>Invalid login credentials.</p><?php endif; ?>
 
-		<?php $this->label('password'); ?>
-		<?php $this->field('password', $user); ?>
+		<?php foreach($user->get_schema() as $column => $options): ?>
 
-		<p><a href="<?php echo route_url('get', 'App.Controller.Auth', 'reset_request'); ?>"><i class="icon-refresh"></i> Reset Password</a></p>
+			<?php $this->label($column); ?>
+			<?php $this->field($column, $user); ?>
+
+		<?php endforeach; ?>
 		
 		<p><input type="submit" value="Login" class="btn btn-primary" /></p>
 

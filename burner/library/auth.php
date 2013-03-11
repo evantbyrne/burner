@@ -20,6 +20,26 @@ class Auth implements Auth\BaseInterface {
 	/**
 	 * @inheritdoc
 	 */
+	public static function current_user() {
+
+		$plugin_class = to_php_namespace('Library.Auth.Plugin.' . \Core\Config::get('auth_plugin'));
+		return $plugin_class::current_user();
+
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function enforce($group = false) {
+
+		$plugin_class = to_php_namespace('Library.Auth.Plugin.' . \Core\Config::get('auth_plugin'));
+		return $plugin_class::enforce($group);
+
+	}
+
+	/**
+	 * @inheritdoc
+	 */
 	public static function logout() {
 
 		$plugin_class = to_php_namespace('Library.Auth.Plugin.' . \Core\Config::get('auth_plugin'));
@@ -71,24 +91,6 @@ class Auth implements Auth\BaseInterface {
 	public function login() {
 
 		return $this->plugin->login();
-
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function enforce($group = false) {
-
-		return $this->plugin->enforce($group);
-
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function create($params = array()) {
-
-		return $this->plugin->create($params);
 
 	}
 

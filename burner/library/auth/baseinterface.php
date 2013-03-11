@@ -14,6 +14,18 @@ interface BaseInterface {
 	public static function logged_in();
 
 	/**
+	 * Current User
+	 * @return mixed User, or null
+	 */
+	public static function current_user();
+
+	/**
+	 * Enforce
+	 * @param string Group
+	 */
+	public static function enforce($group = false);
+
+	/**
 	 * Logout
 	 */
 	public static function logout();
@@ -42,18 +54,5 @@ interface BaseInterface {
 	 * @return boolean Success
 	 */
 	public function login();
-
-	/**
-	 * Enforce
-	 * @param string Group
-	 */
-	public function enforce($group = false);
-
-	/**
-	 * Create
-	 * @param array Extra parameters
-	 * @return boolean Success
-	 */
-	public function create($params = array());
 
 }

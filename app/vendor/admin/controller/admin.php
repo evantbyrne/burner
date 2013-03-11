@@ -213,7 +213,7 @@ class Admin extends \Core\Controller\Base {
 	 */
 	public function __construct() {
 		
-		\Core\Controller\Auth\Standard::enforce('admin');
+		\Library\Auth::enforce('admin');
 		self::$models = \Core\Config::get('admin_models');
 		self::$https = \Core\Config::get('admin_https_urls');
 		

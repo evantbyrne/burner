@@ -8,7 +8,7 @@ use App\Model\User as User;
 use App\Model\UserSession as UserSession;
 
 /**
- * Auth Library Email Plugin
+ * Auth Library Standard Plugin
  *
  * Authenticates using 'email' and 'password' credentials. Uses
  * App\Model\User, which must extend Library\Auth\Model\Standard.
@@ -16,10 +16,17 @@ use App\Model\UserSession as UserSession;
 class Standard implements \Library\Auth\BaseInterface {
 
 	/**
+	 * mixed User, null, or false if not yet set
+	 */
+	protected static $current_user = false;
+
+	/**
 	 * @inheritdoc
 	 */
 	public static function logged_in() {
 
+		self::$current_user = null;
+		
 		$logged_in = false;
 		$secret = Input::cookie('auth');
 		if($secret !== null) {
@@ -30,6 +37,7 @@ class Standard implements \Library\Auth\BaseInterface {
 				$user = User::select()->where('id', '=', $session->user)->single();
 				if($user !== null) {
 				
+					self::$current_user = $user;
 					$logged_in = true;
 				
 				}
@@ -39,6 +47,45 @@ class Standard implements \Library\Auth\BaseInterface {
 		}
 
 		return $logged_in;
+
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function current_user() {
+
+		if(self::$current_user === false) {
+
+			self::logged_in();
+
+		}
+
+		return self::$current_user;
+
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function enforce($group = false) {
+
+		if(!self::logged_in()) {
+			
+			login_redirect(CURRENT_PAGE);
+			
+		}
+
+		if($group !== false) {
+
+			if(self::current_user()->type < User::level($group)) {
+
+				\Core\Bootstrap::controller('App.Controller.Error', '_403');
+				exit;
+
+			}
+
+		}
 
 	}
 
@@ -78,7 +125,9 @@ class Standard implements \Library\Auth\BaseInterface {
 	/**
 	 * @inheritdoc
 	 *
-	 * Requires 'email' and 'password' credentials
+	 * Requires 'email' and 'password' credentials. Password must
+	 * be hashed (which is automatically handled when using either
+	 * ::from_array() or ::from_post() on the form/model class).
 	 */
 	public function __construct($credentials) {
 
@@ -94,7 +143,9 @@ class Standard implements \Library\Auth\BaseInterface {
 
 		}
 
-		$user = User::from_array($credentials, array('email', 'password'));
+		$user = new User();
+		$user->email = $credentials['email'];
+		$user->password = $credentials['password'];
 		if($user->get()) {
 
 			$this->valid = true;
@@ -143,39 +194,6 @@ class Standard implements \Library\Auth\BaseInterface {
 			'value'  => $secret,
 			'expire' => '+30 days'
 		));
-
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function enforce($group = false) {
-
-		if(!self::logged_in()) {
-			
-			login_redirect(CURRENT_PAGE);
-			
-		}
-
-		if($group !== false) {
-
-			if($this->user->type < User::level($group)) {
-
-				\Core\Bootstrap::controller('App.Controller.Error', '_403');
-				exit;
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function create($params = array()) {
-
-		throw new Ex('Not implemented');
 
 	}
 

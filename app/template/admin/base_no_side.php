@@ -31,10 +31,10 @@
 					<div class="nav-collapse">
 						<ul class="nav pull-right">
 							
-							<?php if(\App\Controller\Auth::logged_in()): ?>
+							<?php if(\Library\Auth::logged_in()): ?>
 								
-								<li class="active"><a href="javascript:;"><?php echo 'Welcome, ' . \App\Controller\Auth::user()->email; ?></a></li>
-								<li><a href="<?php echo route_url('get', 'App.Controller.Auth', 'logout'); ?>">Log Out</a></li>
+								<li class="active"><a href="javascript:;"><?php echo 'Welcome, ' . \Library\Auth::current_user()->email; ?></a></li>
+								<li><a href="<?php echo route_url('get', 'App.Vendor.Auth.Controller.Auth', 'logout'); ?>">Log Out</a></li>
 							
 							<?php endif; ?>
 
