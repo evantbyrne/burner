@@ -30,6 +30,9 @@ Config::set('error_logging_file', 'errors.txt');
 // Template engine
 Config::set('template_library', 'Library.Template.Standard');
 
+// Auth
+Config::set('auth_plugin', 'Standard');
+
 // Admin
 Config::set('admin_models', array('project'));
 Config::set('admin_page_size', 10);

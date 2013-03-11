@@ -5,6 +5,6 @@ namespace App\Model;
 /**
  * Example User Session Model
  */
-class UserSession extends \Core\Model\UserSession {
+class UserSession extends \Library\Auth\Model\UserSession {
 	
 }

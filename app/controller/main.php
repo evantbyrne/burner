@@ -8,8 +8,9 @@ class Main extends \Core\Controller\Base {
 	 * Index
 	 */
 	public function index() {
-	
-		echo to_php_namespace('Burner.Model.Base');
+
+		$auth = new \Library\Auth(array('email' => 'evantbyrne@gmail.com', 'password' => 'awesome'));
+		var_dump($auth->user());
 		exit;
 	
 	}

@@ -1,13 +1,13 @@
 <?php
 
-namespace Core\Model;
+namespace Library\Auth\Model;
 use Core\Config;
 
 /**
  * Base User Model
  * @author Evan Byrne
  */
-class User extends Base {
+class Standard extends \Core\Model\Base {
 	
 	/**
 	 * array User levels, which are primarily used for ACLs

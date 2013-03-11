@@ -1,11 +1,11 @@
 <?php
 
-namespace Core\Model;
+namespace Library\Auth\Model;
 
 /**
  * User Session Model
  */
-class UserSession extends Session {
+class UserSession extends \Core\Model\Session {
 	
 	/**
 	 * @inheritdoc
