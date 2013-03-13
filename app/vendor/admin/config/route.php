@@ -13,6 +13,7 @@ Route::add('App.Vendor.Admin.Controller.Admin', array(
 	'BOTH:admin/:any/:int/children/:any/add' => 'add_child',
 	'BOTH:admin/:any/delete/:int' => 'delete',
 	'BOTH:admin/ajax/:any/add_modal' => 'ajax_add_modal',
-	'GET:admin/ajax/:any/add_modal/:int' => 'ajax_add_modal_refresh'
+	'GET:admin/ajax/:any/add_modal/:int' => 'ajax_add_modal_refresh',
+	'POST:admin/ajax/order' => 'ajax_order'
 
 ));

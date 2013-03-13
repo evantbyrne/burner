@@ -56,7 +56,9 @@
 			</thead>
 			<tbody>
 				<?php foreach($rows as $row): ?>
-					<tr>
+					
+					<tr data-model="<?php e($model); ?>" data-id="<?php e($row->id); ?>">
+						
 						<td style="width:45px;">
 							<a class="btn" href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit', array($model, $row->id)); ?>">Edit</a>
 						</td>
@@ -78,6 +80,7 @@
 								<?php endif; ?>
 							</td>
 						<?php endforeach; ?>
+					
 					</tr>
 					
 				<?php endforeach; ?>

@@ -725,4 +725,40 @@ class Admin extends \Core\Controller\Base {
 
 	}
 
+	/**
+	 * Ajax Order
+	 */
+	public function ajax_order() {
+
+		$model_class = "App\\Model\\" . \Library\Input::post('model');
+		$column = \Library\Input::post('column');
+		$order = json_decode(\Library\Input::post('order'));
+
+		// TODO validate model and column
+
+		// TODO support inlines
+
+		if(!is_array($order)) {
+
+			throw new \Exception("'order' json array not passed as POST param");
+
+		}
+
+		$i = 1;
+		foreach($order as $id) {
+
+			$model_class::update()
+				->value($column, $i)
+				->where('id', '=', $id)
+				->limit(1)
+				->execute();
+
+			$i++;
+
+		}
+
+		exit;
+
+	}
+
 }

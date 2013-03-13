@@ -5,3 +5,7 @@
 .modal {
 	position: absolute; /* Needed for select2 dropdowns */
 }
+
+.move-cursor {
+	cursor: move;
+}
