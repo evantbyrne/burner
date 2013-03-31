@@ -17,7 +17,7 @@ class BelongsTo extends Base {
 		// Get parent
 		$this->set_method($column_name, function($model) use ($column_name) {
 
-			return call_user_func("\\Model\\$column_name::id", $model->$column_name);
+			return call_user_func("\\App\\Model\\$column_name::id", $model->$column_name);
 
 		});
 	

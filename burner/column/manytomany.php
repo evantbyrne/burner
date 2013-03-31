@@ -64,11 +64,11 @@ class ManyToManyQuery {
 		$parent_class = get_class($parent);
 		$this->parent_table = $parent_class::table();
 		
-		$child_class = "\\Model\\$child_class";
+		$child_class = "\\App\\Model\\$child_class";
 		$this->child_class = $child_class;
 		$this->child_table = $child_class::table();
 
-		$middleman_class = "\\Model\\$middleman_class";
+		$middleman_class = "\\App\\Model\\$middleman_class";
 		$this->middleman_class = $middleman_class;
 		$this->middleman_table = $middleman_class::table();
 		

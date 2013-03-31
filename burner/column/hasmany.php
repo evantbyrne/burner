@@ -49,7 +49,7 @@ class HasManyQuery {
 		
 		$this->column = $column;
 		$this->id = $id;
-		$this->model_class = "\\Model\\$model";
+		$this->model_class = "App\\Model\\$model";
 		
 	}
 	
