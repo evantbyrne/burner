@@ -10,8 +10,7 @@ class Main extends \Core\Controller\Base {
 	public function index() {
 
 		$auth = new \Library\Auth(array('email' => 'evantbyrne@gmail.com', 'password' => \App\Model\User::hash('awesome')));
-		var_dump($auth->user());
-		exit;
+		return new \Core\Response($auth->user());
 	
 	}
 	

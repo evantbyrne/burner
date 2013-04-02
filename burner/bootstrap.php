@@ -167,8 +167,8 @@ class Bootstrap {
 	 */
 	public static function controller($controller_ns, $method, $args = array()) {
 		
-		$tmp = to_php_namespace($controller_ns);
-		$controller = new $tmp();
+		$ns = to_php_namespace($controller_ns);
+		$controller = new $ns();
 		
 		// Check to see if method is callable
 		if(!is_callable(array($controller, $method))) {
@@ -177,16 +177,19 @@ class Bootstrap {
 		
 		}
 		
-		call_user_func_array(array($controller, $method), $args);
-		
-		$controller_segments = explode('.', $controller_ns);
-		$controller_name = end($controller_segments);
+		$response = call_user_func_array(array($controller, $method), $args);
+		if(!is_a($response, 'Core\Response')) {
 
-		$template = $controller->get_template();
-		$response = Response::template(
-			($template === null) ? "$controller_name/$method" : $template,
-			$controller->get_data(),
-			$controller->get_status_code());
+			$controller_segments = explode('.', $controller_ns);
+			$controller_name = end($controller_segments);
+
+			$template = $controller->get_template();
+			$response = Response::template(
+				($template === null) ? "$controller_name/$method" : $template,
+				$controller->get_data(),
+				$controller->get_status_code());
+
+		}
 		
 		header($response->header());
 		echo $response->content();
