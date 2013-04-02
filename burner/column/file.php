@@ -44,6 +44,13 @@ class File extends Char {
 		
 		// Construct
 		parent::__construct($column_name, $options);
+
+		// File URL
+		$this->set_method($column_name . '_url', function($model) use ($column_name) {
+
+			return url($model->{$column_name . '_path'}() . '.' . $model->{$column_name});
+
+		});
 	
 	}
 	
