@@ -135,7 +135,7 @@ class Bootstrap {
 
 			$template = $controller->get_template();
 			$response = Response::template(
-				($template === null) ? "$controller_name/$method" : $template,
+				($template === null) ? strtolower("$controller_name/$method") : $template,
 				$controller->get_data(),
 				$controller->get_status_code());
 
