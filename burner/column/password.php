@@ -24,7 +24,7 @@ class Password extends Char {
 	 */
 	public function set($value) {
 
-		return (empty($value)) ? null : \App\Model\User::hash($value);
+		return (empty($value)) ? null : \Library\Auth::hash($value);
 
 	}
 	

@@ -54,18 +54,6 @@ class Standard extends \Core\Model\Base {
 		return (isset(static::$type_choices[$level])) ? $type_choices[$level] : '';
 	
 	}
-	
-	/**
-	 * Hash
-	 * @param string Value
-	 * @param string Secret
-	 * @return string Hashed value
-	 */
-	public static function hash($value, $secret = null) {
-		
-		return hash_hmac('sha512', $value, ($secret === null) ? Config::get('hash_secret') : $secret);
-		
-	}
 
 	/**
 	 * Email

@@ -48,6 +48,18 @@ class Auth implements Auth\BaseInterface {
 	}
 
 	/**
+	 * Hash
+	 * @param string Value
+	 * @param string Secret
+	 * @return string Hashed value
+	 */
+	public static function hash($value, $secret = null) {
+		
+		return hash_hmac('sha512', $value, ($secret === null) ? \Core\Config::get('hash_secret') : $secret);
+		
+	}
+
+	/**
 	 * string
 	 */
 	public $plugin_class;
