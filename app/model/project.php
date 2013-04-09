@@ -15,6 +15,7 @@ class Project extends \Core\Model\Base {
 	/**
 	 * Description
 	 * @option type = Text
+	 * @option template = wysiwyg
 	 */
 	public $description;
 

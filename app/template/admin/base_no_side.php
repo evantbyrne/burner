@@ -13,6 +13,10 @@
 			<link rel="stylesheet" href="<?php echo url('static/admin/css/rewrite.css'); ?>" />
 			<link rel="stylesheet" href="<?php echo url('static/admin/css/datepicker.css'); ?>" />
 			<link rel="stylesheet" href="<?php echo url('static/admin/css/select2.css'); ?>" />
+			<link rel="stylesheet" href="<?php echo url('static/admin/css/font-awesome.css'); ?>">
+			<!--[if IE 7]>
+				<link rel="stylesheet" href="<?php echo url('static/admin/css/font-awesome-ie7.css'); ?>">
+			<![endif]-->
 		<?php $this->end_section(); ?>
 
 	</head>
@@ -87,13 +91,23 @@
 		<?php $this->section('scripts'); ?>
 			<script src="<?php echo url('static/admin/js/jquery.min.js'); ?>"></script>
 			<script src="<?php echo url('static/admin/js/bootstrap.min.js'); ?>"></script>
+			<script src="<?php echo url('static/admin/js/jquery.hotkeys.js'); ?>"></script>
 			<script src="<?php echo url('static/admin/js/bootstrap-datepicker.js'); ?>"></script>
+			<script src="<?php echo url('static/admin/js/bootstrap-wysiwyg.js'); ?>"></script>
 			<script src="<?php echo url('static/admin/js/select2.min.js'); ?>"></script>
 			<script>
 				$(document).ready(function() {
 
 					// Date picker
 					$('.datepicker').datepicker({ format:'yyyy-mm-dd' });
+
+					// WYSIWYG editor
+					$('.wysiwyg').wysiwyg().on('input', function() {
+
+						var field = $(this).attr('data-wysiwyg-field');
+						$('input[name=' + field + ']').val($(this).html());
+
+					});
 
 					// Fancy select boxes
 					$('select').select2({width:'element'});
