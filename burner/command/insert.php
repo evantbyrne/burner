@@ -22,6 +22,7 @@ class Insert {
 
 	/**
 	 * Run
+	 * @return mixed Inserted row ID, or null
 	 */
 	public function run($model) {
 		
@@ -72,12 +73,14 @@ class Insert {
 
 		} else {
 
-			$ins->save();
-			echo "\nSaved.\n";
+			$id = $ins->save();
+			echo "\nSaved. ID: $id\n\n";
+			return $id;
 
 		}
 
 		echo "\n";
+		return null;
 		
 	}
 	
