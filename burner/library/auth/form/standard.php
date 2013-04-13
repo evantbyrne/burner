@@ -1,7 +1,6 @@
 <?php
 
 namespace Library\Auth\Form;
-use Core\Config;
 
 /**
  * Standard User Form

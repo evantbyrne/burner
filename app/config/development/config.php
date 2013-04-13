@@ -31,10 +31,10 @@ Config::set('error_logging_file', 'errors.txt');
 Config::set('template_library', 'Library.Template.Standard');
 
 // Auth
-Config::set('auth_plugin', 'Standard');
+Config::set('auth_plugin', 'MultipleGroups');
 
 // Admin
-Config::set('admin_models', array('user', 'usersession', 'project', 'category', 'article'));
+Config::set('admin_models', array('user', 'group', 'membership', 'category', 'article'));
 Config::set('admin_page_size', 10);
 Config::set('admin_https_urls', false);
 
