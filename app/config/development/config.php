@@ -34,7 +34,7 @@ Config::set('template_library', 'Library.Template.Standard');
 Config::set('auth_plugin', 'Standard');
 
 // Admin
-Config::set('admin_models', array('user', 'usersession', 'project', 'article'));
+Config::set('admin_models', array('user', 'usersession', 'project', 'category', 'article'));
 Config::set('admin_page_size', 10);
 Config::set('admin_https_urls', false);
 

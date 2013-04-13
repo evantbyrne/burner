@@ -16,6 +16,12 @@ class Article extends \Core\Model\Base {
 
 	/**
 	 * @option type = BelongsTo
+	 * @option required = Category field is required.
+	 */
+	public $category;
+
+	/**
+	 * @option type = BelongsTo
 	 * @option required = User field is required.
 	 */
 	public $user;

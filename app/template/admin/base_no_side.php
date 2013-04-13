@@ -90,6 +90,7 @@
 
 		<?php $this->section('scripts'); ?>
 			<script src="<?php echo url('static/admin/js/jquery.min.js'); ?>"></script>
+			<script src="<?php echo url('static/admin/js/jquery-ui.min.js'); ?>"></script>
 			<script src="<?php echo url('static/admin/js/bootstrap.min.js'); ?>"></script>
 			<script src="<?php echo url('static/admin/js/jquery.hotkeys.js'); ?>"></script>
 			<script src="<?php echo url('static/admin/js/bootstrap-datepicker.js'); ?>"></script>
@@ -167,6 +168,32 @@
 						});
 
 					});
+
+					// Order column
+					$('tbody:has(.order-column)').sortable({ update:function() {
+
+						var data = {
+							model: null,
+							column: $(this).find('.order-column').attr('data-column'),
+							order: []
+						};
+
+						$(this).find('tr').each(function() {
+
+							if(data.model === null) {
+
+								data.model = $(this).attr('data-model');
+
+							}
+
+							data.order[data.order.length] = $(this).attr('data-id');
+
+						});
+
+						data.order = JSON.stringify(data.order);
+						$.post("<?php echo route_url('post', 'App.Vendor.Admin.Controller.Admin', 'ajax_order'); ?>", data);
+
+					}});
 
 				});
 			</script>

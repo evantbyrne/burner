@@ -12,6 +12,10 @@
 			<link rel="stylesheet" href="<?php echo url('static/admin/css/bootstrap-responsive.css'); ?>" />
 			<link rel="stylesheet" href="<?php echo url('static/admin/css/rewrite.css'); ?>" />
 			<link rel="stylesheet" href="<?php echo url('static/admin/css/datepicker.css'); ?>" />
+			<link rel="stylesheet" href="<?php echo url('static/admin/css/font-awesome.css'); ?>">
+			<!--[if IE 7]>
+				<link rel="stylesheet" href="<?php echo url('static/admin/css/font-awesome-ie7.css'); ?>">
+			<![endif]-->
 		<?php $this->end_section(); ?>
 
 	</head>

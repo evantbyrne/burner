@@ -71,7 +71,9 @@
 					</thead>
 					<tbody>
 						<?php foreach($child['rows'] as $child_row): ?>
-							<tr>
+							
+							<tr data-model="<?php e($name); ?>" data-id="<?php e($child_row->id); ?>">
+								
 								<td style="width:45px;">
 									<a class="btn" href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit_child', array($model, $row->id, $name, $child_row->id)); ?>">Edit</a>
 								</td>
@@ -93,6 +95,7 @@
 										<?php endif; ?>
 									</td>
 								<?php endforeach; ?>
+							
 							</tr>
 							
 						<?php endforeach; ?>

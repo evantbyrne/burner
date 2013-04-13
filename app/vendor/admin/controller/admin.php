@@ -358,7 +358,7 @@ class Admin extends \Core\Controller\Base {
 					$child_model_class = '\\App\\Model\\' . $column->get_option('model');
 					$parent_column = $column->get_option('column');
 					$child_model = new $child_model_class();
-					$child_select = $child_model_class::select()->where($parent_column, '=', $id)->order_asc('id');
+					$child_select = $child_model_class::select()->where($parent_column, '=', $id);
 					$child_columns = $this->get_list_columns($child_model);
 					unset($child_columns[$parent_column]);
 
@@ -374,7 +374,7 @@ class Admin extends \Core\Controller\Base {
 					$child_model_class = '\\App\\Model\\' . $column->get_option('middleman');
 					$parent_column = $model_class::table();
 					$child_model = new $child_model_class();
-					$child_select = $child_model_class::select()->where($parent_column, '=', $id)->order_asc('id');
+					$child_select = $child_model_class::select()->where($parent_column, '=', $id);
 					$child_columns = $this->get_list_columns($child_model, 'list');
 					unset($child_columns[$parent_column]);
 

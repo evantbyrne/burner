@@ -6,8 +6,10 @@
 	position: absolute; /* Needed for select2 dropdowns */
 }
 
-.move-cursor {
+.move-cursor, .move-cursor:hover {
 	cursor: move;
+	color: #333333;
+	text-decoration: none;
 }
 
 .wysiwyg {
