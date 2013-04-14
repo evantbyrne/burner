@@ -100,17 +100,65 @@ class Admin extends \Core\Controller\Base {
 	}
 
 	/**
+	 * Page
+	 * @param mixed Anything with a getDocComment() method, such as ReflectionClass
+	 * @param \Mysql\Select
+	 * @param int Page
+	 * @return \Mysql\Select
+	 */
+	protected function page($klass, $select, $page) {
+
+		$klass_options = \Library\DocComment::options($klass);
+		$size = $this->page_size($klass);
+		if($size !== false) {
+		
+			return $select->page($page, $size);
+
+		}
+
+		return $select;
+
+	}
+
+	/**
+	 * Page Size
+	 * @param mixed Anything with a getDocComment() method, such as ReflectionClass
+	 * @return mixed Int, or false
+	 */
+	protected function page_size($klass) {
+
+		$klass_options = \Library\DocComment::options($klass);
+		$size = (isset($klass_options['admin_page_size'])) ? $klass_options['admin_page_size'] : \Core\Config::get('admin_page_size');
+		if($size !== false) {
+
+			return intval($size);
+
+		}
+
+		return false;
+
+	}
+
+	/**
 	 * Get Rows
 	 * @param string Model name
 	 * @param array Columns names
 	 * @param \Mysql\Select Custom select query
+	 * @param mixed Int, or false
 	 */
 	protected function get_rows($model_name, $columns, $select = null, $page = 1) {
 
 		$model_class = "\\App\\Model\\$model_name";
 		$model = new $model_class();
-		$select = ($select === null) ? $model_class::select()->page($page, \Core\Config::get('admin_page_size')) : $select;
-		$select = $this->order(new \ReflectionClass($model), $select);
+		$klass = new \ReflectionClass($model);
+		$select = ($select === null) ? $model_class::select() : $select;
+		$select = $this->order($klass, $select);
+		if($page !== false) {
+		
+			$select = $this->page($klass, $select, $page);
+		
+		}
+
 		$belongsto = array();
 		$choices = array();
 
@@ -257,16 +305,26 @@ class Admin extends \Core\Controller\Base {
 		$columns = $this->get_list_columns($model);
 		$total_rows = $model_class::select()->count_column('id', 'total')->single();
 		$page = \Library\Input::get('page', 1);
-		$page_count = ceil(intval($total_rows->total) / \Core\Config::get('admin_page_size'));
+		$page_size = $this->page_size(new \ReflectionClass($model));
+		if($page_size !== false) {
+		
+			$page_count = ceil(intval($total_rows->total) / $page_size);
+
+			$url = route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($name)) . '&page=';
+			$this->data('next', ($page < $page_count) ?  $url . ($page + 1) : null);
+			$this->data('prev', ($page > 1) ? $url . ($page - 1) : null);
+
+		} else {
+
+			$this->data('next', null);
+			$this->data('prev', null);
+
+		}
 
 		$this->data('columns', $columns);
 		$this->data('rows', $this->get_rows($name, $columns, $select, $page));
 		$this->data('model', $name);
 		$this->data('model_name', $model_class::get_verbose());
-
-		$url = route_url('get', 'admin', 'model', array($name)) . '&page=';
-		$this->data('next', ($page < $page_count) ?  $url . ($page + 1) : null);
-		$this->data('prev', ($page > 1) ? $url . ($page - 1) : null);
 
 		if(file_exists(APPLICATION . "/template/admin/$name/model.php")) {
 
@@ -287,15 +345,25 @@ class Admin extends \Core\Controller\Base {
 		$model_class = "\\App\\Model\\$child_model";
 		$model = new $model_class();
 
-		$total_rows = $model_class::select()->where($parent_model, '=', $parent_id)->count_column('id', 'total')->single();
-		$page = \Library\Input::get('page', 1);
-		$page_count = ceil(intval($total_rows->total) / \Core\Config::get('admin_page_size'));
-		$select = $model_class::select()->where($parent_model, '=', $parent_id)->page($page, \Core\Config::get('admin_page_size'))->order_desc('id');
+		$select = $model_class::select()->where($parent_model, '=', $parent_id);
 		$this->model($child_model, $select);
 
-		$url = route_url('get', 'admin', 'children', array($parent_model, $parent_id, $child_model)) . '&page=';
-		$this->data('next', ($page < $page_count) ?  $url . ($page + 1) : null);
-		$this->data('prev', ($page > 1) ? $url . ($page - 1) : null);
+		$total_rows = $model_class::select()->where($parent_model, '=', $parent_id)->count_column('id', 'total')->single();
+		$page = \Library\Input::get('page', 1);
+		$page_size = $this->page_size(new \ReflectionClass($model));
+		if($page_size !== false) {
+		
+			$page_count = ceil(intval($total_rows->total) / $page_size);
+			$url = route_url('get', 'admin', 'children', array($parent_model, $parent_id, $child_model)) . '&page=';
+			$this->data('next', ($page < $page_count) ?  $url . ($page + 1) : null);
+			$this->data('prev', ($page > 1) ? $url . ($page - 1) : null);
+
+		} else {
+
+			$this->data('next', null);
+			$this->data('prev', null);
+
+		}
 
 		$parent_model_class = '\\App\\Model\\' . $parent_model;
 		$this->data(array(
@@ -365,7 +433,7 @@ class Admin extends \Core\Controller\Base {
 					$inlines[$child_model->table()] = array(
 						'verbose' => $child_model_class::get_verbose(),
 						'verbose_plural' => $child_model_class::get_verbose_plural(),
-						'rows' => $this->get_rows($column->get_option('model'), $child_columns, $child_select),
+						'rows' => $this->get_rows($column->get_option('model'), $child_columns, $child_select, false),
 						'columns' => $child_columns
 					);
 				
@@ -381,7 +449,7 @@ class Admin extends \Core\Controller\Base {
 					$inlines[$child_model->table()] = array(
 						'verbose' => $child_model_class::get_verbose(),
 						'verbose_plural' => $child_model_class::get_verbose_plural(),
-						'rows' => $this->get_rows($column->get_option('middleman'), $child_columns, $child_select),
+						'rows' => $this->get_rows($column->get_option('middleman'), $child_columns, $child_select, false),
 						'columns' => $child_columns
 					);
 

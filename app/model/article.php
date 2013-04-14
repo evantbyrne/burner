@@ -6,6 +6,7 @@ namespace App\Model;
  * Example Article Model
  * @option list = order, title, post_date, awesome
  * @option order = order
+ * @option admin_page_size = false
  */
 class Article extends \Core\Model\Base {
 	
@@ -54,20 +55,6 @@ class Article extends \Core\Model\Base {
 	 * @option type = Boolean
 	 */
 	public $awesome;
-
-	/**
-	 * @option type = ManyToMany
-	 * @option model = Tag
-	 * @option middleman = ArticleTag
-	 */
-	public $tags;
-
-	/**
-	 * @option type = HasMany
-	 * @option model = Comment
-	 * @option column = article
-	 */
-	public $comments;
 
 	/**
 	 * To String
