@@ -5,7 +5,7 @@ namespace App\Model;
 /**
  * Example Article Model
  * @option admin_list = order, title, post_date, awesome
- * @option order = order
+ * @option admin_order = order
  * @option admin_page_size = false
  */
 class Article extends \Core\Model\Base {

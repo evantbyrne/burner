@@ -71,7 +71,7 @@ class Admin extends \Core\Controller\Base {
 	protected function order($klass, $select) {
 
 		$klass_options = \Library\DocComment::options($klass);
-		$order = (isset($klass_options['order'])) ? array_map('trim', explode(',', $klass_options['order'])) : null;
+		$order = (isset($klass_options['admin_order'])) ? array_map('trim', explode(',', $klass_options['admin_order'])) : null;
 
 		if(is_array($order)) {
 
