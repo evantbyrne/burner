@@ -4,7 +4,7 @@ namespace App\Model;
 
 /**
  * Example Article Model
- * @option list = order, title, post_date, awesome
+ * @option admin_list = order, title, post_date, awesome
  * @option order = order
  * @option admin_page_size = false
  */

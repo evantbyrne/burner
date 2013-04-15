@@ -26,7 +26,7 @@ class Admin extends \Core\Controller\Base {
 	protected function get_list_columns($model) {
 
 		$klass_options = \Library\DocComment::options(new \ReflectionClass($model));
-		$list = (isset($klass_options['list'])) ? array_map('trim', explode(',', $klass_options['list'])) : null;
+		$list = (isset($klass_options['admin_list'])) ? array_map('trim', explode(',', $klass_options['admin_list'])) : null;
 		$options = $model->get_admin();
 		$columns = array();
 
@@ -50,7 +50,7 @@ class Admin extends \Core\Controller\Base {
 
 		foreach($columns as $column_name => $o) {
 
-			if(isset($o['list']) and !$o['list']) {
+			if(isset($o['admin_list']) and !$o['admin_list']) {
 
 				unset($columns[$column_name]);
 

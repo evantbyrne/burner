@@ -17,7 +17,7 @@ class HasMany extends Base {
 		
 		}
 		
-		parent::__construct($column_name, array_merge(array('model' => $column_name, 'list' => false), $options));
+		parent::__construct($column_name, array_merge(array('model' => $column_name, 'admin_list' => false), $options));
 		
 		// Selections on remote table
 		$model_class = $options['model'];

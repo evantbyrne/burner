@@ -16,7 +16,7 @@ class Image extends File {
 		parent::__construct($column_name, array_merge(array(
 			'mimetypes'     => array('image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif'),
 			'template'      => 'image',
-			'list'          => true,
+			'admin_list'    => true,
 			'list_template' => 'image'
 		), $options));
 		

@@ -13,7 +13,7 @@ class Password extends Char {
 	 */
 	public function __construct($column_name, $options = array()) {
 		
-		parent::__construct($column_name, array_merge(array('length' => 128, 'blank' => true, 'template' => 'password', 'list' => false), $options));
+		parent::__construct($column_name, array_merge(array('length' => 128, 'blank' => true, 'template' => 'password', 'admin_list' => false), $options));
 	
 	}
 

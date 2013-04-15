@@ -23,11 +23,11 @@ class File extends Char {
 		
 		$options = array_merge(array(
 			
-			'length'    => 5,
-			'blank'     => true,
-			'template'  => 'file',
-			'list'      => false,
-			'mimetypes' => null
+			'length'     => 5,
+			'blank'      => true,
+			'template'   => 'file',
+			'admin_list' => false,
+			'mimetypes'  => null
 		
 		), $options);
 		
