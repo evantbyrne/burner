@@ -9,11 +9,25 @@ namespace Library;
 class DocComment {
 	
 	/**
+	 * array Cached class options
+	 */
+	protected static $cache = array();
+
+	/**
 	 * Options
 	 * @param mixed Anything with a getDocComment() method, such as ReflectionClass
 	 * @return array
 	 */
 	public static function options($object) {
+
+		$name = $object->getName();
+		$is_class = is_a($object, 'ReflectionClass');
+		
+		if($is_class and isset(self::$cache[$name])) {
+
+			return self::$cache[$name];
+
+		}
 
 		$options = array();
 		$doc_lines = explode("\n", $object->getDocComment());
@@ -38,6 +52,12 @@ class DocComment {
 				}
 			
 			}
+
+		}
+
+		if($is_class) {
+
+			self::$cache[$name] = $options;
 
 		}
 
