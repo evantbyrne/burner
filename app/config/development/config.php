@@ -41,8 +41,8 @@ Config::set('admin_https_urls', false);
 // Default language
 Config::set('language', 'english');
 
-// Sessions
+// Session
 Config::set('session', array(
 	'path'   => '/',
-	'expire' => '+1 months'
+	'expire' => '+1 minutes'
 ));

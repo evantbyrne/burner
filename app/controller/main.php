@@ -9,8 +9,7 @@ class Main extends \Core\Controller\Base {
 	 */
 	public function index() {
 
-		$auth = new \Library\Auth(array('email' => 'evantbyrne@gmail.com', 'password' => \Library\Auth::hash('awesome')));
-		return new \Core\Response($auth->user());
+		return new \Core\Response('Hello, world!');
 	
 	}
 	
