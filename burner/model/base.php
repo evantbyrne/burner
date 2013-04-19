@@ -12,7 +12,7 @@ class Base extends \Core\Form\Base {
 	/**
 	 * string MySQL storage engine to use
 	 */
-	public static $engine = 'MyISAM';
+	public static $engine = 'InnoDB';
 
 	/**
 	 * mixed Verbose name
