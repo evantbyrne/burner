@@ -53,9 +53,27 @@ class Auth implements Auth\BaseInterface {
 	 * @param string Secret
 	 * @return string Hashed value
 	 */
-	public static function hash($value, $secret = null) {
+	public static function hash($value, $secret = null, $iterations = null) {
 		
-		return hash_hmac('sha512', $value, ($secret === null) ? \Core\Config::get('hash_secret') : $secret);
+		if($secret === null) {
+
+			$secret = \Core\Config::get('hash_secret');
+
+		}
+
+		if($iterations === null) {
+			
+			$iterations = \Core\Config::get('hash_iterations');
+
+		}
+
+		for($i = 0; $i < $iterations; $i++) {
+
+			$value = hash_hmac('sha512', $value, $secret);
+
+		}
+
+		return $value;
 		
 	}
 

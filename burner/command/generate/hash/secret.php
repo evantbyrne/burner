@@ -31,6 +31,7 @@ class Generate_Hash_Secret {
 		
 		echo "Generating new hash secret...\n";
 		
+		$iterations = mt_rand(5, 10);
 		$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789=-_`~!@#$%^&*(){}[]|:;,./?';
 		$chars_len = strlen($chars) - 1;
 		$secret = '';
@@ -48,7 +49,8 @@ class Generate_Hash_Secret {
 		$f = fopen(APPLICATION . "/config/$config/hash.php", 'w');
 		fwrite($f, "<?php\n\n" .
 			"namespace Core;\n\n" .
-			"Config::set('hash_secret', '$secret');");
+			"Config::set('hash_secret', '$secret');\n" .
+			"Config::set('hash_iterations', $iterations);");
 		fclose($f);
 		
 	}
