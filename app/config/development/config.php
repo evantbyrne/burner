@@ -44,5 +44,5 @@ Config::set('language', 'english');
 // Session
 Config::set('session', array(
 	'path'   => '/',
-	'expire' => '+1 minutes'
+	'expire' => '+1 months'
 ));

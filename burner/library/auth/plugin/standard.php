@@ -1,11 +1,9 @@
 <?php
 
 namespace Library\Auth\Plugin;
-use Library\Input as Input;
-use Library\Cookie as Cookie;
+use Library\Session;
 use Library\Auth\Exception as Ex;
-use App\Model\User as User;
-use App\Model\UserSession as UserSession;
+use App\Model\User;
 
 /**
  * Auth Library Standard Plugin
@@ -28,20 +26,15 @@ class Standard implements \Library\Auth\BaseInterface {
 		self::$current_user = null;
 		
 		$logged_in = false;
-		$secret = Input::cookie('auth');
-		if($secret !== null) {
+		$user_id = Session::get('auth_user_id');
+		if($user_id !== null) {
 			
-			$session = UserSession::select()->where('secret', '=', $secret)->single();
-			if($session !== null) {
-				
-				$user = User::select()->where('id', '=', $session->user)->single();
-				if($user !== null) {
-				
-					self::$current_user = $user;
-					$logged_in = true;
-				
-				}
-				
+			$user = User::select()->where('id', '=', $user_id)->single();
+			if($user !== null) {
+			
+				self::$current_user = $user;
+				$logged_in = true;
+			
 			}
 			
 		}
@@ -93,22 +86,8 @@ class Standard implements \Library\Auth\BaseInterface {
 	 * @inheritdoc
 	 */
 	public static function logout() {
-
-		$secret = Input::cookie('auth');
 		
-		if($secret !== null) {
-		
-			UserSession::delete()
-				->where('secret', '=', $secret)
-				->limit(1)
-				->execute();
-
-			Cookie::delete(array(
-				'path' => '/',
-				'name' => 'auth'
-			));
-		
-		}
+		Session::delete('auth_user_id');
 
 	}
 
@@ -178,22 +157,14 @@ class Standard implements \Library\Auth\BaseInterface {
 	 */
 	public function login() {
 
-		$table = UserSession::table();
-		$secret = UserSession::secret();
-		$expire = new \DateTime();
-		$expire->modify('+30 days');
+		if($this->valid) {
 
-		\Core\DB::connection()->execute(new \Mysql\Query("INSERT INTO `$table` (`secret`, `user`, `expire`) VALUES (?, ?, FROM_UNIXTIME(?))", array(
-			$secret,
-			$this->user->id,
-			$expire->format('U'))));
+			Session::set('auth_user_id', $this->user->id);
+			return true;
 
-		Cookie::set(array(
-			'path'   => '/',
-			'name'   => 'auth',
-			'value'  => $secret,
-			'expire' => '+30 days'
-		));
+		}
+
+		return false;
 
 	}
 
