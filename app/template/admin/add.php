@@ -27,16 +27,16 @@
 
 	<form method="post"<?php if($is_multipart): ?> enctype="multipart/form-data"<?php endif; ?>>
 
-		<div class="form-actions">
-			<input type="submit" value="Save" class="btn btn-primary" />
-		</div>
-
 		<?php foreach($columns as $name => $c): ?>
 
 			<?php $this->label($name); ?>
 			<?php $this->field($name, $row, $c['options']); ?>
 
 		<?php endforeach; ?>
+
+		<div class="form-actions">
+			<input type="submit" value="Save" class="btn btn-primary" />
+		</div>
 
 	</form>
 

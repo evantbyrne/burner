@@ -113,6 +113,13 @@
 					// Fancy select boxes
 					$('select').select2({width:'element'});
 
+					// Tabs
+					$('#tabs a').click(function() {
+
+						$(this).tab('show');
+
+					});
+
 					// Modal
 					$('.ajax-add-modal').click(function() {
 
