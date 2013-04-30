@@ -1,4 +1,4 @@
-<?php $this->base('admin/base'); ?>
+<?php $this->base('admin/base_no_side'); ?>
 
 
 <!-- Title -->
@@ -6,7 +6,7 @@
 
 
 <!-- Header -->
-<?php $this->set('header', 'Models'); ?>
+<?php $this->set('header', 'Dashboard'); ?>
 
 
 <!-- Content -->
@@ -18,24 +18,28 @@
 		
 	<?php else: ?>
 	
-		<table class="table table-bordered table-striped">
-			<thead>
-				<tr>
-					<th>Name</th>
-				</tr>
-			</thead>
-			<tbody>
+		<?php foreach($models as $group_name => $group_models): ?>
 
-				<?php foreach($models as $model_class => $model): ?>
-			
+			<table class="table table-bordered table-striped">
+				<thead>
 					<tr>
-						<td><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($model_class)); ?>"><?php echo $model['name']; ?></a></td>
+						<th><?php e($group_name); ?></th>
 					</tr>
-				
-				<?php endforeach; ?>
+				</thead>
+				<tbody>
 
-			</tbody>
-		</table>
+					<?php foreach($group_models as $model_class => $model): ?>
+				
+						<tr>
+							<td><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($model_class)); ?>"><?php echo $model['name']; ?></a></td>
+						</tr>
+					
+					<?php endforeach; ?>
+
+				</tbody>
+			</table>
+
+		<?php endforeach; ?>
 		
 	<?php endif; ?>
 

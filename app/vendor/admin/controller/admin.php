@@ -262,8 +262,18 @@ class Admin extends \Core\Controller\Base {
 	public function __construct() {
 		
 		\Library\Auth::enforce('admin');
-		self::$models = \Core\Config::get('admin_models');
+		self::$models = array();
 		self::$https = \Core\Config::get('admin_https_urls');
+		
+		foreach(\Core\Config::get('admin_models') as $group_name => $models) {
+
+			foreach($models as $model) {
+
+				self::$models[] = $model;
+
+			}
+
+		}
 		
 	}
 	
@@ -273,14 +283,19 @@ class Admin extends \Core\Controller\Base {
 	public function index() {
 		
 		$models = array();
-		foreach(static::$models as $model) {
-			
-			$model_class = "\\App\\Model\\$model";
-			$models[$model] = array(
-				'name'        => $model_class::get_verbose(),
-				'name_plural' => $model_class::get_verbose_plural()
-			);
-			
+		foreach(\Core\Config::get('admin_models') as $group_name => $group_models) {
+
+			$models[$group_name] = array();
+			foreach($group_models as $model) {
+
+				$model_class = "\\App\\Model\\$model";
+				$models[$group_name][$model] = array(
+					'name'        => $model_class::get_verbose(),
+					'name_plural' => $model_class::get_verbose_plural()
+				);
+
+			}
+
 		}
 		
 		$this->data('models', $models);

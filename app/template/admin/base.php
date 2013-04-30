@@ -59,9 +59,7 @@
 			
 			<?php $this->end_section(); ?>
 			
-			<div class="page-header">
-				<h3><?php $this->section('header'); ?>Admin<?php $this->end_section(); ?></h3>
-			</div>
+			<h3><?php $this->section('header'); ?>Admin<?php $this->end_section(); ?></h3>
 
 			<div class="row-fluid show-grid">
 				<div class="span8">

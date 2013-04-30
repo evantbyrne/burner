@@ -34,9 +34,12 @@ Config::set('template_library', 'Library.Template.Standard');
 Config::set('auth_plugin', 'MultipleGroups');
 
 // Admin
-Config::set('admin_models', array('user', 'group', 'membership', 'category', 'article'));
 Config::set('admin_page_size', 10);
 Config::set('admin_https_urls', false);
+Config::set('admin_models', array(
+	'Users' => array('user', 'group', 'membership'),
+	'Blog' => array('article', 'category'))
+);
 
 // Default language
 Config::set('language', 'english');
