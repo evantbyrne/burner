@@ -3,5 +3,5 @@
     <a class="btn" data-edit="italic"><i class="icon-italic"></i></a>
     <a class="btn" data-edit="underline"><i class="icon-underline"></i></a>
 </div>
-<p><div class="wysiwyg" data-wysiwyg-field="<?php echo $field; ?>"><?= $value; ?></div></p>
-<input type="hidden" name="<?php echo $field; ?>" value="<?php e($value); ?>" />
+<p><div class="wysiwyg" data-wysiwyg-field="<?= $field; ?>"><?= $value; ?></div></p>
+<input type="hidden" name="<?= $field; ?>" value="<?= e($value); ?>" />

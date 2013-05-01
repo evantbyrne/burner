@@ -1,1 +1,1 @@
-<i class="icon-<?php echo ($model->{$field} == 'True') ? 'ok-sign' : 'remove-circle' ; ?>"></i>
+<i class="icon-<?= ($model->{$field} == 'True') ? 'ok-sign' : 'remove-circle'; ?>"></i>

@@ -13,10 +13,10 @@
 <?php $this->extend('breadcrumbs'); ?>
 
 	<ul class="breadcrumb">
-		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($model)); ?>"><?php echo $model_name; ?></a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit', array($model, $id)); ?>">Edit</a> <span class="divider">/</span></li>
+		<li><a href="<?= url(); ?>">Home</a> <span class="divider">/</span></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($model)); ?>"><?= $model_name; ?></a> <span class="divider">/</span></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit', array($model, $id)); ?>">Edit</a> <span class="divider">/</span></li>
 		<li class="active">Delete</li>
 	</ul>
 
@@ -26,7 +26,7 @@
 <!-- Content -->
 <?php $this->extend('content') ?>
 
-	<p>Are you sure that you want to delete this <?php echo strtolower($model_name); ?>?</p>
+	<p>Are you sure that you want to delete this <?= strtolower($model_name); ?>?</p>
 
 	<form method="post">
 

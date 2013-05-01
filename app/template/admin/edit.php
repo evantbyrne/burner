@@ -13,9 +13,9 @@
 <?php $this->extend('breadcrumbs'); ?>
 
 	<ul class="breadcrumb">
-		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($model)); ?>"><?php echo $model_name; ?></a> <span class="divider">/</span></li>
+		<li><a href="<?= url(); ?>">Home</a> <span class="divider">/</span></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($model)); ?>"><?= $model_name; ?></a> <span class="divider">/</span></li>
 		<li class="active">Edit</li>
 	</ul>
 
@@ -31,7 +31,7 @@
 
 			<?php foreach($inlines as $name => $child): ?>
 
-				<li><a href="#<?php e($name); ?>"><?= $child['verbose_plural']; ?></a></li>
+				<li><a href="#<?= e($name); ?>"><?= $child['verbose_plural']; ?></a></li>
 
 			<?php endforeach; ?>
 
@@ -53,7 +53,7 @@
 
 				<div class="form-actions">
 					<input type="submit" value="Save" class="btn btn-primary" />
-					<a class="btn pull-right" href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'delete', array($model, $row->id)); ?>">Delete</a>
+					<a class="btn pull-right" href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'delete', array($model, $row->id)); ?>">Delete</a>
 				</div>
 
 			</form>
@@ -64,9 +64,9 @@
 
 			<?php foreach($inlines as $name => $child): ?>
 
-				<div class="tab-pane" id="<?php e($name); ?>">
+				<div class="tab-pane" id="<?= e($name); ?>">
 
-					<p><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?php echo $child['verbose']; ?></a></p>
+					<p><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'add_child', array($model, $row->id, $name)); ?>"><i class="icon-plus"></i> Add <?= $child['verbose']; ?></a></p>
 
 					<?php if(empty($child['rows'])): ?>
 
@@ -81,7 +81,7 @@
 									
 									<?php foreach($child['columns'] as $column => $options): ?>
 										
-										<th><?php echo str_replace('_', ' ', $column); ?></th>
+										<th><?= str_replace('_', ' ', $column); ?></th>
 										
 									<?php endforeach; ?>
 								</tr>
@@ -89,10 +89,10 @@
 							<tbody>
 								<?php foreach($child['rows'] as $child_row): ?>
 									
-									<tr data-model="<?php e($name); ?>" data-id="<?php e($child_row->id); ?>">
+									<tr data-model="<?= e($name); ?>" data-id="<?= e($child_row->id); ?>">
 										
 										<td style="width:45px;">
-											<a class="btn" href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit_child', array($model, $row->id, $name, $child_row->id)); ?>">Edit</a>
+											<a class="btn" href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit_child', array($model, $row->id, $name, $child_row->id)); ?>">Edit</a>
 										</td>
 
 										<?php foreach($child['columns'] as $column => $options): ?>
@@ -107,7 +107,7 @@
 												
 												<?php else: ?>
 												
-													<?php echo e($child_row->{$column}); ?>
+													<?= e($child_row->{$column}); ?>
 
 												<?php endif; ?>
 											</td>

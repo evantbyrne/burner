@@ -1,2 +1,2 @@
 <?php $this->error($field); ?>
-<p><?php e(ucfirst($label)); ?></p>
+<p><?= e(ucfirst($label)); ?></p>

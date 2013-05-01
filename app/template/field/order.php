@@ -1,1 +1,1 @@
-<p><input type="text" name="<?php echo $field; ?>" placeholder="Automatically set" value="<?php e($value); ?>" disabled /></p>
+<p><input type="text" name="<?= $field; ?>" placeholder="Automatically set" value="<?= e($value); ?>" disabled /></p>

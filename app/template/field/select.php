@@ -1,8 +1,8 @@
-<p><select name="<?php echo $field; ?>">
+<p><select name="<?= $field; ?>">
 
 	<?php foreach($options['choices'] as $key => $name): ?>
 
-		<option value="<?php echo $key ?>"<?php if($value == $key) { echo ' SELECTED'; } ?>><?php e($name); ?></option>
+		<option value="<?= $key ?>"<?php if($value == $key) { echo ' SELECTED'; } ?>><?= e($name); ?></option>
 
 	<?php endforeach; ?>
 

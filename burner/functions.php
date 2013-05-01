@@ -120,7 +120,7 @@ function is_post() {
  */
 function e($value) {
 
-	echo htmlentities($value);
+	return htmlentities($value);
 
 }
 

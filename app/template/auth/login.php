@@ -13,7 +13,7 @@
 <?php $this->extend('breadcrumbs'); ?>
 
 	<ul class="breadcrumb">
-		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
+		<li><a href="<?= url(); ?>">Home</a> <span class="divider">/</span></li>
 		<li class="active">Log In</li>
 	</ul>
 

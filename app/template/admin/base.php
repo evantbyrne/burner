@@ -8,13 +8,13 @@
 		<title><?php $this->section('title'); ?>Admin<?php $this->end_section(); ?></title>
 		
 		<?php $this->section('styles'); ?>
-			<link rel="stylesheet" href="<?php echo url('static/admin/css/bootstrap.css'); ?>" />
-			<link rel="stylesheet" href="<?php echo url('static/admin/css/bootstrap-responsive.css'); ?>" />
-			<link rel="stylesheet" href="<?php echo url('static/admin/css/rewrite.css'); ?>" />
-			<link rel="stylesheet" href="<?php echo url('static/admin/css/datepicker.css'); ?>" />
-			<link rel="stylesheet" href="<?php echo url('static/admin/css/font-awesome.css'); ?>">
+			<link rel="stylesheet" href="<?= url('static/admin/css/bootstrap.css'); ?>" />
+			<link rel="stylesheet" href="<?= url('static/admin/css/bootstrap-responsive.css'); ?>" />
+			<link rel="stylesheet" href="<?= url('static/admin/css/rewrite.css'); ?>" />
+			<link rel="stylesheet" href="<?= url('static/admin/css/datepicker.css'); ?>" />
+			<link rel="stylesheet" href="<?= url('static/admin/css/font-awesome.css'); ?>">
 			<!--[if IE 7]>
-				<link rel="stylesheet" href="<?php echo url('static/admin/css/font-awesome-ie7.css'); ?>">
+				<link rel="stylesheet" href="<?= url('static/admin/css/font-awesome-ie7.css'); ?>">
 			<![endif]-->
 		<?php $this->end_section(); ?>
 
@@ -36,8 +36,8 @@
 							
 							<?php if(\Library\Auth::logged_in()): ?>
 								
-								<li class="active"><a href="javascript:;"><?php echo 'Welcome, ' . \Library\Auth::current_user()->email; ?></a></li>
-								<li><a href="<?php echo route_url('get', 'App.Vendor.Auth.Controller.Auth', 'logout'); ?>">Log Out</a></li>
+								<li class="active"><a href="javascript:;">Welcome, <?= \Library\Auth::current_user()->email; ?></a></li>
+								<li><a href="<?= route_url('get', 'App.Vendor.Auth.Controller.Auth', 'logout'); ?>">Log Out</a></li>
 							
 							<?php endif; ?>
 
@@ -53,7 +53,7 @@
 			<?php $this->section('breadcrumbs'); ?>
 			
 				<ul class="breadcrumb">
-					<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
+					<li><a href="<?= url(); ?>">Home</a> <span class="divider">/</span></li>
 					<li class="active">Admin</li>
 				</ul>
 			
@@ -86,7 +86,7 @@
 
 				<?php if(\Core\Config::get('debug')): ?>
 					
-					<p><small>Executed queries: <?php echo count(\Core\DB::connection()->queries()); ?></small></p>
+					<p><small>Executed queries: <?= count(\Core\DB::connection()->queries()); ?></small></p>
 				
 				<?php endif; ?>
 
@@ -94,10 +94,10 @@
 		</div>
 
 		<?php $this->section('scripts'); ?>
-			<script src="<?php echo url('static/admin/js/jquery.min.js'); ?>"></script>
-			<script src="<?php echo url('static/admin/js/jquery-ui.min.js'); ?>"></script>
-			<script src="<?php echo url('static/admin/js/bootstrap.min.js'); ?>"></script>
-			<script src="<?php echo url('static/admin/js/bootstrap-datepicker.js'); ?>"></script>
+			<script src="<?= url('static/admin/js/jquery.min.js'); ?>"></script>
+			<script src="<?= url('static/admin/js/jquery-ui.min.js'); ?>"></script>
+			<script src="<?= url('static/admin/js/bootstrap.min.js'); ?>"></script>
+			<script src="<?= url('static/admin/js/bootstrap-datepicker.js'); ?>"></script>
 			<script>
 				$(document).ready(function() {
 
@@ -126,7 +126,7 @@
 						});
 
 						data.order = JSON.stringify(data.order);
-						$.post("<?php echo route_url('post', 'App.Vendor.Admin.Controller.Admin', 'ajax_order'); ?>", data);
+						$.post("<?= route_url('post', 'App.Vendor.Admin.Controller.Admin', 'ajax_order'); ?>", data);
 
 					}});
 

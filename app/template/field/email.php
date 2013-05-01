@@ -1,1 +1,1 @@
-<p><input type="email" name="<?php echo $field; ?>" value="<?php e($value); ?>" /></p>
+<p><input type="email" name="<?= $field; ?>" value="<?= e($value); ?>" /></p>

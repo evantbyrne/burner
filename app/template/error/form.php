@@ -1,1 +1,1 @@
-<p>Error: <?php echo $content; ?></p>
+<p>Error: <?= $content; ?></p>

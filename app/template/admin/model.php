@@ -13,9 +13,9 @@
 <?php $this->extend('breadcrumbs'); ?>
 
 	<ul class="breadcrumb">
-		<li><a href="<?php echo url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li class="active"><?php echo $model_name; ?></li>
+		<li><a href="<?= url(); ?>">Home</a> <span class="divider">/</span></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li class="active"><?= $model_name; ?></li>
 	</ul>
 
 <?php $this->end_extend(); ?>
@@ -26,7 +26,7 @@
 
 	<div class="well">
 		<ul class="nav nav-list">
-			<li><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'add', array($model)); ?>"><i class="icon-plus"></i> Add <?php echo $model_name; ?></a></li>
+			<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'add', array($model)); ?>"><i class="icon-plus"></i> Add <?= $model_name; ?></a></li>
 		</ul>
 	</div>
 
@@ -49,7 +49,7 @@
 					
 					<?php foreach($columns as $column => $options): ?>
 						
-						<th><?php echo str_replace('_', ' ', $column); ?></th>
+						<th><?= str_replace('_', ' ', $column); ?></th>
 						
 					<?php endforeach; ?>
 				</tr>
@@ -57,10 +57,10 @@
 			<tbody>
 				<?php foreach($rows as $row): ?>
 					
-					<tr data-model="<?php e($model); ?>" data-id="<?php e($row->id); ?>">
+					<tr data-model="<?= e($model); ?>" data-id="<?= e($row->id); ?>">
 						
 						<td style="width:45px;">
-							<a class="btn" href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit', array($model, $row->id)); ?>">Edit</a>
+							<a class="btn" href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit', array($model, $row->id)); ?>">Edit</a>
 						</td>
 
 						<?php foreach($columns as $column => $options): ?>
@@ -75,7 +75,7 @@
 								
 								<?php else: ?>
 								
-									<?php echo e($row->{$column}); ?>
+									<?= e($row->{$column}); ?>
 
 								<?php endif; ?>
 							</td>
@@ -91,8 +91,8 @@
 
 	<?php if($next or $prev): ?>
 		<p>
-			<?php if($prev): ?><a href="<?php echo $prev; ?>">Previous</a><?php endif; ?>&nbsp;
-			<?php if($next): ?><a href="<?php echo $next; ?>">Next</a><?php endif; ?>
+			<?php if($prev): ?><a href="<?= $prev; ?>">Previous</a><?php endif; ?>&nbsp;
+			<?php if($next): ?><a href="<?= $next; ?>">Next</a><?php endif; ?>
 		</p>
 	<?php endif; ?>
 

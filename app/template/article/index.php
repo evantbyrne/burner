@@ -16,7 +16,7 @@
 
 			<?php foreach($articles as $article): ?>
 
-				<li><a href="<?php echo url("article/{$article->id}"); ?>"><?php e($article->title); ?></a></li>
+				<li><a href="<?= url("article/{$article->id}"); ?>"><?= e($article->title); ?></a></li>
 
 			<?php endforeach; ?>
 

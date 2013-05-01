@@ -1,1 +1,1 @@
-<p><input type="text" name="<?php echo $field; ?>" value="<?php e($value); ?>" /></p>
+<p><input type="text" name="<?= $field; ?>" value="<?= e($value); ?>" /></p>

@@ -23,7 +23,7 @@
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th><?php e($group_name); ?></th>
+						<th><?= e($group_name); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -31,7 +31,7 @@
 					<?php foreach($group_models as $model_class => $model): ?>
 				
 						<tr>
-							<td><a href="<?php echo route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($model_class)); ?>"><?php echo $model['name']; ?></a></td>
+							<td><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($model_class)); ?>"><?= $model['name']; ?></a></td>
 						</tr>
 					
 					<?php endforeach; ?>

@@ -1,1 +1,1 @@
-<span class="btn btn-link order-column move-cursor" data-column="<?php echo $field; ?>"><i class="icon-reorder"></i></span>
+<span class="btn btn-link order-column move-cursor" data-column="<?= $field; ?>"><i class="icon-reorder"></i></span>
