@@ -13,6 +13,7 @@ class MultipleGroups extends \Core\Model\Base {
 	 * @option type = Email
 	 * @option length = 100
 	 * @option required = Email field is required.
+	 * @option unique = Email address already in use.
 	 */
 	public $email;
 
