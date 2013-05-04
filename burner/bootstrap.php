@@ -153,8 +153,12 @@ class Bootstrap {
 	 */
 	public static function run() {
 		
-		// Get route
 		$request_url = self::get_request_url();
+
+		// Set current page
+		define('CURRENT_PAGE', $request_url);
+
+		// Get route
 		$uri = Route::get($request_url);
 		
 		if($uri === false) {
@@ -163,9 +167,6 @@ class Bootstrap {
 			exit;
 			
 		}
-		
-		// Set current page
-		define('CURRENT_PAGE', $request_url);
 		
 		// Load controller
 		self::controller($uri['controller'], $uri['method'], $uri['args']);
