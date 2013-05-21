@@ -9,7 +9,7 @@ class Main extends \Core\Controller\Base {
 	 */
 	public function index() {
 
-		return new \Core\Response(\Library\Session::get('auth_user_id'));
+		return new \Core\Response(url('foo/bar/baz'));
 	
 	}
 	

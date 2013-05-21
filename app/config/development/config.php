@@ -17,6 +17,9 @@ date_default_timezone_set('America/New_York');
 // Application's Base URL (including trailing slash)
 Config::set('base_url', 'localhost:8888/beaker-burner/');
 
+// Use HTTPS URLs?
+Config::set('https', false);
+
 // Does Application Use Mod_Rewrite URLs?
 Config::set('mod_rewrite', true);
 

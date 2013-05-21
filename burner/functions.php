@@ -17,9 +17,9 @@ function root_url($https = false) {
  * @param boolean HTTPS
  * @return string Full path to page
  */
-function url($path = '', $https = false) {
+function url($path = '', $https = null) {
 
-	return root_url($https) . $path;
+	return root_url(($https === null) ? \Core\Config::get('https') : $https) . $path;
 
 }
 
