@@ -40,9 +40,8 @@ Config::set('auth_plugin', 'MultipleGroups');
 Config::set('admin_page_size', 10);
 Config::set('admin_https_urls', false);
 Config::set('admin_models', array(
-	'Users' => array('user', 'group', 'membership'),
-	'Blog' => array('article', 'category'))
-);
+	'Users' => array('user', 'group', 'membership')
+));
 
 // Default language
 Config::set('language', 'english');
