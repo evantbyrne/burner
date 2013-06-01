@@ -5,9 +5,9 @@
  * @param boolean HTTPS
  * @return string The base URL
  */
-function root_url($https = false) {
+function root_url($https = null) {
 
-	return (($https) ? 'https://' : 'http://' ) . ((!\Core\Config::get('mod_rewrite')) ? \Core\Config::get('base_url') . 'index.php/' : \Core\Config::get('base_url'));
+	return ((($https === null) ? \Core\Config::get('https') : $https) ? 'https://' : 'http://' ) . ((!\Core\Config::get('mod_rewrite')) ? \Core\Config::get('base_url') . 'index.php/' : \Core\Config::get('base_url'));
 
 }
 
@@ -19,7 +19,7 @@ function root_url($https = false) {
  */
 function url($path = '', $https = null) {
 
-	return root_url(($https === null) ? \Core\Config::get('https') : $https) . $path;
+	return root_url($https) . $path;
 
 }
 
@@ -77,7 +77,7 @@ function route_url($type, $controller, $method, $args = null, $https = false) {
  * @param string URL to redirect to
  * @param boolean HTTPS
  */
-function redirect($path = '', $https = false) {
+function redirect($path = '', $https = null) {
 	
 	header('Location: ' . root_url($https) . $path);
 	exit;
@@ -89,7 +89,7 @@ function redirect($path = '', $https = false) {
  * @param string URL to redirect to after logging in
  * @param boolean HTTPS
  */
-function login_redirect($path = '', $https = false) {
+function login_redirect($path = '', $https = null) {
 	
 	redirect('auth/login/' . base64_encode($path), $https);
 	
