@@ -11,7 +11,6 @@ class Exception extends \Exception {}
 
 /**
  * Connection Class
- * @author Beaker Studio
  */
 class Connection {
 
@@ -365,7 +364,6 @@ class Connection {
 
 /**
  * Result Class
- * @author Beaker Studio
  */
 class Result {
 
@@ -373,7 +371,6 @@ class Result {
 
 /**
  * Abstract Base
- * @author Beaker Studio
  */
 abstract class Base {
 
@@ -417,7 +414,6 @@ abstract class Base {
 
 /**
  * Abstract Where Base Class
- * @author Beaker Studio
  */
 abstract class WhereBase extends Base {
 
@@ -795,7 +791,6 @@ abstract class WhereBase extends Base {
 
 /**
  * Query Class
- * @author Beaker Studio
  */
 class Query {
 
@@ -838,7 +833,6 @@ class Query {
 
 /**
  * Select
- * @author Beaker Studio
  */
 class Select extends WhereBase {
 	
@@ -1194,7 +1188,6 @@ class Select extends WhereBase {
 
 /**
  * Update
- * @author Beaker Studio
  */
 class Update extends WhereBase {
 
@@ -1300,7 +1293,6 @@ class Update extends WhereBase {
 
 /**
  * Delete
- * @author Beaker Studio
  */
 class Delete extends WhereBase {
 	
@@ -1355,7 +1347,6 @@ class Delete extends WhereBase {
 
 /**
  * Insert
- * @author Beaker Studio
  */
 class Insert extends Base {
 
@@ -1436,7 +1427,6 @@ class Insert extends Base {
 
 /**
  * Create Table
- * @author Beaker Studio
  */
 class CreateTable {
 
@@ -1549,7 +1539,6 @@ class CreateTable {
 
 /**
  * Drop Table
- * @author Beaker Studio
  */
 class DropTable {
 	
@@ -1620,7 +1609,6 @@ class DropTable {
 
 /**
  * Truncate Table
- * @author Beaker Studio
  */
 class TruncateTable {
 	
@@ -1665,7 +1653,6 @@ class TruncateTable {
 
 /**
  * Rename Table
- * @author Beaker Studio
  */
 class RenameTable {
 	
@@ -1713,7 +1700,6 @@ class RenameTable {
 
 /**
  * Alter Table
- * @author Beaker Studio
  */
 class AlterTable {
 	
@@ -1820,7 +1806,6 @@ class AlterTable {
 
 /**
  * Abstract Table Column
- * @author Beaker Studio
  */
 abstract class TableColumn {
 
@@ -1875,7 +1860,6 @@ abstract class TableColumn {
 
 /**
  * Int Column
- * @author Beaker Studio
  */
 class IntColumn extends TableColumn {
 	
@@ -1894,7 +1878,6 @@ class IntColumn extends TableColumn {
 
 /**
  * Tiny Int Column
- * @author Beaker Studio
  */
 class TinyIntColumn extends TableColumn {
 	
@@ -1913,7 +1896,6 @@ class TinyIntColumn extends TableColumn {
 
 /**
  * Small Int Column
- * @author Beaker Studio
  */
 class SmallIntColumn extends TableColumn {
 	
@@ -1932,7 +1914,6 @@ class SmallIntColumn extends TableColumn {
 
 /**
  * Medium Int Column
- * @author Beaker Studio
  */
 class MediumIntColumn extends TableColumn {
 	
@@ -1951,7 +1932,6 @@ class MediumIntColumn extends TableColumn {
 
 /**
  * Big Int Column
- * @author Beaker Studio
  */
 class BigIntColumn extends TableColumn {
 	
@@ -1970,7 +1950,6 @@ class BigIntColumn extends TableColumn {
 
 /**
  * Boolean Column
- * @author Beaker Studio
  */
 class BooleanColumn extends TableColumn {
 	
@@ -1989,7 +1968,6 @@ class BooleanColumn extends TableColumn {
 
 /**
  * Decimal Column
- * @author Beaker Studio
  */
 class DecimalColumn extends TableColumn {
 	
@@ -2072,7 +2050,6 @@ class TimeColumn extends TableColumn {
 
 /**
  * Timestamp Column
- * @author Beaker Studio
  */
 class TimestampColumn extends TableColumn {
 	
@@ -2117,7 +2094,6 @@ class TimestampColumn extends TableColumn {
 
 /**
  * Text Column
- * @author Beaker Studio
  */
 class TextColumn extends TableColumn {
 	
@@ -2136,7 +2112,6 @@ class TextColumn extends TableColumn {
 
 /**
  * Char Column
- * @author Beaker Studio
  */
 class CharColumn extends TableColumn {
 	
@@ -2162,7 +2137,6 @@ class CharColumn extends TableColumn {
 
 /**
  * Varchar Column
- * @author Beaker Studio
  */
 class VarcharColumn extends TableColumn {
 	
@@ -2188,7 +2162,6 @@ class VarcharColumn extends TableColumn {
 
 /**
  * Enum Column
- * @author Beaker Studio
  */
 class EnumColumn extends TableColumn {
 	
@@ -2214,7 +2187,6 @@ class EnumColumn extends TableColumn {
 
 /**
  * Incrementing Column
- * @author Beaker Studio
  */
 class IncrementingColumn extends TableColumn {
 	
@@ -2232,8 +2204,25 @@ class IncrementingColumn extends TableColumn {
 
 
 /**
+ * Point Column
+ */
+class PointColumn extends TableColumn {
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function build() {
+	
+		return "`{$this->name}` POINT{$this->build_null()}";
+	
+	}
+	
+}
+
+
+
+/**
  * Abstract Table Addition
- * @author Beaker Studio
  */
 abstract class TableAddition {
 
@@ -2260,7 +2249,6 @@ abstract class TableAddition {
 
 /**
  * Primary Key
- * @author Beaker Studio
  */
 class PrimaryKey extends TableAddition {
 	
@@ -2285,7 +2273,6 @@ class PrimaryKey extends TableAddition {
 
 /**
  * Unique Key
- * @author Beaker Studio
  */
 class UniqueKey extends TableAddition {
 	
@@ -2310,7 +2297,6 @@ class UniqueKey extends TableAddition {
 
 /**
  * Fulltext Index
- * @author Beaker Studio
  */
 class FulltextIndex extends TableAddition {
 	
