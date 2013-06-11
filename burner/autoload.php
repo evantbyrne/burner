@@ -57,17 +57,6 @@ class Autoload {
 
 			}
 
-			if(isset($segments[1])) {
-
-				switch($segments[1]) {
-
-					case 'language':
-						$segments[1] = 'language/' . Config::get('language');
-
-				}
-
-			}
-
 			$path = implode('/', $segments) . '.php';
 
 		}
