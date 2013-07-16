@@ -25,7 +25,7 @@ class Test {
 	 * @param string Path
 	 * @param string Namespace
 	 */
-	public function run($path = null, $namespace = 'Test') {
+	public function run($path = null, $namespace = 'App.Test') {
 		
 		$path = ($path === null) ? APPLICATION . '/test/*.php' : $path;
 		$total = 0;
@@ -34,7 +34,7 @@ class Test {
 		foreach(glob($path) as $class) {
 
 			$class = explode('/', $class);
-			$class_name = "\\$namespace\\" . substr(end($class), 0, -4);
+			$class_name = to_php_namespace($namespace) . "\\" . substr(end($class), 0, -4);
 			$klass = new \ReflectionClass($class_name);
 			$methods = $klass->getMethods(\ReflectionMethod::IS_PUBLIC);
 			$test = new $class_name;
