@@ -111,7 +111,6 @@ class Base {
 
 		if(is_array($errors)) {
 
-			$this->data($model->to_array());
 			$this->data('errors', $errors);
 			return false;
 
