@@ -118,9 +118,9 @@ function is_post() {
 /**
  * Escape
  */
-function e($value) {
+function e($value, $flags = null, $encoding = "UTF-8") {
 
-	return htmlentities($value);
+	return htmlentities($value, ($flags === null) ? ENT_QUOTES|ENT_HTML5 : $flags, $encoding);
 
 }
 
