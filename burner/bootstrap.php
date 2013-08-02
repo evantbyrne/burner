@@ -83,7 +83,6 @@ class Bootstrap {
 		require_once(APPLICATION . '/config/' . CONFIGURATION . '/db.php');
 		require_once(APPLICATION . '/config/' . CONFIGURATION . '/hash.php');
 		require_once(BURNER . '/functions.php');
-		require_once(BURNER . '/mysql.php');
 		require_once(BURNER . '/response.php');
 		
 		set_error_handler('Core\burner_error');

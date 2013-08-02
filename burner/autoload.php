@@ -47,6 +47,10 @@ class Autoload {
 					$segments[0] = BURNER;
 					break;
 
+				case 'mysql':
+					$segments[0] = BURNER . '/mysql';
+					break;
+
 				case 'column':
 					$segments[0] = BURNER . '/column';
 					break;
