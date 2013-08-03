@@ -117,6 +117,11 @@ function is_post() {
 
 /**
  * Escape
+ * A wrapper for PHP's htmlentities
+ * @param string Dirty value
+ * @param int Flags
+ * @param string Encoding
+ * @return string Clean value
  */
 function e($value, $flags = null, $encoding = "UTF-8") {
 
