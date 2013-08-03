@@ -125,7 +125,7 @@ function is_post() {
  */
 function e($value, $flags = null, $encoding = "UTF-8") {
 
-	return htmlentities($value, ($flags === null) ? ENT_QUOTES|ENT_HTML5 : $flags, $encoding);
+	return htmlentities($value, ($flags === null) ? (defined('ENT_HTML5') ? ENT_QUOTES|ENT_HTML5 : ENT_QUOTES) : $flags, $encoding);
 
 }
 
