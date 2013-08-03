@@ -63,6 +63,20 @@ class Base extends \Core\Form\Base {
 
 	}
 
+
+	/**
+	 * Fetch
+	 * @param string SQL
+	 * @param array Parameters to bind to query
+	 * @return array An array of the model type
+	 */
+	public static function fetch($sql, $params = array()) {
+
+		$query = new \Mysql\Query($sql, $params);
+		return \Core\DB::connection()->fetch($query, '\\'.get_called_class());
+
+	}
+
 	/**
 	 * Select
 	 * @return \Mysql\Select
