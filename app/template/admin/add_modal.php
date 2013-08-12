@@ -12,6 +12,7 @@
 
 		<?php foreach($columns as $name => $c): ?>
 
+			<?php $this->error($name, 'admin/error'); ?>
 			<?php $this->label($name); ?>
 			<?php $this->field($name, $row, $c['options']); ?>
 

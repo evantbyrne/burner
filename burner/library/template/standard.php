@@ -220,11 +220,19 @@ class Standard implements BaseInterface {
 	 * Error
 	 * @param string Name of error
 	 */
-	public function error($error) {
+	public function error($error, $template = null) {
 
 		if(isset($this->data['errors'][$error])) {
 
-			echo self::render('error/form', array('content' => $this->data['errors'][$error]));
+			if(!empty($template)) {
+
+				echo self::render($template, array('content' => $this->data['errors'][$error]));
+
+			} else {
+
+				echo $this->data['errors'][$error];
+
+			}
 
 		}
 
