@@ -1,0 +1,1 @@
+<p><input class="datepicker" placeholder="yyyy-mm-dd" type="text" name="<?= $field; ?>" value="<?= e($value); ?>" /></p>

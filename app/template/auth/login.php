@@ -29,8 +29,9 @@
 
 		<?php foreach($user->get_schema() as $column => $options): ?>
 
-			<?php $this->label($column); ?>
-			<?php $this->field($column, $user); ?>
+			<?php $this->error($column, 'admin/error'); ?>
+			<?php $this->admin_label($column); ?>
+			<?php $this->admin_field($column, $user); ?>
 
 		<?php endforeach; ?>
 		

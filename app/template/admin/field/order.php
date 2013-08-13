@@ -1,0 +1,1 @@
+<p><input type="text" name="<?= $field; ?>" placeholder="Automatically set" value="<?= e($value); ?>" disabled /></p>

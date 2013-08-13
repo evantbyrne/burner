@@ -1,0 +1,1 @@
+<p><input type="email" name="<?= $field; ?>" value="<?= e($value); ?>" /></p>

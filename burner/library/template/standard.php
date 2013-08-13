@@ -269,11 +269,17 @@ class Standard implements BaseInterface {
 	 * @param string Field name
 	 * @param \Core\Model\Base Model
 	 * @param array Extra options
+	 * @param boolean Admin control panel
 	 */
-	public function field($name, $model, $extra_options = array()) {
+	public function field($name, $model, $extra_options = array(), $admin = false) {
 
 		$options = array_merge($model->get_schema_column($name)->options(), $extra_options);
-		echo self::render("field/{$options['template']}", array(
+		$template = "field/{$options['template']}";
+		if($admin) {
+			$template = 'admin/' . $template;
+		}
+
+		echo self::render($template, array(
 			
 			'field'   => $name,
 			'options' => $options,
@@ -286,12 +292,24 @@ class Standard implements BaseInterface {
 	}
 
 	/**
-	 * Label
+	 * Admin Field
+	 * @param string Field name
+	 * @param \Core\Model\Base Model
+	 * @param array Extra options
+	 */
+	public function admin_field($name, $model, $extra_options = array()) {
+
+		$this->field($name, $model, $extra_options, true);
+
+	}
+
+	/**
+	 * Admin Label
 	 * @param string Field Name
 	 */
-	public function label($field) {
+	public function admin_label($field) {
 
-		echo self::render("field/label", array(
+		echo self::render("admin/field/label", array(
 
 			'field'  => $field,
 			'label'  => str_replace('_', ' ', $field),
