@@ -112,7 +112,7 @@ class Base {
 				// Add column
 				if(!empty($options) and !empty($options['type'])) {
 
-					$column_class = "\\Column\\{$options['type']}";
+					$column_class = (strpos($options['type'], '.') === false) ? "\\Column\\{$options['type']}" : to_php_namespace($options['type']);
 					self::$schema[$this->klass_name][$name] = new $column_class($name, $options);
 
 					// Add to admin
