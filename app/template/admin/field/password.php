@@ -1,1 +1,1 @@
-<p><input type="password" name="<?= $field; ?>" /></p>
+<input class="form-control" type="password" name="<?= $field; ?>" />

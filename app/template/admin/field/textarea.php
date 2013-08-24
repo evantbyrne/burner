@@ -1,1 +1,1 @@
-<p><textarea name="<?= $field; ?>"><?= e($value); ?></textarea></p>
+<textarea class="form-control" name="<?= $field; ?>" rows="6"><?= e($value); ?></textarea>

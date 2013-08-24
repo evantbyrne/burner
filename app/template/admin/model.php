@@ -13,8 +13,8 @@
 <?php $this->extend('breadcrumbs'); ?>
 
 	<ul class="breadcrumb">
-		<li><a href="<?= url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
+		<li><a href="<?= url(); ?>">Home</a></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a></li>
 		<li class="active"><?= $model_name; ?></li>
 	</ul>
 

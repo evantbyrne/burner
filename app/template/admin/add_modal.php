@@ -10,13 +10,21 @@
 
 	<form method="post"<?php if($is_multipart): ?> enctype="multipart/form-data"<?php endif; ?> class="ajax-add-modal-form">
 
-		<?php foreach($columns as $name => $c): ?>
+		<fieldset>
 
-			<?php $this->error($name, 'admin/error'); ?>
-			<?php $this->admin_label($name); ?>
-			<?php $this->admin_field($name, $row, $c['options']); ?>
+			<?php foreach($columns as $name => $c): ?>
 
-		<?php endforeach; ?>
+				<div class="form-group">
+
+					<?php $this->error($name, 'admin/error'); ?>
+					<?php $this->admin_label($name); ?>
+					<?php $this->admin_field($name, $row, $c['options']); ?>
+
+				</div>
+
+			<?php endforeach; ?>
+
+		</fieldset>
 
 	</form>
 

@@ -13,11 +13,11 @@
 <?php $this->extend('breadcrumbs'); ?>
 
 	<ul class="breadcrumb">
-		<li><a href="<?= url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($parent_model)); ?>"><?= $parent_name; ?></a> <span class="divider">/</span></li>
-		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit', array($parent_model, $parent_id)); ?>">Edit</a> <span class="divider">/</span></li>
-		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'children', array($parent_model, $parent_id, $model)); ?>"><?= $model_name; ?></a> <span class="divider">/</span></li>
+		<li><a href="<?= url(); ?>">Home</a></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($parent_model)); ?>"><?= $parent_name; ?></a></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'edit', array($parent_model, $parent_id)); ?>">Edit</a></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'children', array($parent_model, $parent_id, $model)); ?>"><?= $model_name; ?></a></li>
 		<li class="active">Edit</li>
 	</ul>
 
@@ -29,26 +29,32 @@
 
 	<form method="post"<?php if($is_multipart): ?> enctype="multipart/form-data"<?php endif; ?>>
 
-		<div class="form-actions">
+		<fieldset>
+
+			<?php foreach($columns as $name => $c): ?>
+
+				<?php if($name == $parent_model): ?>
+				
+					<input type="hidden" name="<?= e($parent_model); ?>" value="<?= e($parent_id); ?>" /> 
+				
+				<?php else: ?>
+
+					<div class="form-group">
+				
+						<?php $this->error($name, 'admin/error'); ?>
+						<?php $this->admin_label($name); ?>
+						<?php $this->admin_field($name, $row, $c['options']); ?>
+
+					</div>
+				
+				<?php endif; ?>
+
+			<?php endforeach; ?>
+
 			<input type="submit" value="Save" class="btn btn-primary" />
-			<a class="btn pull-right" href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'delete', array($model, $row->id)); ?>">Delete</a>
-		</div>
+			<a class="btn btn-default pull-right" href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'delete', array($model, $row->id)); ?>">Delete</a>
 
-		<?php foreach($columns as $name => $c): ?>
-
-			<?php if($name == $parent_model): ?>
-			
-				<input type="hidden" name="<?= e($parent_model); ?>" value="<?= e($parent_id); ?>" /> 
-			
-			<?php else: ?>
-			
-				<?php $this->error($name, 'admin/error'); ?>
-				<?php $this->admin_label($name); ?>
-				<?php $this->admin_field($name, $row, $c['options']); ?>
-			
-			<?php endif; ?>
-
-		<?php endforeach; ?>
+		</fieldset>
 
 	</form>
 

@@ -1,1 +1,1 @@
-<p><input type="email" name="<?= $field; ?>" value="<?= e($value); ?>" /></p>
+<input class="form-control" type="email" name="<?= $field; ?>" value="<?= e($value); ?>" />

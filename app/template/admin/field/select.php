@@ -1,4 +1,4 @@
-<p><select name="<?= $field; ?>">
+<select class="form-control" name="<?= $field; ?>">
 
 	<?php foreach($options['choices'] as $key => $name): ?>
 
@@ -6,4 +6,4 @@
 
 	<?php endforeach; ?>
 
-</select></p>
+</select>

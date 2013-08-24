@@ -1,1 +1,1 @@
-<p><?= e(ucfirst($label)); ?></p>
+<label><?= e(ucfirst($label)); ?></label>

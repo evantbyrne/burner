@@ -1,1 +1,1 @@
-<div class="alert alert-error"><?= $content; ?></div>
+<div class="alert alert-danger"><?= $content; ?></div>

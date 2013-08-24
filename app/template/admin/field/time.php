@@ -1,1 +1,1 @@
-<p><input placeholder="hh:mm:ss" type="text" name="<?= $field; ?>" value="<?= e($value); ?>" /></p>
+<input class="form-control" placeholder="hh:mm:ss" type="text" name="<?= $field; ?>" value="<?= e($value); ?>" />

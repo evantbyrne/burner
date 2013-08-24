@@ -8,14 +8,13 @@
 		<title><?php $this->section('title'); ?>Admin<?php $this->end_section(); ?></title>
 		
 		<?php $this->section('styles'); ?>
-			<link rel="stylesheet" href="<?= url('static/admin/css/bootstrap.css'); ?>" />
-			<link rel="stylesheet" href="<?= url('static/admin/css/bootstrap-responsive.css'); ?>" />
-			<link rel="stylesheet" href="<?= url('static/admin/css/rewrite.css'); ?>" />
+			<link rel="stylesheet" href="<?= url('static/admin/css/bootstrap.min.css'); ?>" />
+			<link rel="stylesheet" href="<?= url('static/admin/css/bootstrap-theme.min.css'); ?>" />
 			<link rel="stylesheet" href="<?= url('static/admin/css/datepicker.css'); ?>" />
 			<link rel="stylesheet" href="<?= url('static/admin/css/select2.css'); ?>" />
-			<link rel="stylesheet" href="<?= url('static/admin/css/font-awesome.css'); ?>">
+			<link rel="stylesheet" href="<?= url('static/admin/css/font-awesome.min.css'); ?>">
 			<!--[if IE 7]>
-				<link rel="stylesheet" href="<?= url('static/admin/css/font-awesome-ie7.css'); ?>">
+				<link rel="stylesheet" href="<?= url('static/admin/css/font-awesome-ie7.min.css'); ?>">
 			<![endif]-->
 		<?php $this->end_section(); ?>
 
@@ -23,44 +22,47 @@
 	<body>
 
 		<!-- Navigation -->
-		<div class="navbar">
-			<div class="navbar-inner">
-				<div class="container-fluid">
-					<a class="brand"><?php $this->section('brand'); ?>Burner<?php $this->end_section(); ?></a>
-					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		<nav class="navbar navbar-default navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-top-collapse">
+						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
-					</a>
-					<div class="nav-collapse">
-						<ul class="nav pull-right">
+					</button>
+					<a class="navbar-brand" href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>"><?php $this->section('brand'); ?>Burner<?php $this->end_section(); ?></a>
+				</div>
+				<div class="collapse navbar-collapse navbar-top-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						
+						<?php if(\Library\Auth::logged_in()): ?>
 							
-							<?php if(\Library\Auth::logged_in()): ?>
-								
-								<li class="active"><a href="javascript:;">Welcome, <?= \Library\Auth::current_user()->email; ?></a></li>
-								<li><a href="<?= route_url('get', 'App.Vendor.Auth.Controller.Auth', 'logout'); ?>">Log Out</a></li>
-							
-							<?php endif; ?>
+							<li class="active"><a href="javascript:;">Welcome, <?= \Library\Auth::current_user()->email; ?></a></li>
+							<li><a href="<?= route_url('get', 'App.Vendor.Auth.Controller.Auth', 'logout'); ?>">Log Out</a></li>
+						
+						<?php endif; ?>
 
-						</ul>
-					</div>
+					</ul>
 				</div>
 			</div>
-		</div>
+		</nav>
 		
 		<!-- Container -->
-		<div class="container-fluid">
+		<div class="container">
 			
 			<?php $this->section('breadcrumbs'); ?>
 			
 				<ul class="breadcrumb">
-					<li><a href="<?= url(); ?>">Home</a> <span class="divider">/</span></li>
+					<li><a href="<?= url(); ?>">Home</a></li>
 					<li class="active">Admin</li>
 				</ul>
 			
 			<?php $this->end_section(); ?>
 			
-			<h3><?php $this->section('header'); ?>Admin<?php $this->end_section(); ?></h3>
+			<div class="page-header">
+				<h3><?php $this->section('header'); ?>Admin<?php $this->end_section(); ?></h3>
+			</div>
 
 			<div class="row-fluid show-grid">
 				<div class="span12">
@@ -111,7 +113,7 @@
 					});
 
 					// Fancy select boxes
-					$('select').select2({width:'element'});
+					// $('select').select2({width:'element'});
 
 					// Tabs
 					$('#tabs a').click(function() {
@@ -126,11 +128,8 @@
 						$.get($(this).attr('data-url'), function(data) {
 
 							var modal = $('#modal');
-							modal.html(data).show().modal({ keyboard:true, backdrop:false, show: true });
-							modal.find('.ajax-add-modal').hide().parent().removeClass('controls-row');
+							modal.html(data).find('> .modal').modal({ keyboard:true, backdrop:false, show:true });
 							modal.find('.datepicker').datepicker({ format:'yyyy-mm-dd' });
-							modal.find('select').select2({width:'element'});
-							modal.modal('show');
 
 							$('html, body').animate({ scrollTop: 0 });
 
@@ -154,7 +153,7 @@
 							var id = parseInt(data);
 							if(!isNaN(id)) {
 
-								$('#modal').modal('hide').html('');
+								$('#modal > .modal').modal('hide').html('');
 								$.getJSON(url + '/' + id, function(data) {
 
 									var option = $('<option/>').attr('value', data.id).prop('selected', true).text(data.name);
@@ -165,10 +164,9 @@
 							} else {
 
 								var modal = $('#modal');
-								modal.html(data);
-								modal.find('.ajax-add-modal').hide().parent().removeClass('controls-row');
+								modal.find('> .modal').modal('hide');
+								modal.html(data).find('> .modal').modal({ keyboard:true, backdrop:false, show:true });
 								modal.find('.datepicker').datepicker({ format:'yyyy-mm-dd' });
-								modal.find('select').select2({width:'element'});
 
 							}
 

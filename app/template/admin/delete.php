@@ -30,7 +30,11 @@
 
 	<form method="post">
 
-		<p><input type="submit" value="Delete" class="btn btn-danger" /></p>
+		<fieldset>
+
+			<input type="submit" value="Delete" class="btn btn-danger" />
+
+		</fieldset>
 
 	</form>
 

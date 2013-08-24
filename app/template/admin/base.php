@@ -6,15 +6,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<title><?php $this->section('title'); ?>Admin<?php $this->end_section(); ?></title>
-		
+
 		<?php $this->section('styles'); ?>
-			<link rel="stylesheet" href="<?= url('static/admin/css/bootstrap.css'); ?>" />
-			<link rel="stylesheet" href="<?= url('static/admin/css/bootstrap-responsive.css'); ?>" />
-			<link rel="stylesheet" href="<?= url('static/admin/css/rewrite.css'); ?>" />
+			<link rel="stylesheet" href="<?= url('static/admin/css/bootstrap.min.css'); ?>" />
+			<link rel="stylesheet" href="<?= url('static/admin/css/bootstrap-theme.min.css'); ?>" />
 			<link rel="stylesheet" href="<?= url('static/admin/css/datepicker.css'); ?>" />
-			<link rel="stylesheet" href="<?= url('static/admin/css/font-awesome.css'); ?>">
+			<link rel="stylesheet" href="<?= url('static/admin/css/select2.css'); ?>" />
+			<link rel="stylesheet" href="<?= url('static/admin/css/font-awesome.min.css'); ?>">
 			<!--[if IE 7]>
-				<link rel="stylesheet" href="<?= url('static/admin/css/font-awesome-ie7.css'); ?>">
+				<link rel="stylesheet" href="<?= url('static/admin/css/font-awesome-ie7.min.css'); ?>">
 			<![endif]-->
 		<?php $this->end_section(); ?>
 
@@ -22,33 +22,34 @@
 	<body>
 
 		<!-- Navigation -->
-		<div class="navbar">
-			<div class="navbar-inner">
-				<div class="container-fluid">
-					<a class="brand"><?php $this->section('brand'); ?>Burner<?php $this->end_section(); ?></a>
-					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		<nav class="navbar navbar-default navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-top-collapse">
+						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
-					</a>
-					<div class="nav-collapse">
-						<ul class="nav pull-right">
+					</button>
+					<a class="navbar-brand" href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>"><?php $this->section('brand'); ?>Burner<?php $this->end_section(); ?></a>
+				</div>
+				<div class="collapse navbar-collapse navbar-top-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						
+						<?php if(\Library\Auth::logged_in()): ?>
 							
-							<?php if(\Library\Auth::logged_in()): ?>
-								
-								<li class="active"><a href="javascript:;">Welcome, <?= \Library\Auth::current_user()->email; ?></a></li>
-								<li><a href="<?= route_url('get', 'App.Vendor.Auth.Controller.Auth', 'logout'); ?>">Log Out</a></li>
-							
-							<?php endif; ?>
+							<li class="active"><a href="javascript:;">Welcome, <?= \Library\Auth::current_user()->email; ?></a></li>
+							<li><a href="<?= route_url('get', 'App.Vendor.Auth.Controller.Auth', 'logout'); ?>">Log Out</a></li>
+						
+						<?php endif; ?>
 
-						</ul>
-					</div>
+					</ul>
 				</div>
 			</div>
-		</div>
+		</nav>
 		
 		<!-- Container -->
-		<div class="container-fluid">
+		<div class="container">
 			
 			<?php $this->section('breadcrumbs'); ?>
 			
@@ -59,10 +60,12 @@
 			
 			<?php $this->end_section(); ?>
 			
-			<h3><?php $this->section('header'); ?>Admin<?php $this->end_section(); ?></h3>
+			<div class="page-header">
+				<h3><?php $this->section('header'); ?>Admin<?php $this->end_section(); ?></h3>
+			</div>
 
-			<div class="row-fluid show-grid">
-				<div class="span8">
+			<div class="row">
+				<div class="col-lg-8">
 					
 					<?php $this->section('content'); ?>
 
@@ -71,7 +74,7 @@
 					<?php $this->end_section(); ?>
 
 				</div>
-				<div class="span4">
+				<div class="col-lg-4">
 					
 					<?php $this->section('sidebar'); ?>
 

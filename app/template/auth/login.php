@@ -13,7 +13,7 @@
 <?php $this->extend('breadcrumbs'); ?>
 
 	<ul class="breadcrumb">
-		<li><a href="<?= url(); ?>">Home</a> <span class="divider">/</span></li>
+		<li><a href="<?= url(); ?>">Home</a></li>
 		<li class="active">Log In</li>
 	</ul>
 
@@ -23,19 +23,29 @@
 <!-- Content -->
 <?php $this->extend('content'); ?>
 	
-	<form method="post" class="form-horizontal">
+	<form method="post">
 
-		<?php if($invalid): ?><p>Invalid login credentials.</p><?php endif; ?>
+		<fieldset>
 
-		<?php foreach($user->get_schema() as $column => $options): ?>
+			<?php if($invalid): ?>
+				<div class="alert alert-danger">Invalid login credentials.</div>
+			<?php endif; ?>
 
-			<?php $this->error($column, 'admin/error'); ?>
-			<?php $this->admin_label($column); ?>
-			<?php $this->admin_field($column, $user); ?>
+			<?php foreach($user->get_schema() as $column => $options): ?>
 
-		<?php endforeach; ?>
-		
-		<p><input type="submit" value="Login" class="btn btn-primary" /></p>
+				<div class="form-group">
+
+					<?php $this->error($column, 'admin/error'); ?>
+					<?php $this->admin_label($column); ?>
+					<?php $this->admin_field($column, $user); ?>
+
+				</div>
+
+			<?php endforeach; ?>
+			
+			<input type="submit" value="Login" class="btn btn-primary" />
+
+		</fieldset>
 
 	</form>
 

@@ -13,9 +13,9 @@
 <?php $this->extend('breadcrumbs'); ?>
 
 	<ul class="breadcrumb">
-		<li><a href="<?= url(); ?>">Home</a> <span class="divider">/</span></li>
-		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a> <span class="divider">/</span></li>
-		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($model)); ?>"><?= $model_name; ?></a> <span class="divider">/</span></li>
+		<li><a href="<?= url(); ?>">Home</a></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'index'); ?>">Admin</a></li>
+		<li><a href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'model', array($model)); ?>"><?= $model_name; ?></a></li>
 		<li class="active">Edit</li>
 	</ul>
 
@@ -37,6 +37,7 @@
 
 		<?php endif; ?>
 	</ul>
+	<br/>
 
 	<div class="tab-content">
 
@@ -44,18 +45,24 @@
 
 			<form method="post"<?php if($is_multipart): ?> enctype="multipart/form-data"<?php endif; ?>>
 
-				<?php foreach($columns as $name => $c): ?>
+				<fieldset>
 
-					<?php $this->error($name, 'admin/error'); ?>
-					<?php $this->admin_label($name); ?>
-					<?php $this->admin_field($name, $row, $c['options']); ?>
+					<?php foreach($columns as $name => $c): ?>
 
-				<?php endforeach; ?>
+						<div class="form-group">
 
-				<div class="form-actions">
+							<?php $this->error($name, 'admin/error'); ?>
+							<?php $this->admin_label($name); ?>
+							<?php $this->admin_field($name, $row, $c['options']); ?>
+
+						</div>
+
+					<?php endforeach; ?>
+
 					<input type="submit" value="Save" class="btn btn-primary" />
-					<a class="btn pull-right" href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'delete', array($model, $row->id)); ?>">Delete</a>
-				</div>
+					<a class="btn btn-default pull-right" href="<?= route_url('get', 'App.Vendor.Admin.Controller.Admin', 'delete', array($model, $row->id)); ?>">Delete</a>
+
+				</fieldset>
 
 			</form>
 
