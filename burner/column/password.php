@@ -24,7 +24,7 @@ class Password extends Char {
 	 */
 	public function set($value) {
 
-		return (empty($value)) ? null : \Library\Auth::hash(\Library\String::truncate($value, 256));
+		return (empty($value)) ? null : \Library\Auth::hash(\Library\String::truncate($value, 512));
 
 	}
 	
