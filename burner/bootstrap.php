@@ -87,6 +87,10 @@ class Bootstrap {
 		
 		set_error_handler('Core\burner_error');
 		set_exception_handler('Core\burner_exception');
+		$encoding = Config::get('encoding');
+		if(!empty($encoding)) {
+			mb_internal_encoding($encoding);
+		}
 		
 		// Load route configuration
 		require_once(APPLICATION.'/config/route.php');
