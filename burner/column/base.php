@@ -163,6 +163,12 @@ abstract class Base {
 			return 'Invalid choice.';
 
 		}
+
+		if(!empty($this->options['length']) and \Library\String::length($value) > intval($this->options['length'])) {
+
+			return "Exceeds maxium character length of {$this->options['length']}.";
+
+		}
 	
 		if(isset($this->options['valid']) and is_callable($this->options['valid'])) {
 		
